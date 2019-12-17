@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import py.com.fp.una.rbcmsa.grafos.model.Camino;
 import py.com.fp.una.rbcmsa.grafos.model.Rutas;
 
@@ -18,7 +19,7 @@ import py.com.fp.una.rbcmsa.grafos.model.Rutas;
  */
 public class BuscarCaminos {
 
-    public HashMap<String, Rutas> busqueda(int matrizAdyacencia[][]) throws CloneNotSupportedException {
+    public HashMap<String, Rutas> busqueda(int matrizAdyacencia[][], int limite) throws CloneNotSupportedException {
 
         List<Rutas> rutas = new ArrayList<>();
 
@@ -39,10 +40,26 @@ public class BuscarCaminos {
 
             }
         }
+        
         HashMap<String, Rutas> rutasCompletas = new HashMap();
         rutasCompletas = mapearRutas(rutas);
 
+        // se ordena por la menor distancia y se limita el numero de caminos a mostrar
+        this.ordenarCaminosPorDistancia(rutasCompletas, limite);
+
         return rutasCompletas;
+    }
+
+    private void ordenarCaminosPorDistancia(HashMap<String, Rutas> rutasCompletas, int limite) {
+        for (Map.Entry<String, Rutas> entry : rutasCompletas.entrySet()) {
+            String key = entry.getKey();
+            Rutas ruta = entry.getValue();
+            Collections.sort(ruta.getCaminos(), (s2, s1) -> Integer.compare(s2.getDistancia(), s1.getDistancia()));
+            if (ruta.getCaminos().size() > limite) {
+                ruta.setCaminos(ruta.getCaminos().subList(0, limite));
+            }
+
+        }
     }
 
     private HashMap<String, Rutas> mapearRutas(List<Rutas> rutas) throws CloneNotSupportedException {
@@ -58,7 +75,6 @@ public class BuscarCaminos {
             } else {
                 rutasCompletas.put(ruta.getOrigen() + "-" + ruta.getDestino(), ruta);
             }
-
         }
 
         return rutasCompletas;
@@ -105,7 +121,7 @@ public class BuscarCaminos {
 
     }
 
-    private Rutas expandirRutaDestinRutaoOrigenActual(Rutas rutaExpandida, Integer origenActual, Integer destinoActual, int matrizAdyacencia[][]) {
+    private Rutas expandirRutaDestinoRutaOrigenActual(Rutas rutaExpandida, Integer origenActual, Integer destinoActual, int matrizAdyacencia[][]) {
         rutaExpandida.setDestino(destinoActual);
 
         for (Camino caminoExpandido : rutaExpandida.getCaminos()) {
@@ -130,15 +146,6 @@ public class BuscarCaminos {
         return rutaExpandida;
     }
 
-//    private Rutas expandirRutaDestinoDestino(Rutas rutaExpandida, Integer origenActual, Integer destinoActual, int matrizAdyacencia[][]) throws CloneNotSupportedException {
-//        rutaExpandida.setDestino(origenActual);
-//
-//        for (Camino caminoExpandido : rutaExpandida.getCaminos()) {
-//            caminoExpandido.getNodos().add(origenActual);
-//            caminoExpandido.setDistancia(caminoExpandido.getDistancia() + matrizAdyacencia[origenActual][destinoActual]);
-//        }
-//        return rutaExpandida;
-//    }
     private Rutas expandirRutaOrigenOrigen(Rutas rutaExpandida, Integer origenActual, Integer destinoActual, int matrizAdyacencia[][]) throws CloneNotSupportedException {
         rutaExpandida.setOrigen(destinoActual);
 
@@ -155,10 +162,21 @@ public class BuscarCaminos {
         return rutaExpandida;
     }
 
+    //este
+    private Rutas expandirRutaDestinoDestino(Rutas rutaExpandida, Integer origenActual, Integer destinoActual, int matrizAdyacencia[][]) throws CloneNotSupportedException {
+        rutaExpandida.setDestino(origenActual);
+
+        for (Camino caminoExpandido : rutaExpandida.getCaminos()) {
+            caminoExpandido.getNodos().add(origenActual);
+            caminoExpandido.setDistancia(caminoExpandido.getDistancia() + matrizAdyacencia[origenActual][destinoActual]);
+        }
+        return rutaExpandida;
+    }
+    //
+
     private void desmarcarRuta(List<Rutas> rutas) {
         for (Rutas ruta : rutas) {
-            ruta.setExpandido(false);//ver si puedo verificar la ruta si ya existe 
-            //si no existe nomas agregar
+            ruta.setExpandido(false);
         }
     }
 
@@ -172,18 +190,32 @@ public class BuscarCaminos {
                 if (ruta.getDestino().equals(origenActual)) {
                     for (Camino camino : ruta.getCaminos()) {
                         if (!camino.getNodos().contains(destinoActual)) {
-                            rutasExpandidas.add(expandirRutaDestinRutaoOrigenActual(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
+                            rutasExpandidas.add(expandirRutaDestinoRutaOrigenActual(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
                             ruta.setExpandido(true);
                         }
                     }
                 } else if (ruta.getOrigen().equals(destinoActual)) {
                     for (Camino camino : ruta.getCaminos()) {
                         if (!camino.getNodos().contains(origenActual)) {
+                            //if (matrizAdyacencia[destinoActual][origenActual] != 0) {
                             rutasExpandidas.add(expandirRutaOrigenRutaDestinoActual(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
                             ruta.setExpandido(true);
+                            //}
                         }
                     }
-                } //                else if (ruta.getDestino().equals(destinoActual)) {
+                } else if (ruta.getOrigen().equals(origenActual)) {
+                    for (Camino camino : ruta.getCaminos()) {
+                        if (!camino.getNodos().contains(destinoActual)) {
+                            if (matrizAdyacencia[destinoActual][origenActual] != 0) {
+                                rutasExpandidas.add(expandirRutaOrigenOrigen(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
+                                ruta.setExpandido(true);
+                            }
+
+                        }
+                    }
+                }
+                //este
+                //                else if (ruta.getDestino().equals(destinoActual)) {
                 //                    for (Camino camino : ruta.getCaminos()) {
                 //                        if (!camino.getNodos().contains(origenActual)) {
                 //                            rutasExpandidas.add(expandirRutaDestinoDestino(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
@@ -191,15 +223,7 @@ public class BuscarCaminos {
                 //                            //rutasExpandidas.add(expandirRutaOrigenRutaDestinoActual(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
                 //                        }
                 //                    }
-                //                } 
-                else if (ruta.getOrigen().equals(origenActual)) {
-                    for (Camino camino : ruta.getCaminos()) {
-                        if (!camino.getNodos().contains(destinoActual)) {
-                            rutasExpandidas.add(expandirRutaOrigenOrigen(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
-                            ruta.setExpandido(true);
-                        }
-                    }
-                }
+                //
             }
 
         }
