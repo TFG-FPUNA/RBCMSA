@@ -40,7 +40,7 @@ public class main {
     public static void main(String[] args) throws CloneNotSupportedException {
         //int [][] matriz = {{0,1,0,0,0,1},{1,0,1,0,1,0},{0,1,0,1,0,0},{0,0,1,0,1,0},{0,1,0,1,0,1},{1,0,0,0,1,0}};
         //int[][] matriz = {{0, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 0, 1}, {1, 1, 1, 0}};
-        int[][] matriz = {{0, 1, 0, 0}, {0, 0, 1, 1}, {0, 0, 0, 1}, {1, 0, 0, 0}};//dirigido
+        int[][] matriz = {{0, 2233, 0, 0}, {0, 0, 1, 1}, {0, 0, 0, 1}, {1, 0, 0, 0}};//dirigido
         String nombreArchivoTR = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\TR.txt";
         String sepadadorTR = " ";
         String nombreArchivoPeticiones = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Peticiones.txt";
@@ -49,11 +49,12 @@ public class main {
         int columnas = 4 ;
         String nombreArchivoMatriz = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Matriz.txt";
         int limite = 5;
+        double tamanhoFS = 12.5;
 
         Weld weld = new Weld();
         try {
             WeldContainer container = weld.initialize();
-            container.select(main.class).get().procesar(matriz, nombreArchivoTR, sepadadorTR, nombreArchivoPeticiones, sepadadorPeticiones, limite);
+            container.select(main.class).get().procesar(matriz, nombreArchivoTR, sepadadorTR, nombreArchivoPeticiones, sepadadorPeticiones, limite, tamanhoFS);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,7 +64,7 @@ public class main {
     }
 
     private void procesar(int matriz[][], String nombreArchivoTR, String separadorTR,
-            String nombreArchivoPeticiones, String separadorPeticiones, int limite) 
+            String nombreArchivoPeticiones, String separadorPeticiones, int limite, double tamanhoFS) 
             throws CloneNotSupportedException {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
@@ -91,21 +92,21 @@ public class main {
         List<TRBCM> trFinales = new ArrayList<>();
         HashMap<String, PeticionBCM> PeticionesFinales = new HashMap();
         
-//        for (Map.Entry<String, Peticion> entry : Peticiones.entrySet()) {
-//            String key = entry.getKey();
-//            Peticion value = entry.getValue();
-//            Rutas ruta = rutasCompletas.get(value.getPedido());
-//            for (Camino camino : ruta.getCaminos()) {
-//                TRBCM trFinal = buscarTRBean.buscarTR(camino.getDistancia(), TRS);
-//                trFinales.add(trFinal);
-//            }
-//            PeticionBCM peticionFinal =  new PeticionBCM();
-//            peticionFinal.setCaminos(ruta.getCaminos());
-//            peticionFinal.setTrfinal(trFinales);
-//            peticionFinal.setPeticionOriginal(value);
-//            PeticionesFinales.put(key, peticionFinal);
-//            
-//        }
+        for (Map.Entry<String, Peticion> entry : Peticiones.entrySet()) {
+            String key = entry.getKey();
+            Peticion peticion = entry.getValue();
+            Rutas ruta = rutasCompletas.get(peticion.getPedido());
+            for (Camino camino : ruta.getCaminos()) {
+                TRBCM trFinal = buscarTRBean.buscarTR(camino.getDistancia(), TRS, peticion, tamanhoFS);
+                trFinales.add(trFinal);
+            }
+            PeticionBCM peticionFinal =  new PeticionBCM();
+            peticionFinal.setCaminos(ruta.getCaminos());
+            peticionFinal.setTrfinal(trFinales);
+            peticionFinal.setPeticionOriginal(peticion);
+            PeticionesFinales.put(key, peticionFinal);
+            
+        }
 
     }
 }

@@ -6,9 +6,12 @@
 package py.com.fp.una.rbcmsa.tr.business;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import py.com.fp.una.rbcmsa.peticion.model.Peticion;
+import static py.com.fp.una.rbcmsa.tr.model.Constantes.*;
 import py.com.fp.una.rbcmsa.tr.model.TR;
 import py.com.fp.una.rbcmsa.tr.model.TRBCM;
 
@@ -17,54 +20,86 @@ import py.com.fp.una.rbcmsa.tr.model.TRBCM;
  * @author Richard
  */
 public class BuscarTR {
-    public TRBCM buscarTR(Integer distancia, HashMap<String, TR> TRtotales){
-        List<TR> TRSeleccionados = new ArrayList<>();
-        seleccionarTRCandidatos(distancia, TRtotales, TRSeleccionados);
+
+    public TRBCM buscarTR(Integer distancia, HashMap<String, TR> TRtotales, Peticion peticion, Double tamanhoFS) {
+        HashMap<String, Integer> formatoModulacion = new HashMap<>();
+        formatoModulacion.put("PM-QPSK", 2);
+        formatoModulacion.put("PM-8QAM", 3);
+        formatoModulacion.put("PM-16QAM", 4);
+        formatoModulacion.put("PM-32QAM", 5);
+        formatoModulacion.put("PM-64QAM", 6);
+        
+        TR TRSeleccionado = seleccionarTRCandidatos(distancia, TRtotales);
+        System.out.println("seleccionado: " + TRSeleccionado);
         TRBCM trFinal = new TRBCM();
-        if (!TRSeleccionados.isEmpty()) {
-            for (TR TRSeleccionado : TRSeleccionados) {
-                
-            }
-            //llamar al que calcula
-            
-        }
+
+        double tamanhoFSRequerido = calcularNumeroFS(peticion.getLanda(), OH_FEC[TRSeleccionado.getSeleccionado()], tamanhoFS, formatoModulacion.get(TRSeleccionado.getModulacion()));
+        System.out.println("tamanho: " + tamanhoFSRequerido);
+
         return trFinal;
-        
+
     }
-    private List<TR> seleccionarTRCandidatos(Integer distancia, HashMap<String, TR> TRtotales, List<TR> seleccionTR){
-        //List<TR> seleccionTR = new ArrayList<>();
-        
+
+    private Double calcularNumeroFS(Integer landaInicial, Double porcentajeFEC, Double tamanhoFS, Integer nivelModulacion) {
+        System.out.println("landaInicial: " + landaInicial);
+
+        System.out.println("porcentaje: " + porcentajeFEC);
+
+        System.out.println("tamanhoFs: " + tamanhoFS);
+
+        System.out.println("nivel modulacion: " + nivelModulacion);
+        Double resultado = (landaInicial * (1 + porcentajeFEC)) / (tamanhoFS * nivelModulacion);
+        resultado = Math.ceil(resultado);
+        resultado = resultado + 1;
+        return resultado;
+    }
+
+    private TR seleccionarTRCandidatos(Integer distancia, HashMap<String, TR> TRtotales) {
+        List<TR> seleccionTR = new ArrayList<>();
         for (Map.Entry<String, TR> entry : TRtotales.entrySet()) {
             String key = entry.getKey();
-            TR value = entry.getValue();
-            
-            Integer seleccionado = verificarMenor(distancia, value);
+            TR tr = entry.getValue();
+
+            double seleccionado = verificarMenor(distancia, tr);
             if (seleccionado != 0) {
-                seleccionTR.add(value);
+                seleccionTR.add(tr);
             }
         }
-        return seleccionTR;
-        
+
+        //encontrar el menor
+        Collections.sort(seleccionTR, (s2, s1) -> Integer.compare(s2.getFEC().get(s2.getSeleccionado()), s1.getFEC().get(s1.getSeleccionado())));
+        return seleccionTR.get(0);
+
     }
-    
-    private Integer verificarMenor(Integer distancia, TR tr){
-        Integer  mayor = 0;
-        if (distancia < tr.getNoFEC()) {
-            mayor = tr.getNoFEC();
+
+    private double verificarMenor(Integer distancia, TR tr) {
+        double mayor = 0;
+        if (distancia < tr.getFEC().get(NO_FEC)) {
+            mayor = tr.getFEC().get(NO_FEC);
+            tr.setSeleccionado(NO_FEC);
+            return mayor;
         }
-        if (distancia < tr.getT1FEC() && tr.getT1FEC() < mayor) {
-            mayor = tr.getT1FEC();
+        if (distancia < tr.getFEC().get(TIPO_1_FEC)) {
+            mayor = tr.getFEC().get(TIPO_1_FEC);
+            tr.setSeleccionado(TIPO_1_FEC);
+            return mayor;
         }
-        if (distancia < tr.getT2FEC() && tr.getT2FEC() < mayor) {
-            mayor = tr.getT2FEC();
+        if (distancia < tr.getFEC().get(TIPO_2_FEC)) {
+            mayor = tr.getFEC().get(TIPO_2_FEC);
+            tr.setSeleccionado(TIPO_2_FEC);
+            return mayor;
         }
-        if (distancia < tr.getT3FEC() && tr.getT3FEC() < mayor) {
-            mayor = tr.getT3FEC();
+        if (distancia < tr.getFEC().get(TIPO_3_FEC)) {
+            mayor = tr.getFEC().get(TIPO_3_FEC);
+            tr.setSeleccionado(TIPO_3_FEC);
+            return mayor;
         }
-        if (distancia < tr.getT4FEC() && tr.getT4FEC() < mayor) {
-            mayor = tr.getT4FEC();
+        if (distancia < tr.getFEC().get(TIPO_4_FEC)) {
+            mayor = tr.getFEC().get(TIPO_4_FEC);
+            tr.setSeleccionado(TIPO_4_FEC);
+            return mayor;
         }
         return mayor;
     }
-    
+
 }

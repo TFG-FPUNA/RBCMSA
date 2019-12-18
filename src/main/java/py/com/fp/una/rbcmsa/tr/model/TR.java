@@ -5,6 +5,9 @@
  */
 package py.com.fp.una.rbcmsa.tr.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Richard
@@ -12,12 +15,14 @@ package py.com.fp.una.rbcmsa.tr.model;
 public class TR {
     private String modulacion;
     private Integer baudios;
-    private Integer noFEC;
-    private Integer T1FEC;
-    private Integer T2FEC;
-    private Integer T3FEC;
-    private Integer T4FEC;
+    private List<Integer> FEC;
+    private Integer seleccionado;
 
+    public TR() {
+        this.FEC = new ArrayList<>();
+    }
+
+    
     public String getModulacion() {
         return modulacion;
     }
@@ -34,49 +39,26 @@ public class TR {
         this.baudios = baudios;
     }
 
-    public Integer getNoFEC() {
-        return noFEC;
+    public List<Integer> getFEC() {
+        return FEC;
     }
 
-    public void setNoFEC(Integer noFEC) {
-        this.noFEC = noFEC;
+    public void setFEC(List<Integer> FEC) {
+        this.FEC = FEC;
     }
 
-    public Integer getT1FEC() {
-        return T1FEC;
+    public Integer getSeleccionado() {
+        return seleccionado;
     }
 
-    public void setT1FEC(Integer T1FEC) {
-        this.T1FEC = T1FEC;
-    }
-
-    public Integer getT2FEC() {
-        return T2FEC;
-    }
-
-    public void setT2FEC(Integer T2FEC) {
-        this.T2FEC = T2FEC;
-    }
-
-    public Integer getT3FEC() {
-        return T3FEC;
-    }
-
-    public void setT3FEC(Integer T3FEC) {
-        this.T3FEC = T3FEC;
-    }
-
-    public Integer getT4FEC() {
-        return T4FEC;
-    }
-
-    public void setT4FEC(Integer T4FEC) {
-        this.T4FEC = T4FEC;
+    public void setSeleccionado(Integer seleccionado) {
+        this.seleccionado = seleccionado;
     }
 
     @Override
     public String toString() {
-        return "TR{" + "modulacion=" + modulacion + ", baudios=" + baudios + ", noFEC=" + noFEC + ", T1FEC=" + T1FEC + ", T2FEC=" + T2FEC + ", T3FEC=" + T3FEC + ", T4FEC=" + T4FEC + '}';
-    }      
-    
+        return "TR{" + "modulacion=" + modulacion + ", baudios=" + baudios + ", FEC=" + FEC + ", seleccionado=" + seleccionado + '}';
+    }
+
+
 }

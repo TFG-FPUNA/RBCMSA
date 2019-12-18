@@ -77,11 +77,11 @@ public class LecturaArchivo {
         String[] partes = linea.split(separador);
         tr.setModulacion(partes[0]);
         tr.setBaudios(Integer.valueOf(partes[1]));
-        tr.setNoFEC(Integer.valueOf(partes[2]));
-        tr.setT1FEC(Integer.valueOf(partes[3]));
-        tr.setT2FEC(Integer.valueOf(partes[4]));
-        tr.setT3FEC(Integer.valueOf(partes[5]));
-        tr.setT4FEC(Integer.valueOf(partes[6]));
+        tr.getFEC().add(Integer.valueOf(partes[2]));
+        tr.getFEC().add(Integer.valueOf(partes[3]));
+        tr.getFEC().add(Integer.valueOf(partes[4]));
+        tr.getFEC().add(Integer.valueOf(partes[5]));
+        tr.getFEC().add(Integer.valueOf(partes[6]));
 
         return tr;
     }
