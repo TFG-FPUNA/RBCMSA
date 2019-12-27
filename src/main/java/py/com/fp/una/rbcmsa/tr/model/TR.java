@@ -13,6 +13,8 @@ import java.util.List;
  * @author Richard
  */
 public class TR {
+    private Integer distanciaSoportada;
+    private Integer formatoModulacion;
     private String modulacion;
     private Integer baudios;
     private List<Integer> FEC;
@@ -20,6 +22,22 @@ public class TR {
 
     public TR() {
         this.FEC = new ArrayList<>();
+    }
+
+    public Integer getDistanciaSoportada() {
+        return distanciaSoportada;
+    }
+
+    public void setDistanciaSoportada(Integer distanciaSoportada) {
+        this.distanciaSoportada = distanciaSoportada;
+    }
+
+    public Integer getFormatoModulacion() {
+        return formatoModulacion;
+    }
+
+    public void setFormatoModulacion(Integer formatoModulacion) {
+        this.formatoModulacion = formatoModulacion;
     }
 
     
@@ -57,8 +75,7 @@ public class TR {
 
     @Override
     public String toString() {
-        return "TR{" + "modulacion=" + modulacion + ", baudios=" + baudios + ", FEC=" + FEC + ", seleccionado=" + seleccionado + '}';
+        return "TR{" + "distanciaSoportada=" + distanciaSoportada + ", formatoModulacion=" + formatoModulacion + ", modulacion=" + modulacion + ", baudios=" + baudios + ", FEC=" + FEC + ", seleccionado=" + seleccionado + '}';
     }
-
 
 }

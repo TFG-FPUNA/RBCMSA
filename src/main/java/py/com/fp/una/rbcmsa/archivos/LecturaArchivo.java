@@ -75,13 +75,15 @@ public class LecturaArchivo {
     private TR mapearLinea(String linea, String separador) {
         TR tr = new TR();
         String[] partes = linea.split(separador);
-        tr.setModulacion(partes[0]);
-        tr.setBaudios(Integer.valueOf(partes[1]));
-        tr.getFEC().add(Integer.valueOf(partes[2]));
-        tr.getFEC().add(Integer.valueOf(partes[3]));
+        tr.setDistanciaSoportada(Integer.valueOf(partes[0]));
+        tr.setFormatoModulacion(Integer.valueOf(partes[1]));
+        tr.setModulacion(partes[2]);
+        tr.setBaudios(Integer.valueOf(partes[3]));
         tr.getFEC().add(Integer.valueOf(partes[4]));
         tr.getFEC().add(Integer.valueOf(partes[5]));
         tr.getFEC().add(Integer.valueOf(partes[6]));
+        tr.getFEC().add(Integer.valueOf(partes[7]));
+        tr.getFEC().add(Integer.valueOf(partes[8]));
 
         return tr;
     }

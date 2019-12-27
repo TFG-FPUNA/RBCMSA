@@ -22,18 +22,12 @@ import py.com.fp.una.rbcmsa.tr.model.TRBCM;
 public class BuscarTR {
 
     public TRBCM buscarTR(Integer distancia, HashMap<String, TR> TRtotales, Peticion peticion, Double tamanhoFS) {
-        HashMap<String, Integer> formatoModulacion = new HashMap<>();
-        formatoModulacion.put("PM-QPSK", 2);
-        formatoModulacion.put("PM-8QAM", 3);
-        formatoModulacion.put("PM-16QAM", 4);
-        formatoModulacion.put("PM-32QAM", 5);
-        formatoModulacion.put("PM-64QAM", 6);
         
-        TR TRSeleccionado = seleccionarTRCandidatos(distancia, TRtotales);
+        TR TRSeleccionado = seleccionarTRCandidatos(distancia, TRtotales, peticion.getLanda());
         System.out.println("seleccionado: " + TRSeleccionado);
         TRBCM trFinal = new TRBCM();
 
-        double tamanhoFSRequerido = calcularNumeroFS(peticion.getLanda(), OH_FEC[TRSeleccionado.getSeleccionado()], tamanhoFS, formatoModulacion.get(TRSeleccionado.getModulacion()));
+        double tamanhoFSRequerido = calcularNumeroFS(peticion.getLanda(), OH_FEC[TRSeleccionado.getSeleccionado()], tamanhoFS, TRSeleccionado.getFormatoModulacion());
         System.out.println("tamanho: " + tamanhoFSRequerido);
 
         return trFinal;
@@ -54,7 +48,7 @@ public class BuscarTR {
         return resultado;
     }
 
-    private TR seleccionarTRCandidatos(Integer distancia, HashMap<String, TR> TRtotales) {
+    private TR seleccionarTRCandidatos(Integer distancia, HashMap<String, TR> TRtotales, Integer landaInicial) {
         List<TR> seleccionTR = new ArrayList<>();
         for (Map.Entry<String, TR> entry : TRtotales.entrySet()) {
             String key = entry.getKey();
@@ -62,7 +56,10 @@ public class BuscarTR {
 
             double seleccionado = verificarMenor(distancia, tr);
             if (seleccionado != 0) {
-                seleccionTR.add(tr);
+                if (landaInicial <= tr.getDistanciaSoportada()) {
+                    seleccionTR.add(tr);
+                }
+                
             }
         }
 
