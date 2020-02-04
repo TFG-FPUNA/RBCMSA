@@ -11,7 +11,6 @@ package py.com.fp.una.rbcmsa.grafos.model;
  */
 public class Vertice {
     private String identificador;
-    private String nombre;
 
     public String getIdentificador() {
         return identificador;
@@ -21,17 +20,9 @@ public class Vertice {
         this.identificador = identificador;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     @Override
     public String toString() {
-        return "Vertice{" + "identificador=" + identificador + ", nombre=" + nombre + '}';
+        return "Vertice{" + "identificador=" + identificador + '}';
     }
     
     

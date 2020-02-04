@@ -44,7 +44,7 @@ public class PeticionBCM {
 
     @Override
     public String toString() {
-        return "PeticionBCM{" + "peticionOriginal=" + peticionOriginal + ", caminos=" + caminos + ", trfinal=" + trfinal + '}';
+        return "PeticionBCM{" + "peticionOriginal=" + peticionOriginal + ",\n caminos=" + caminos + ",\n trfinal=" + trfinal + '}';
     }
 
     

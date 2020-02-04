@@ -5,6 +5,7 @@
  */
 package py.com.fp.una.rbcmsa.grafos.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class Grafo {
     private List<Vertice> vertices;
-    private List<Arista> atistas;
+    private HashMap<String, Arista> aristas;
 
     public List<Vertice> getVertices() {
         return vertices;
@@ -23,17 +24,19 @@ public class Grafo {
         this.vertices = vertices;
     }
 
-    public List<Arista> getAtistas() {
-        return atistas;
+    public HashMap<String, Arista> getAristas() {
+        return aristas;
     }
 
-    public void setAtistas(List<Arista> atistas) {
-        this.atistas = atistas;
+    public void setAristas(HashMap<String, Arista> aristas) {
+        this.aristas = aristas;
     }
 
     @Override
     public String toString() {
-        return "Grafo{" + "vertices=" + vertices + ", atistas=" + atistas + '}';
+        return "Grafo{" + "vertices=" + vertices + ", aristas=" + aristas + '}';
     }
+
+    
     
 }

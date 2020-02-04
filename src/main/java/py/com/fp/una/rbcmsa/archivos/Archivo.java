@@ -6,8 +6,15 @@
 package py.com.fp.una.rbcmsa.archivos;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Properties;
 import py.com.fp.una.rbcmsa.peticion.model.Peticion;
 import py.com.fp.una.rbcmsa.tr.model.TR;
 
@@ -15,7 +22,31 @@ import py.com.fp.una.rbcmsa.tr.model.TR;
  *
  * @author Richard
  */
-public class LecturaArchivo {
+public class Archivo {
+
+    public void crearArchivo(String ruta, List<String> solicitudes) throws IOException {
+
+        File file = new File(ruta);
+        // Si el archivo no existe es creado
+        if (!file.exists()) {
+            file.createNewFile();
+        }else{
+            return;
+        }
+        FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+        for (String solicitud : solicitudes) {
+            bw.write(solicitud+"\n");
+        }
+         bw.close();
+
+    }
+    
+    public Properties cargarPropiedades() throws FileNotFoundException, IOException{
+        Properties p = new Properties();
+        p.load(new FileReader("C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\properties.properties"));
+        return p;
+    }
 
     public Object cargarArchivo(String nombreArchivo, String separador, int indicador, int filas, int columnas) {
 
@@ -29,7 +60,7 @@ public class LecturaArchivo {
             String linea;
             int i = 0;
             while ((linea = br.readLine()) != null) {
-                System.out.println(linea);
+                //System.out.println(linea);
 
                 switch (indicador) {
                     case 0:

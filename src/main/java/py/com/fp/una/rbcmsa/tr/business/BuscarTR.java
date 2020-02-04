@@ -26,22 +26,26 @@ public class BuscarTR {
         TR TRSeleccionado = seleccionarTRCandidatos(distancia, TRtotales, peticion.getLanda());
         System.out.println("seleccionado: " + TRSeleccionado);
         TRBCM trFinal = new TRBCM();
-
-        double tamanhoFSRequerido = calcularNumeroFS(peticion.getLanda(), OH_FEC[TRSeleccionado.getSeleccionado()], tamanhoFS, TRSeleccionado.getFormatoModulacion());
+        trFinal.setBaudios(TRSeleccionado.getBaudios());
+        trFinal.setFEC(TRSeleccionado.getSeleccionado());
+        trFinal.setModulacion(TRSeleccionado.getModulacion());
+        
+        Double tamanhoFSRequerido = calcularNumeroFS(peticion.getLanda(), OH_FEC[TRSeleccionado.getSeleccionado()], tamanhoFS, TRSeleccionado.getFormatoModulacion());
         System.out.println("tamanho: " + tamanhoFSRequerido);
 
+        trFinal.setTamanhoFS(tamanhoFSRequerido.intValue());
         return trFinal;
 
     }
 
     private Double calcularNumeroFS(Integer landaInicial, Double porcentajeFEC, Double tamanhoFS, Integer nivelModulacion) {
-        System.out.println("landaInicial: " + landaInicial);
-
-        System.out.println("porcentaje: " + porcentajeFEC);
-
-        System.out.println("tamanhoFs: " + tamanhoFS);
-
-        System.out.println("nivel modulacion: " + nivelModulacion);
+//        System.out.println("landaInicial: " + landaInicial);
+//
+//        System.out.println("porcentaje: " + porcentajeFEC);
+//
+//        System.out.println("tamanhoFs: " + tamanhoFS);
+//
+//        System.out.println("nivel modulacion: " + nivelModulacion);
         Double resultado = (landaInicial * (1 + porcentajeFEC)) / (tamanhoFS * nivelModulacion);
         resultado = Math.ceil(resultado);
         resultado = resultado + 1;
@@ -64,6 +68,7 @@ public class BuscarTR {
         }
 
         //encontrar el menor
+        //System.out.println("seleccionado: " + seleccionTR);
         Collections.sort(seleccionTR, (s2, s1) -> Integer.compare(s2.getFEC().get(s2.getSeleccionado()), s1.getFEC().get(s1.getSeleccionado())));
         return seleccionTR.get(0);
 

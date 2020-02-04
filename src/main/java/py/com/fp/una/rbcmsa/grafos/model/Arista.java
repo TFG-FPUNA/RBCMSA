@@ -13,14 +13,11 @@ public class Arista {
     private String identificador;
     private String verticeOrigen;
     private String verticeDestino;
-    private String distancia;
+    private Integer distancia;
+    private boolean[] SP;
 
-    public String getIdentificador() {
-        return identificador;
-    }
-
-    public void setIdentificador(String identificador) {
-        this.identificador = identificador;
+    public Arista(int cantidadSP) {
+        this.SP = new boolean[cantidadSP];
     }
 
     public String getVerticeOrigen() {
@@ -39,17 +36,33 @@ public class Arista {
         this.verticeDestino = verticeDestino;
     }
 
-    public String getDistancia() {
+    public Integer getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(String distancia) {
+    public void setDistancia(Integer distancia) {
         this.distancia = distancia;
+    }
+
+    public boolean[] getSP() {
+        return SP;
+    }
+
+    public void setSP(boolean[] SP) {
+        this.SP = SP;
+    }
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
     }
 
     @Override
     public String toString() {
-        return "Arista{" + "identificador=" + identificador + ", verticeOrigen=" + verticeOrigen + ", verticeDestino=" + verticeDestino + ", distancia=" + distancia + '}';
+        return "Arista{" + "identificador=" + identificador + ", verticeOrigen=" + verticeOrigen + ", verticeDestino=" + verticeDestino + ", distancia=" + distancia + ", SP=" + SP + '}';
     }
     
 }
