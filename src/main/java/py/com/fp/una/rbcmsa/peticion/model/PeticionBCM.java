@@ -17,6 +17,7 @@ public class PeticionBCM {
     private Peticion peticionOriginal;
     private List<Camino> caminos;
     private List<TRBCM> trfinal;
+    private Integer FSMayor;
 
     public Peticion getPeticionOriginal() {
         return peticionOriginal;
@@ -42,12 +43,17 @@ public class PeticionBCM {
         this.trfinal = trfinal;
     }
 
-    @Override
-    public String toString() {
-        return "PeticionBCM{" + "peticionOriginal=" + peticionOriginal + ",\n caminos=" + caminos + ",\n trfinal=" + trfinal + '}';
+    public Integer getFSMayor() {
+        return FSMayor;
     }
 
-    
-    
+    public void setFSMayor(Integer FSMayor) {
+        this.FSMayor = FSMayor;
+    }
+
+    @Override
+    public String toString() {
+        return "PeticionBCM{" + "peticionOriginal=" + peticionOriginal + ", caminos=" + caminos + ", trfinal=" + trfinal + ", FSMayor=" + FSMayor + '}';
+    }
     
 }
