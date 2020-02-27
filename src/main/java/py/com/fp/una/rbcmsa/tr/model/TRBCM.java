@@ -16,6 +16,7 @@ public class TRBCM {
     private Integer FEC;
     private Integer landaCalculado;
     private Integer tamanhoFS;
+    private Integer formatoModulacion;
 
     public String getModulacion() {
         return modulacion;
@@ -57,10 +58,20 @@ public class TRBCM {
         this.tamanhoFS = tamanhoFS;
     }
 
+    public Integer getFormatoModulacion() {
+        return formatoModulacion;
+    }
+
+    public void setFormatoModulacion(Integer formatoModulacion) {
+        this.formatoModulacion = formatoModulacion;
+    }
+
     @Override
     public String toString() {
-        return "TRBCM{" + "modulacion=" + modulacion + ", baudios=" + baudios + ", FEC=" + FEC + ", landaCalculado=" + landaCalculado + ", tamanhoFS=" + tamanhoFS + '}';
+        return "TRBCM{" + "modulacion=" + modulacion + ", baudios=" + baudios + ", FEC=" + FEC + ", landaCalculado=" + landaCalculado + ", tamanhoFS=" + tamanhoFS + ", formatoModulacion=" + formatoModulacion + '}';
     }
+
+    
 
     
 }

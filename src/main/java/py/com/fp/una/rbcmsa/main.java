@@ -170,7 +170,7 @@ public class main {
         algoritmosAsignacionEspectro.SFMRA(peticionesFinales, grafo);
         
         //Llamada algoritmo 2 del paper base
-        algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo);
+        algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         
         //Llamada algoritmo 3 del paper base
         

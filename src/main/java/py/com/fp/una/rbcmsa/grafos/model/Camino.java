@@ -15,6 +15,8 @@ import java.util.List;
 public class Camino {
     List<Integer> nodos;
     Integer distancia;
+    Integer cantidadFsDisponibles;
+    Integer anchoBandaAsignable;
 
     public Camino() {
         this.nodos = new ArrayList<>();
@@ -36,10 +38,25 @@ public class Camino {
         return distancia;
     }
 
-    @Override
-    public String toString() {
-        return "Camino{" + "nodos=" + nodos + ", distancia=" + distancia + '}';
+    public Integer getCantidadFsDisponibles() {
+        return cantidadFsDisponibles;
     }
 
+    public void setCantidadFsDisponibles(Integer cantidadFsDisponibles) {
+        this.cantidadFsDisponibles = cantidadFsDisponibles;
+    }
+
+    public Integer getAnchoBandaAsignable() {
+        return anchoBandaAsignable;
+    }
+
+    public void setAnchoBandaAsignable(Integer anchoBandaAsignable) {
+        this.anchoBandaAsignable = anchoBandaAsignable;
+    }
+
+    @Override
+    public String toString() {
+        return "Camino{" + "nodos=" + nodos + ", distancia=" + distancia + ", cantidadFsDisponibles=" + cantidadFsDisponibles + ", anchoBandaAsignable=" + anchoBandaAsignable + '}';
+    }
     
 }

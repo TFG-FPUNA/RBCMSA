@@ -25,7 +25,7 @@ public class Simulador {
             for (int j = 0; j < cantidadSolicitudes; j++) {
                 this.generarArchivos(cantidadSolicitudes, numNodos, distanciaMin, distanciaMax, rutaArchivo, nombreArchivo);
             }
-            mainBean.procesar(matriz, rutaArchivo, rutaArchivo);
+            //mainBean.procesar(matriz, rutaArchivo, rutaArchivo);
             
             
         }

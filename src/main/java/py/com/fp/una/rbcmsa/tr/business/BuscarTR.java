@@ -29,6 +29,7 @@ public class BuscarTR {
         trFinal.setBaudios(TRSeleccionado.getBaudios());
         trFinal.setFEC(TRSeleccionado.getSeleccionado());
         trFinal.setModulacion(TRSeleccionado.getModulacion());
+        trFinal.setFormatoModulacion(TRSeleccionado.getFormatoModulacion());
         
         Double tamanhoFSRequerido = calcularNumeroFS(peticion.getLanda(), OH_FEC[TRSeleccionado.getSeleccionado()], tamanhoFS, TRSeleccionado.getFormatoModulacion());
         System.out.println("tamanho: " + tamanhoFSRequerido);

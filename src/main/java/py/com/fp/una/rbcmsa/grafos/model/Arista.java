@@ -15,9 +15,11 @@ public class Arista {
     private String verticeDestino;
     private Integer distancia;
     private boolean[] SP;
+    private int cantidadSP;
 
     public Arista(int cantidadSP) {
         this.SP = new boolean[cantidadSP];
+        this.cantidadSP =  cantidadSP;
     }
 
     public String getVerticeOrigen() {
@@ -60,9 +62,19 @@ public class Arista {
         this.identificador = identificador;
     }
 
+    public int getCantidadSP() {
+        return cantidadSP;
+    }
+
+    public void setCantidadSP(int cantidadSP) {
+        this.cantidadSP = cantidadSP;
+    }
+
     @Override
     public String toString() {
-        return "Arista{" + "identificador=" + identificador + ", verticeOrigen=" + verticeOrigen + ", verticeDestino=" + verticeDestino + ", distancia=" + distancia + ", SP=" + SP + '}';
+        return "Arista{" + "identificador=" + identificador + ", verticeOrigen=" + verticeOrigen + ", verticeDestino=" + verticeDestino + ", distancia=" + distancia + ", SP=" + SP + ", cantidadSP=" + cantidadSP + '}';
     }
+
+    
     
 }
