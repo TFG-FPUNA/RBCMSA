@@ -26,6 +26,7 @@ import py.com.fp.una.rbcmsa.grafos.model.AuxArista;
 import py.com.fp.una.rbcmsa.grafos.model.Camino;
 import py.com.fp.una.rbcmsa.grafos.model.Grafo;
 import py.com.fp.una.rbcmsa.grafos.model.Rutas;
+import py.com.fp.una.rbcmsa.peticion.model.CaminoTR;
 import py.com.fp.una.rbcmsa.peticion.model.Peticion;
 import py.com.fp.una.rbcmsa.peticion.model.PeticionBCM;
 import py.com.fp.una.rbcmsa.tr.business.BuscarTR;
@@ -58,12 +59,22 @@ public class main {
     AlgoritmosAsignacionEspectro algoritmosAsignacionEspectro;
 
     public static void main(String[] args) throws CloneNotSupportedException {
+        //caso 2 para SFMRA
+//        int[][] matriz = {
+//            {0, 1000, 0, 0, 0, 200}, 
+//            {1000, 0, 1000, 0, 400, 0}, 
+//            {0, 1000, 0, 500, 0, 0}, 
+//            {0, 0, 500, 0, 100, 0}, 
+//            {0, 400, 0, 100, 0, 200}, 
+//            {200, 0, 0, 0, 200, 0}
+//        };
+        // caso 3
         int[][] matriz = {
             {0, 1000, 0, 0, 0, 200}, 
-            {1000, 0, 1000, 0, 400, 0}, 
-            {0, 1000, 0, 500, 0, 0}, 
-            {0, 0, 500, 0, 100, 0}, 
-            {0, 400, 0, 100, 0, 200}, 
+            {1000, 0, 100, 0, 400, 0}, 
+            {0, 100, 0, 700, 0, 0}, 
+            {0, 0, 700, 0, 1000, 0}, 
+            {0, 400, 0, 1000, 0, 200}, 
             {200, 0, 0, 0, 200, 0}
         };
         //int[][] matriz = {{0, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 0, 1}, {1, 1, 1, 0}};
@@ -72,7 +83,9 @@ public class main {
         //String nombreArchivoTR = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\TR.txt";
         String sepadadorTR = " ";
         String rutaArchvo = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\";
-        String nombreArchivo = "Peticiones.txt";
+//        String nombreArchivo = "Peticiones.txt";
+//        String nombreArchivo = "Peticiones_caso2.txt";
+        String nombreArchivo = "Peticiones_caso3.txt";
         String sepadadorPeticiones = " ";
         //String nombreArchivoMatriz = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Matriz.txt";
         //int limite = 5;
@@ -138,21 +151,28 @@ public class main {
             String key = entry.getKey();
             Peticion peticion = entry.getValue();
             Rutas ruta = rutasCompletas.get(peticion.getPedido());
-            List<TRBCM> trFinales = new ArrayList<>();
-            Integer FSMayor = -1;
+            //List<TRBCM> trFinales = new ArrayList<>();
+            List<CaminoTR> caminosTrFinales = new ArrayList<>();
+            Integer FSMenor = Integer.MAX_VALUE;
             for (Camino camino : ruta.getCaminos()) {
+                CaminoTR caminoTrFinal = new CaminoTR();
                 TRBCM trFinal = buscarTRBean.buscarTR(camino.getDistancia(), TRS, peticion, tamanhoFS);
-                if (FSMayor < trFinal.getTamanhoFS()) {
-                    FSMayor = trFinal.getTamanhoFS();
+                caminoTrFinal.setCamino(camino);
+                caminoTrFinal.setTrfinal(trFinal);
+                if (FSMenor > trFinal.getTamanhoFS()) {
+                    FSMenor = trFinal.getTamanhoFS();
                 }
-                trFinales.add(trFinal);
+                //trFinales.add(trFinal);
+                caminosTrFinales.add(caminoTrFinal);
             }
             PeticionBCM peticionFinal = new PeticionBCM();
-            peticionFinal.setCaminos(ruta.getCaminos());
-            peticionFinal.setTrfinal(trFinales);
+            //peticionFinal.setCaminos(ruta.getCaminos());
+            //peticionFinal.setTrfinal(trFinales);
             peticionFinal.setPeticionOriginal(peticion);
-            peticionFinal.setFSMayor(FSMayor);
+            peticionFinal.setFSMenor(FSMenor);
+            peticionFinal.setCaminosTR(caminosTrFinales);
             peticionesFinales.add(peticionFinal);
+            
 
             //PeticionesFinales.put(key, peticionFinal);
             //hablar con divina sobre el tema de ordenar por TFS porque cada camino tiene un TFS diferente y estos caminos estan asociados a una peticion
@@ -167,12 +187,13 @@ public class main {
 
         Grafo grafo = operacionesGrafos.cargaGrafo(matriz, cantidadSP);
         //Llamada algoritmo 1 del paper base
-        algoritmosAsignacionEspectro.SFMRA(peticionesFinales, grafo);
+        //algoritmosAsignacionEspectro.SFMRA(peticionesFinales, grafo);
         
         //Llamada algoritmo 2 del paper base
-        algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
+        //algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         
         //Llamada algoritmo 3 del paper base
+        algoritmosAsignacionEspectro.BFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
     }

@@ -6,8 +6,6 @@
 package py.com.fp.una.rbcmsa.peticion.model;
 
 import java.util.List;
-import py.com.fp.una.rbcmsa.grafos.model.Camino;
-import py.com.fp.una.rbcmsa.tr.model.TRBCM;
 
 /**
  *
@@ -15,9 +13,8 @@ import py.com.fp.una.rbcmsa.tr.model.TRBCM;
  */
 public class PeticionBCM {
     private Peticion peticionOriginal;
-    private List<Camino> caminos;
-    private List<TRBCM> trfinal;
-    private Integer FSMayor;
+    private List<CaminoTR> caminosTR;
+    private Integer FSMenor;
 
     public Peticion getPeticionOriginal() {
         return peticionOriginal;
@@ -27,33 +24,27 @@ public class PeticionBCM {
         this.peticionOriginal = peticionOriginal;
     }
 
-    public List<Camino> getCaminos() {
-        return caminos;
+    public List<CaminoTR> getCaminosTR() {
+        return caminosTR;
     }
 
-    public void setCaminos(List<Camino> caminos) {
-        this.caminos = caminos;
+    public void setCaminosTR(List<CaminoTR> caminosTR) {
+        this.caminosTR = caminosTR;
     }
 
-    public List<TRBCM> getTrfinal() {
-        return trfinal;
+    public Integer getFSMenor() {
+        return FSMenor;
     }
 
-    public void setTrfinal(List<TRBCM> trfinal) {
-        this.trfinal = trfinal;
-    }
-
-    public Integer getFSMayor() {
-        return FSMayor;
-    }
-
-    public void setFSMayor(Integer FSMayor) {
-        this.FSMayor = FSMayor;
+    public void setFSMenor(Integer FSMenor) {
+        this.FSMenor = FSMenor;
     }
 
     @Override
     public String toString() {
-        return "PeticionBCM{" + "peticionOriginal=" + peticionOriginal + ", caminos=" + caminos + ", trfinal=" + trfinal + ", FSMayor=" + FSMayor + '}';
+        return "PeticionBCM{" + "peticionOriginal=" + peticionOriginal + ", caminosTR=" + caminosTR + ", FSMenor=" + FSMenor + '}';
     }
+
+    
     
 }
