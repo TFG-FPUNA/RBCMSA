@@ -11,8 +11,54 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         
         <version.cdi-api>1.2</version.cdi-api>
+        <version.jgrapht>0.7.3</version.jgrapht>
     </properties>
     <dependencies>
+        <!-- Esta mierda tenes que instalar manualmente porque no sé de donde sacaron -->
+        <dependency>
+            <groupId>oplall</groupId>
+            <artifactId>oplall</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/cplex/cplex 
+        <dependency>
+            <groupId>cplex</groupId>
+            <artifactId>cplex</artifactId>
+            <version>1.0.0</version>
+        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/jgraph/jgraph -->
+        <dependency>
+            <groupId>jgraph</groupId>
+            <artifactId>jgraph</artifactId>
+            <version>5.13.0.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core -->
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>0.9.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-demo -->
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-demo</artifactId>
+            <version>0.9.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-ext -->
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-ext</artifactId>
+            <version>0.9.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.tinyjee.jgraphx/jgraphx -->
+        <dependency>
+            <groupId>org.tinyjee.jgraphx</groupId>
+            <artifactId>jgraphx</artifactId>
+            <version>2.0.0.1</version>
+        </dependency>
+
+
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>

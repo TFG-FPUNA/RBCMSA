@@ -5,10 +5,8 @@
  */
 package py.com.fp.una.rbcmsa;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +19,10 @@ import py.com.fp.una.rbcmsa.archivos.Archivo;
 import py.com.fp.una.rbcmsa.generadores.Generador;
 import py.com.fp.una.rbcmsa.grafos.OperacionesGrafos;
 import py.com.fp.una.rbcmsa.grafos.business.BuscarCaminos;
-import py.com.fp.una.rbcmsa.grafos.model.Arista;
-import py.com.fp.una.rbcmsa.grafos.model.AuxArista;
 import py.com.fp.una.rbcmsa.grafos.model.Camino;
 import py.com.fp.una.rbcmsa.grafos.model.Grafo;
 import py.com.fp.una.rbcmsa.grafos.model.Rutas;
+import py.com.fp.una.rbcmsa.ilp.SPILP;
 import py.com.fp.una.rbcmsa.peticion.model.CaminoTR;
 import py.com.fp.una.rbcmsa.peticion.model.Peticion;
 import py.com.fp.una.rbcmsa.peticion.model.PeticionBCM;
@@ -57,6 +54,9 @@ public class main {
     
     @Inject
     AlgoritmosAsignacionEspectro algoritmosAsignacionEspectro;
+    
+    @Inject
+    SPILP SPILP;
 
     public static void main(String[] args) throws CloneNotSupportedException {
         //caso 2 para SFMRA
@@ -196,5 +196,7 @@ public class main {
         algoritmosAsignacionEspectro.BFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
+        
+        SPILP.ILP();
     }
 }
