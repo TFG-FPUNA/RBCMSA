@@ -15,6 +15,7 @@ import java.util.List;
 public class Grafo {
     private List<Vertice> vertices;
     private HashMap<String, Arista> aristas;
+    private String RILP;
 
     public List<Vertice> getVertices() {
         return vertices;
@@ -32,10 +33,20 @@ public class Grafo {
         this.aristas = aristas;
     }
 
+    public String getRILP() {
+        return RILP;
+    }
+
+    public void setRILP(String RILP) {
+        this.RILP = RILP;
+    }
+
     @Override
     public String toString() {
-        return "Grafo{" + "vertices=" + vertices + ", aristas=" + aristas + '}';
+        return "Grafo{" + "vertices=" + vertices + ", aristas=" + aristas + ", RILP=" + RILP + '}';
     }
+
+    
 
     
     

@@ -23,6 +23,7 @@ import py.com.fp.una.rbcmsa.grafos.model.Camino;
 import py.com.fp.una.rbcmsa.grafos.model.Grafo;
 import py.com.fp.una.rbcmsa.grafos.model.Rutas;
 import py.com.fp.una.rbcmsa.ilp.SPILP;
+import py.com.fp.una.rbcmsa.ilp.propios.Adaptaciones;
 import py.com.fp.una.rbcmsa.peticion.model.CaminoTR;
 import py.com.fp.una.rbcmsa.peticion.model.Peticion;
 import py.com.fp.una.rbcmsa.peticion.model.PeticionBCM;
@@ -57,6 +58,9 @@ public class main {
     
     @Inject
     SPILP SPILP;
+    
+    @Inject
+    Adaptaciones adaptacionesBean;
 
     public static void main(String[] args) throws CloneNotSupportedException {
         //caso 2 para SFMRA
@@ -82,10 +86,13 @@ public class main {
 
         //String nombreArchivoTR = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\TR.txt";
         String sepadadorTR = " ";
-        String rutaArchvo = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\";
+        String rutaArchivo = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\";
+        String rutaArchivoILP = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\resultados\\";
 //        String nombreArchivo = "Peticiones.txt";
 //        String nombreArchivo = "Peticiones_caso2.txt";
         String nombreArchivo = "Peticiones_caso3.txt";
+        String nombreArchivoILPFaseI = "SP-ILP_11.dat";
+        String nombreArchivoILPFaseII = "SP-ILP_21.dat";
         String sepadadorPeticiones = " ";
         //String nombreArchivoMatriz = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Matriz.txt";
         //int limite = 5;
@@ -95,7 +102,8 @@ public class main {
         Weld weld = new Weld();
         try {
             WeldContainer container = weld.initialize();
-            container.select(main.class).get().procesar(matriz, sepadadorTR, sepadadorPeticiones, rutaArchvo, nombreArchivo);
+            container.select(main.class).get().procesar(matriz, sepadadorTR, sepadadorPeticiones, 
+                    rutaArchivo, nombreArchivo, rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -104,13 +112,16 @@ public class main {
 //        }
     }
 
-    public void procesar(int matriz[][], String separadorTR, String sepadadorPeticiones, String rutaArchivos, String nombrePerticiones)
+    public void procesar(int matriz[][], String separadorTR, String sepadadorPeticiones, 
+            String rutaArchivos, String nombrePerticiones, String rutaArchivoILP, 
+            String nombreArchivoILPFaseI, String nombreArchivoILPFaseII)
             throws CloneNotSupportedException, IOException {
         Properties p = archivoBean.cargarPropiedades();
         String nombreArchivoTR = (String) p.get(NOMBRE_ARCHIVO_TR);
         int limite = Integer.parseInt((String) p.get(LIMITE));
         double tamanhoFS = Double.parseDouble((String) p.get(TAMANHO_FS));
         int cantidadSP = Integer.parseInt((String) p.get(CANTIDAD_SP));
+        int guarBan = Integer.parseInt((String) p.get(GUARBAN));
 
         //String rutaArchivo = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\";
         //String nombreArchivo = "Peticiones1.txt";
@@ -193,10 +204,13 @@ public class main {
         //algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         
         //Llamada algoritmo 3 del paper base
-        algoritmosAsignacionEspectro.BFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
+    //    algoritmosAsignacionEspectro.BFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
         
-        SPILP.ILP();
+        SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
+        
+        
+        //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);
     }
 }

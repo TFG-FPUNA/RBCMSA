@@ -24,7 +24,7 @@ import py.com.fp.una.rbcmsa.tr.model.TR;
  */
 public class Archivo {
 
-    public void crearArchivo(String ruta, List<String> solicitudes) throws IOException {
+    public void crearArchivo(String ruta, List<String> lineas) throws IOException {
 
         File file = new File(ruta);
         // Si el archivo no existe es creado
@@ -35,8 +35,8 @@ public class Archivo {
         }
         FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
-        for (String solicitud : solicitudes) {
-            bw.write(solicitud+"\n");
+        for (String linea : lineas) {
+            bw.write(linea+"\n");
         }
          bw.close();
 

@@ -20,6 +20,7 @@ public class Constantes {
     public static final String LIMITE = "limite";
     public static final String TAMANHO_FS= "tamanhoFS";
     public static final String CANTIDAD_SP = "cantidadSP";
+    public static final String GUARBAN = "guarban";
     
     
 }
