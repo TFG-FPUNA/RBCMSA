@@ -148,8 +148,9 @@ public class Adaptaciones {
         for (PeticionBCM peticionFinal : peticionesFinales) {
             alpha = alpha + INICIO_LLAVE;
             
-            List<String> filaR = this.generarFilaRCerada(spliter.length);
+            
             for (CaminoTR caminoTR : peticionFinal.getCaminosTR()) {
+                List<String> filaR = this.generarFilaRCerada(spliter.length);
                 Integer tamanhoFs = caminoTR.getTrfinal().getTamanhoFS() - 1;
                 alpha = alpha + tamanhoFs + SEPARADOR;
                 
