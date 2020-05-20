@@ -73,8 +73,10 @@ public class SPILP {
             for (int x = 0; x < indiceCaminosElegidos.size(); x++) {
                 System.out.println(indiceCaminosElegidos.get(x));
             }
-            adaptacionesBean.preparaArchivoFaseIIILP(ruta, nombreFaseII, k, peticionesFinales, grafo, guardBan+"", fTotal, alphaR, indiceCaminosElegidos);
+            adaptacionesBean.preparaArchivoFaseIIILP(ruta, nombreFaseII, k, peticionesFinales, grafo, guardBan + "", fTotal, alphaR, indiceCaminosElegidos);
             cplexFaseII(1);
+            List<Integer> posicionesFS = obtenerFFaseII(1);
+            adaptacionesBean.asigarGrafoILP(indiceCaminosElegidos, posicionesFS, grafo, peticionesFinales, k);
         }
 
     }
@@ -808,15 +810,31 @@ public class SPILP {
     private void cplexFaseII(int y) throws FileNotFoundException, IOException {
         long time_start2, time_end2;
         /* Probamos la conexiÃ³n de Java con CPLEX */
-        String argumentos2[] = {"-v", "./src/SPILP_2/SP-ILP_2.mod", "./src/resultados/SP-ILP_2"+y+".dat", "./src/resultados/salidaCplexSP-ILP_2"+y+".txt"};
-        
+        String argumentos2[] = {"-v", "./src/SPILP_2/SP-ILP_2.mod", "./src/resultados/SP-ILP_2" + y + ".dat", "./src/resultados/salidaCplexSP-ILP_2" + y + ".txt"};
+
         time_start2 = System.currentTimeMillis();
         OplRunILP.main(argumentos2);
 
         time_end2 = System.currentTimeMillis();
-        
+
         System.out.println("La fase 2 de ILP 2 ha tomado " + (time_end2 - time_start2) + " milisegundos");
         //System.out.println("EL ILP 2 ha tomado " + (time_end1 - time_start1 + time_end2 - time_start2) + " milisegundos");
+    }
+
+    private List<Integer> obtenerFFaseII(int y) {
+        String f = leerArchivo("./src/resultados/salidaCplexSP-ILP_2" + y + ".txt");
+        f = f.substring(f.indexOf("f") + 5, f.indexOf("]"));
+        System.out.println("F: " + f);
+        String[] t2 = f.split(" ");
+        
+        List<Integer> posicionesFS = new ArrayList<>();
+        for (String t1 : t2) {
+            if (!t1.equals("")) {
+                posicionesFS.add(Integer.parseInt(t1));
+            }
+        }
+        
+        return posicionesFS;
     }
 
     private Integer cplexFaseI(int y, int k, int cantSolicitudes) throws IOException {
@@ -834,7 +852,6 @@ public class SPILP {
 
         System.out.println("La cota de la ILP 2 ha tomado " + (time_end1 - time_start1) + " milisegundos");
 
-   
 //        String f = leerArchivo("./src/resultados/salidaCplexSP-ILP_2"+y+".txt");
 //        f = f.substring(f.indexOf("f")+5, f.indexOf("]"));
 //        String [] t2 = f.split(" ");
