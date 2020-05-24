@@ -198,7 +198,7 @@ public class main {
 
         Grafo grafo = operacionesGrafos.cargaGrafo(matriz, cantidadSP);
         //Llamada algoritmo 1 del paper base
-        //algoritmosAsignacionEspectro.SFMRA(peticionesFinales, grafo);
+        algoritmosAsignacionEspectro.SFMRA(peticionesFinales, grafo);
         
         //Llamada algoritmo 2 del paper base
         //algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
@@ -208,7 +208,7 @@ public class main {
         
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
         
-        SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
+        //SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
         
         
         //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);

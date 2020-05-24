@@ -51,7 +51,7 @@ public class Adaptaciones {
             CaminoTR caminoTR = peticionFinal.getCaminosTR().get(indice);
             for (int j = 0; j < caminoTR.getCamino().getNodos().size() - 1; j++) {
                 String identificador = caminoTR.getCamino().getNodos().get(j) + SEPARADOR_IDENTIFICADOR + caminoTR.getCamino().getNodos().get(j + 1);
-                for (int l = 0; l < caminoTR.getTrfinal().getTamanhoFS()+1; l++) {
+                for (int l = 0; l < caminoTR.getTrfinal().getTamanhoFS(); l++) {
                     int auxPosicion = l + posicionesFS.get(indicaAuxPeticion);
                     grafo.getAristas().get(identificador).getSP()[auxPosicion] = true;
                     grafo.getAristas().get(identificador).setCantidadSP(grafo.getAristas().get(identificador).getCantidadSP() - 1);
