@@ -22,6 +22,7 @@ import py.com.fp.una.rbcmsa.grafos.business.BuscarCaminos;
 import py.com.fp.una.rbcmsa.grafos.model.Camino;
 import py.com.fp.una.rbcmsa.grafos.model.Grafo;
 import py.com.fp.una.rbcmsa.grafos.model.Rutas;
+import py.com.fp.una.rbcmsa.ilp.JPILP;
 import py.com.fp.una.rbcmsa.ilp.SPILP;
 import py.com.fp.una.rbcmsa.ilp.propios.Adaptaciones;
 import py.com.fp.una.rbcmsa.peticion.model.CaminoTR;
@@ -60,6 +61,9 @@ public class main {
     SPILP SPILP;
     
     @Inject
+    JPILP JPILP;
+    
+    @Inject
     Adaptaciones adaptacionesBean;
 
     public static void main(String[] args) throws CloneNotSupportedException {
@@ -93,6 +97,7 @@ public class main {
         String nombreArchivo = "Peticiones_caso3.txt";
         String nombreArchivoILPFaseI = "SP-ILP_11.dat";
         String nombreArchivoILPFaseII = "SP-ILP_21.dat";
+        String nombreArchivoJPIL = "JPILP.dat";
         String sepadadorPeticiones = " ";
         //String nombreArchivoMatriz = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Matriz.txt";
         //int limite = 5;
@@ -103,7 +108,7 @@ public class main {
         try {
             WeldContainer container = weld.initialize();
             container.select(main.class).get().procesar(matriz, sepadadorTR, sepadadorPeticiones, 
-                    rutaArchivo, nombreArchivo, rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII);
+                    rutaArchivo, nombreArchivo, rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, nombreArchivoJPIL);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,7 +119,7 @@ public class main {
 
     public void procesar(int matriz[][], String separadorTR, String sepadadorPeticiones, 
             String rutaArchivos, String nombrePerticiones, String rutaArchivoILP, 
-            String nombreArchivoILPFaseI, String nombreArchivoILPFaseII)
+            String nombreArchivoILPFaseI, String nombreArchivoILPFaseII, String nombreArchivoJPIL)
             throws CloneNotSupportedException, IOException {
         Properties p = archivoBean.cargarPropiedades();
         String nombreArchivoTR = (String) p.get(NOMBRE_ARCHIVO_TR);
@@ -198,7 +203,7 @@ public class main {
 
         Grafo grafo = operacionesGrafos.cargaGrafo(matriz, cantidadSP);
         //Llamada algoritmo 1 del paper base
-        algoritmosAsignacionEspectro.SFMRA(peticionesFinales, grafo);
+        //algoritmosAsignacionEspectro.SFMRA(peticionesFinales, grafo);
         
         //Llamada algoritmo 2 del paper base
         //algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
@@ -206,9 +211,13 @@ public class main {
         //Llamada algoritmo 3 del paper base
         //algoritmosAsignacionEspectro.BFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         
+        //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
+        
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
         
         //SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
+        
+        SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
         
         
         //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);

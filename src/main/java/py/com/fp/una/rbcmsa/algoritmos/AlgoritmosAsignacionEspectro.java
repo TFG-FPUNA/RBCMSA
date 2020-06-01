@@ -83,6 +83,32 @@ public class AlgoritmosAsignacionEspectro {
         }
 
     }
+    
+    public void BFMRA2(List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS) {
+        System.out.println("------------- BFMRA -------------");
+
+        for (PeticionBCM peticionFinal : peticionesFinales) {
+            System.out.println("");
+            System.out.println("------------- INICIAL -------------");
+            System.out.println("");
+            this.imprimirPeticion(peticionFinal);
+            //ver si queremos pisar o que onda 
+            peticionFinal.setCaminosTR(this.seleccionFS(peticionFinal.getCaminosTR(), peticionFinal.getFSMenor()));
+            for (CaminoTR caminoTr : peticionFinal.getCaminosTR()) {
+                int cantidadDisponibleFs = this.calcularFsDisponibles(caminoTr.getCamino(), cantidadFS, grafo);
+                //int BWCamino = this.calcularBW(cantidadDisponibleFs, OH_FEC[caminoTr.getTrfinal().getFEC()], tamanhoFS, caminoTr.getTrfinal().getFormatoModulacion());
+                caminoTr.getCamino().setCantidadFsDisponibles(cantidadDisponibleFs);
+                //caminoTr.getCamino().setAnchoBandaAsignable(BWCamino);
+            }
+            Collections.sort(peticionFinal.getCaminosTR(), (s1, s2) -> Integer.compare(s2.getCamino().getCantidadFsDisponibles(), s1.getCamino().getCantidadFsDisponibles()));
+            System.out.println("");
+            System.out.println("------------- ORDEN -------------");
+            System.out.println("");
+            this.imprimirPeticion(peticionFinal);
+            this.asignarFS(peticionFinal, grafo);
+        }
+
+    }
 
     private List<CaminoTR> seleccionFS(List<CaminoTR> caminosTrs, Integer FSMenor) {
         List<CaminoTR> aux = new ArrayList<>();

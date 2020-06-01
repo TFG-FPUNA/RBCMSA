@@ -62,7 +62,22 @@ public class Adaptaciones {
             indicaAuxPeticion++;
         }
     }
+    
+    public AlphaR preparaArchivoJPILP(String ruta, String nombre, String k, List<PeticionBCM> peticionesFinales,
+            Grafo grafo, String GuardBan, int ftotal) throws IOException {
+        List<String> archivoPrimeraFaseILP = new ArrayList<>();
+        archivoPrimeraFaseILP.add(K + k + FIN_LINEA);
+        archivoPrimeraFaseILP.add(SD + peticionesFinales.size() + FIN_LINEA);
+        archivoPrimeraFaseILP.add(FTOTAL + ftotal + FIN_LINEA);
+        archivoPrimeraFaseILP.add(G + GuardBan + FIN_LINEA);
+        AlphaR alphaR = this.generarAlphaGenerarR(peticionesFinales, grafo);
+        archivoPrimeraFaseILP.add(alphaR.getAlphaR().replace(RR, LL));
+        archivoBean.crearArchivo(ruta + nombre, archivoPrimeraFaseILP, true);
 
+        return alphaR;
+
+    }
+    
     public AlphaR preparaArchivoFaseIILP(String ruta, String nombre, String k, List<PeticionBCM> peticionesFinales,
             Grafo grafo, String GuardBan) throws IOException {
         List<String> archivoPrimeraFaseILP = new ArrayList<>();
@@ -72,7 +87,7 @@ public class Adaptaciones {
         archivoPrimeraFaseILP.add(G + GuardBan + FIN_LINEA);
         AlphaR alphaR = this.generarAlphaGenerarR(peticionesFinales, grafo);
         archivoPrimeraFaseILP.add(alphaR.getAlphaR());
-        archivoBean.crearArchivo(ruta + nombre, archivoPrimeraFaseILP);
+        archivoBean.crearArchivo(ruta + nombre, archivoPrimeraFaseILP, true);
 
         return alphaR;
 
@@ -87,7 +102,7 @@ public class Adaptaciones {
         archivoPrimeraFaseILP.add(G + GuardBan + FIN_LINEA);
         archivoPrimeraFaseILP.add(this.generarAlpha2(posicionesCaminos, peticionesFinales, k) + FIN_LINEA);
         archivoPrimeraFaseILP.add(this.generarL(alphaR, posicionesCaminos, peticionesFinales.size()));
-        archivoBean.crearArchivo(ruta + nombre, archivoPrimeraFaseILP);
+        archivoBean.crearArchivo(ruta + nombre, archivoPrimeraFaseILP, true);
 
     }
 

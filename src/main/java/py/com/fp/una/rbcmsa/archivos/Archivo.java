@@ -24,15 +24,16 @@ import py.com.fp.una.rbcmsa.tr.model.TR;
  */
 public class Archivo {
 
-    public void crearArchivo(String ruta, List<String> lineas) throws IOException {
+    public void crearArchivo(String ruta, List<String> lineas, boolean flagEliminar) throws IOException {
 
         File file = new File(ruta);
+        file.delete();
         // Si el archivo no existe es creado
-        if (!file.exists()) {
+        //if (!file.exists()) {
             file.createNewFile();
-        }else{
-            return;
-        }
+//        }else{
+//            return;
+//        }
         FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
         for (String linea : lineas) {

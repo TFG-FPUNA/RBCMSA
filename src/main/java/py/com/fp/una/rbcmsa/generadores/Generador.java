@@ -21,7 +21,7 @@ public class Generador {
     
     public void GenerarArchivo(int cantidadSolicitudes, int numNodos, int landaMin, int landaMax, String rutaArchivo, String nombrearchivo) throws IOException{
         List<String> solicitudes = this.generarSolicitudes(cantidadSolicitudes, numNodos, landaMin, landaMax);
-        archivoBean.crearArchivo(rutaArchivo+nombrearchivo, solicitudes);
+        archivoBean.crearArchivo(rutaArchivo+nombrearchivo, solicitudes, false);
     }
     
     private List<String> generarSolicitudes(int cantSolicitudes, int numNodos, int landaMin, int landaMax){
