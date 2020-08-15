@@ -35,19 +35,19 @@ public class SPILP {
     public static Double alphax = 1.0;
     public static String topologia = "6nodos";//"dfn_bwin";
 
-    public void JPILP(String ruta, String nombre, Integer k, List<PeticionBCM> peticionesFinales,
-            Grafo grafo, String guardBan, int fTotal) throws IOException {
-        
-        adaptacionesBean.preparaArchivoJPILP(ruta, nombre, k+"", peticionesFinales, grafo, guardBan, fTotal);
-        /* Probamos la conexión de Java con CPLEX */
-        String argumentos[] = {"-v", "./src/JPILP/JP-ILP.mod", "./src/resultados/JPILP.dat", "./src/resultados/salidaCplexILP1.txt"};
-        
-
-        OplRunILP.main(argumentos);    
-        ArrayList<Integer> indiceCaminosElegidos = leerSalidaCplex(k, 1);
-        List<Integer> posicionesFS = obtenerFFaseII(1);
-        adaptacionesBean.asigarGrafoILP(indiceCaminosElegidos, posicionesFS, grafo, peticionesFinales, k);
-    }
+//    public void JPILP(String ruta, String nombre, Integer k, List<PeticionBCM> peticionesFinales,
+//            Grafo grafo, String guardBan, int fTotal) throws IOException {
+//        
+//        adaptacionesBean.preparaArchivoJPILP(ruta, nombre, k+"", peticionesFinales, grafo, guardBan, fTotal);
+//        /* Probamos la conexión de Java con CPLEX */
+//        String argumentos[] = {"-v", "./src/JPILP/JP-ILP.mod", "./src/resultados/JPILP.dat", "./src/resultados/salidaCplexILP1.txt"};
+//        
+//
+//        OplRunILP.main(argumentos);    
+//        ArrayList<Integer> indiceCaminosElegidos = leerSalidaCplex(k, 1);
+//        List<Integer> posicionesFS = obtenerFFaseII(1);
+//        adaptacionesBean.asigarGrafoILP(indiceCaminosElegidos, posicionesFS, grafo, peticionesFinales, k);
+//    }
     
     public void ILP(String ruta, String nombreFaseI, String nombreFaseII, Integer k, List<PeticionBCM> peticionesFinales,
             Grafo grafo, String guardBan, int fTotal) throws IOException {

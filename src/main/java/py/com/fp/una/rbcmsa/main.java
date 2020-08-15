@@ -14,6 +14,8 @@ import java.util.Properties;
 import javax.inject.Inject;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
+import py.com.fp.una.rbcmsa.ag.ysa.AG;
+import py.com.fp.una.rbcmsa.ag.ysa.adaptaciones.AdaptacionesAG;
 import py.com.fp.una.rbcmsa.algoritmos.AlgoritmosAsignacionEspectro;
 import py.com.fp.una.rbcmsa.archivos.Archivo;
 import py.com.fp.una.rbcmsa.generadores.Generador;
@@ -65,6 +67,12 @@ public class main {
     
     @Inject
     Adaptaciones adaptacionesBean;
+    
+    @Inject
+    AdaptacionesAG adaptacionesAG;
+    
+    @Inject
+    AG AG;
 
     public static void main(String[] args) throws CloneNotSupportedException {
         //caso 2 para SFMRA
@@ -92,12 +100,14 @@ public class main {
         String sepadadorTR = " ";
         String rutaArchivo = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\";
         String rutaArchivoILP = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\resultados\\";
+        String rutaArchivoAG = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\ag\\";
 //        String nombreArchivo = "Peticiones.txt";
 //        String nombreArchivo = "Peticiones_caso2.txt";
         String nombreArchivo = "Peticiones_caso3.txt";
         String nombreArchivoILPFaseI = "SP-ILP_11.dat";
         String nombreArchivoILPFaseII = "SP-ILP_21.dat";
         String nombreArchivoJPIL = "JPILP.dat";
+        String nombreArchivoAG = "ga.txt";
         String sepadadorPeticiones = " ";
         //String nombreArchivoMatriz = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Matriz.txt";
         //int limite = 5;
@@ -108,7 +118,8 @@ public class main {
         try {
             WeldContainer container = weld.initialize();
             container.select(main.class).get().procesar(matriz, sepadadorTR, sepadadorPeticiones, 
-                    rutaArchivo, nombreArchivo, rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, nombreArchivoJPIL);
+                    rutaArchivo, nombreArchivo, rutaArchivoILP, nombreArchivoILPFaseI, 
+                    nombreArchivoILPFaseII, nombreArchivoJPIL, rutaArchivoAG, nombreArchivoAG);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,7 +130,8 @@ public class main {
 
     public void procesar(int matriz[][], String separadorTR, String sepadadorPeticiones, 
             String rutaArchivos, String nombrePerticiones, String rutaArchivoILP, 
-            String nombreArchivoILPFaseI, String nombreArchivoILPFaseII, String nombreArchivoJPIL)
+            String nombreArchivoILPFaseI, String nombreArchivoILPFaseII, String nombreArchivoJPIL,
+            String rutaArchivoAG, String nombreArchivoAG)
             throws CloneNotSupportedException, IOException {
         Properties p = archivoBean.cargarPropiedades();
         String nombreArchivoTR = (String) p.get(NOMBRE_ARCHIVO_TR);
@@ -170,6 +182,7 @@ public class main {
             //List<TRBCM> trFinales = new ArrayList<>();
             List<CaminoTR> caminosTrFinales = new ArrayList<>();
             Integer FSMenor = Integer.MAX_VALUE;
+             Integer FSMayor = Integer.MIN_VALUE;
             for (Camino camino : ruta.getCaminos()) {
                 CaminoTR caminoTrFinal = new CaminoTR();
                 TRBCM trFinal = buscarTRBean.buscarTR(camino.getDistancia(), TRS, peticion, tamanhoFS);
@@ -177,6 +190,9 @@ public class main {
                 caminoTrFinal.setTrfinal(trFinal);
                 if (FSMenor > trFinal.getTamanhoFS()) {
                     FSMenor = trFinal.getTamanhoFS();
+                }
+                if (FSMayor < trFinal.getTamanhoFS()) {
+                    FSMayor = trFinal.getTamanhoFS();
                 }
                 //trFinales.add(trFinal);
                 caminosTrFinales.add(caminoTrFinal);
@@ -186,6 +202,7 @@ public class main {
             //peticionFinal.setTrfinal(trFinales);
             peticionFinal.setPeticionOriginal(peticion);
             peticionFinal.setFSMenor(FSMenor);
+            peticionFinal.setFSMayor(FSMayor);
             peticionFinal.setCaminosTR(caminosTrFinales);
             peticionesFinales.add(peticionFinal);
             
@@ -211,15 +228,19 @@ public class main {
         //Llamada algoritmo 3 del paper base
         //algoritmosAsignacionEspectro.BFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         
-        //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
+        //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
         
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
         
         //SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
         
-        SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
+        //SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
         
         
         //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);
+        //adaptacionesAG.generarEntradaAG(peticionesFinales, 0, rutaArchivoAG, nombreArchivoAG);
+        
+        AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
+        
     }
 }

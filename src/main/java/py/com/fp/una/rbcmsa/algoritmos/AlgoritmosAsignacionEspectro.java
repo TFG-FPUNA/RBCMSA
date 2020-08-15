@@ -13,6 +13,7 @@ import py.com.fp.una.rbcmsa.grafos.model.AuxArista;
 import py.com.fp.una.rbcmsa.grafos.model.Camino;
 import py.com.fp.una.rbcmsa.grafos.model.Grafo;
 import py.com.fp.una.rbcmsa.peticion.model.CaminoTR;
+import py.com.fp.una.rbcmsa.peticion.model.Peticion;
 import py.com.fp.una.rbcmsa.peticion.model.PeticionBCM;
 import static py.com.fp.una.rbcmsa.tr.model.Constantes.OH_FEC;
 import py.com.fp.una.rbcmsa.tr.model.TRBCM;
@@ -53,7 +54,7 @@ public class AlgoritmosAsignacionEspectro {
             System.out.println("------------- ORDEN -------------");
             System.out.println("");
             this.imprimirPeticion(peticionFinal);
-            this.asignarFS(peticionFinal, grafo);
+            this.asignarFS(peticionFinal, grafo, true);
         }
 
     }
@@ -79,12 +80,12 @@ public class AlgoritmosAsignacionEspectro {
             System.out.println("------------- ORDEN -------------");
             System.out.println("");
             this.imprimirPeticion(peticionFinal);
-            this.asignarFS(peticionFinal, grafo);
+            this.asignarFS(peticionFinal, grafo, true);
         }
 
     }
-    
-    public void BFMRA2(List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS) {
+
+    public void BFMRA2(List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS, int k) throws CloneNotSupportedException {
         System.out.println("------------- BFMRA -------------");
 
         for (PeticionBCM peticionFinal : peticionesFinales) {
@@ -93,7 +94,7 @@ public class AlgoritmosAsignacionEspectro {
             System.out.println("");
             this.imprimirPeticion(peticionFinal);
             //ver si queremos pisar o que onda 
-            peticionFinal.setCaminosTR(this.seleccionFS(peticionFinal.getCaminosTR(), peticionFinal.getFSMenor()));
+            peticionFinal.setCaminosTR(this.seleccionFSAmpliado(peticionFinal.getCaminosTR(), peticionFinal.getFSMayor(), k));
             for (CaminoTR caminoTr : peticionFinal.getCaminosTR()) {
                 int cantidadDisponibleFs = this.calcularFsDisponibles(caminoTr.getCamino(), cantidadFS, grafo);
                 //int BWCamino = this.calcularBW(cantidadDisponibleFs, OH_FEC[caminoTr.getTrfinal().getFEC()], tamanhoFS, caminoTr.getTrfinal().getFormatoModulacion());
@@ -105,9 +106,53 @@ public class AlgoritmosAsignacionEspectro {
             System.out.println("------------- ORDEN -------------");
             System.out.println("");
             this.imprimirPeticion(peticionFinal);
-            this.asignarFS(peticionFinal, grafo);
+
+            List<Integer> posicionesFinales = new ArrayList<>();
+            int finalLista = peticionFinal.getCaminosTR().size();
+            for (int i = 0; i < finalLista; i++) {
+                PeticionBCM peticionAux = peticionFinal.clone();
+                CaminoTR caminoSeleccionado = peticionFinal.getCaminosTR().get(i);
+                peticionAux.getCaminosTR().clear();
+                peticionAux.getCaminosTR().add(caminoSeleccionado);
+                int posicionInicial = this.asignarFS(peticionAux, grafo, false);
+                if (posicionInicial != -1) {
+                    posicionesFinales.add(posicionInicial + peticionAux.getCaminosTR().get(0).getTrfinal().getTamanhoFS());
+                }
+            }
+            int posicionAsignar = this.buscarPosicionMenor(posicionesFinales);
+            System.out.println("Posiciones: ");
+            for (Integer posicionesFinale : posicionesFinales) {
+                System.out.println(posicionesFinale);
+            }
+            CaminoTR caminoSeleccionado = peticionFinal.getCaminosTR().get(posicionAsignar);
+            PeticionBCM peticionAux = peticionFinal.clone();
+            peticionAux.getCaminosTR().clear();
+            peticionAux.getCaminosTR().add(caminoSeleccionado);
+            System.out.println("Peticion a asignar: \n" +  peticionAux);
+            this.asignarFS(peticionAux, grafo, true);
+//            Collections.sort(posicionesIniciales, (s1, s2) -> Integer.compare(s2, s1));
+//            if (!posicionesIniciales.isEmpty()) {
+//                for (Integer posicionInicial : posicionesIniciales) {
+//                    System.out.println("Posicion inicial: " + posicionInicial);
+//                }
+//                
+//            }
+
         }
 
+    }
+
+    private int buscarPosicionMenor(List<Integer> posicionesFinales) {
+        int menor = Integer.MAX_VALUE;
+        int posicion = -1; 
+        
+        for (int i = 0; i < posicionesFinales.size(); i++) {
+            if (posicionesFinales.get(i) < menor) {
+                menor = posicionesFinales.get(i);
+                posicion = i;
+            }
+        }
+        return posicion;
     }
 
     private List<CaminoTR> seleccionFS(List<CaminoTR> caminosTrs, Integer FSMenor) {
@@ -118,7 +163,21 @@ public class AlgoritmosAsignacionEspectro {
             }
         }
         return aux;
+    }private List<CaminoTR> seleccionFSAmpliado(List<CaminoTR> caminosTrs, Integer FSMayor, int k) {
+        List<CaminoTR> aux = new ArrayList<>();
+        int cont = 0;
+        Collections.sort(caminosTrs, (s1, s2) -> Integer.compare(s1.getTrfinal().getTamanhoFS(), s2.getTrfinal().getTamanhoFS()));
+         
+        for (CaminoTR caminoTr : caminosTrs) {
+            if (caminoTr.getTrfinal().getTamanhoFS() <= FSMayor) {
+                aux.add(caminoTr);
+                cont ++;
+            }
+            if (cont == k) break;
+        }
+        return aux;
     }
+    
 
     private void imprimirPeticion(PeticionBCM peticionesFinal) {
         System.out.println("Peticion Final: ");
@@ -190,11 +249,11 @@ public class AlgoritmosAsignacionEspectro {
 
     private void asignarFsPeticionesListas(List<PeticionBCM> peticionesFinales, Grafo grafo) {
         for (PeticionBCM peticionFinal : peticionesFinales) {
-            this.asignarFS(peticionFinal, grafo);
+            this.asignarFS(peticionFinal, grafo, true);
         }
     }
 
-    private void asignarFS(PeticionBCM peticionFinal, Grafo grafo) {
+    private int asignarFS(PeticionBCM peticionFinal, Grafo grafo, boolean asignar) {
         int rechazados = 0;
         int aceptados = 0;
         for (CaminoTR caminoTR : peticionFinal.getCaminosTR()) {
@@ -235,14 +294,20 @@ public class AlgoritmosAsignacionEspectro {
                         }
                         if (confirmado) {
                             //marcar fs
-                            for (Arista aristasSeleccionada : aristasSeleccionadas) {
-                                for (int j = posicionInicial; j < posicionInicial + tamanhoRequeridoFS; j++) {
-                                    grafo.getAristas().get(aristasSeleccionada.getIdentificador()).getSP()[j] = true;
-                                    grafo.getAristas().get(aristasSeleccionada.getIdentificador()).setCantidadSP(grafo.getAristas().get(aristasSeleccionada.getIdentificador()).getCantidadSP() - 1);
-                                    System.out.println("Arista:" + aristasSeleccionada.getIdentificador() + "posicion fs usado: " + j);
+                            if (asignar) {
+
+                                for (Arista aristasSeleccionada : aristasSeleccionadas) {
+                                    for (int j = posicionInicial; j < posicionInicial + tamanhoRequeridoFS; j++) {
+                                        grafo.getAristas().get(aristasSeleccionada.getIdentificador()).getSP()[j] = true;
+                                        grafo.getAristas().get(aristasSeleccionada.getIdentificador()).setCantidadSP(grafo.getAristas().get(aristasSeleccionada.getIdentificador()).getCantidadSP() - 1);
+                                        System.out.println("Arista:" + aristasSeleccionada.getIdentificador() + "posicion fs usado: " + j);
+                                    }
                                 }
+                                aceptados++;
+                            } else {
+                                return posicionInicial;
                             }
-                            aceptados++;
+
                         } else {
                             posicionInicial = -1;
                             contador = 0;
@@ -268,6 +333,7 @@ public class AlgoritmosAsignacionEspectro {
             }
 
         }
+        return -1;
     }
 
     private boolean verificarAristas(Integer nodoInicial, Integer nodoSiguiente, int tamanhoRequeridoFS, Grafo grafo,
