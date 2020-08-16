@@ -21,6 +21,25 @@ public class Constantes {
     public static final String TAMANHO_FS= "tamanhoFS";
     public static final String CANTIDAD_SP = "cantidadSP";
     public static final String GUARBAN = "guarban";
+    /*AG YSA*/
+    public static final String RUTA_AG = "ag\\";
+    public static final String MOGA_1 = "moga1";
+    public static final String MOGA_2 = "moga2";
+    public static final String FIN_DE_RUTA = "\\";
+    public static final String ARCHIVO_GA = "ga.txt";
+    public static final String K = "k";
+    public static final String SOLUCION_NUMERO = "\nSolucion numero: ";
+    public static final String CANTIDAD_BLOQUEOS = "\nCantidad de bloqueados: ";
+    public static final String COSTO = "\nCosto: ";
+    public static final String DISTANCIA = "\nDistancia: ";
+    public static final String ESPECTRO_MAYOR = "\nEspectro Mayor: ";
+    public static final String FITNESS = "\nFitness: ";
+    public static final String ENLACES = "\nEnlaces: ";
+    public static final String SALTO_LINEA = "\n";
+    public static final String RUTEOS = "\nRuteos: ";
+    public static final String FIN_ARCHIVO = "\n\n";
+    public static final String EJECUCION = "\nTiempo total de ejecucion: ";
+    public static final String UNIDAD_TIEMPO = " minutos.";
     
     
 }

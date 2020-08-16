@@ -23,6 +23,20 @@ import py.com.fp.una.rbcmsa.tr.model.TR;
  * @author Richard
  */
 public class Archivo {
+    
+    public void crearDirectorio(String ruta){
+        File directorio = new File(ruta);
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
+    }
+    
+    public void eliminarDirectorio(String ruta){
+        File directorio = new File(ruta);
+        if (directorio.exists()) {
+            directorio.delete();
+        }
+    }
 
     public void crearArchivo(String ruta, List<String> lineas, boolean flagEliminar) throws IOException {
 

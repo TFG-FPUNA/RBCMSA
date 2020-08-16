@@ -100,7 +100,7 @@ public class main {
         String sepadadorTR = " ";
         String rutaArchivo = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\";
         String rutaArchivoILP = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\resultados\\";
-        String rutaArchivoAG = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\ag\\";
+        String rutaArchivoAG = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\";
 //        String nombreArchivo = "Peticiones.txt";
 //        String nombreArchivo = "Peticiones_caso2.txt";
         String nombreArchivo = "Peticiones_caso3.txt";

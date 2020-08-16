@@ -5,7 +5,9 @@ import java.util.*;
 import static java.lang.Math.floor;
 import javax.inject.Inject;
 import py.com.fp.una.rbcmsa.ag.ysa.adaptaciones.AdaptacionesAG;
+import py.com.fp.una.rbcmsa.archivos.Archivo;
 import py.com.fp.una.rbcmsa.peticion.model.PeticionBCM;
+import static py.com.fp.una.rbcmsa.tr.model.Constantes.*;
 
 /**
  * Created by ysapy on 23/02/16.
@@ -15,21 +17,23 @@ public class AG {
     private static Long costoMayor;
     private static Long saltoMayor;
     private static Long espectroMayor;
-    private static int nivelDeModulacion = 1;
-    private static List<String> algoritmos = new ArrayList<>();
-    private static String topologia = "nsf";
-    private static String tipoDeCarga = "cargaAleatoria";
-    
+    private static final int nivelDeModulacion = 1;
+    //private static final List<String> ALGORITMOS = new ArrayList<>();
+    private static final String TOPOLOGIA = "nsf";
+
     @Inject
     AdaptacionesAG adaptacionesAG;
 
-    //public static void main(String [] args) throws IOException {
-    public void AG(List<PeticionBCM> peticionesFinales, String ruta, String nombre, int limite) throws FileNotFoundException, IOException{
-        algoritmos.add("moga2");
+    @Inject
+    Archivo archivoBean;
+
+    public void AG(List<PeticionBCM> peticionesFinales, String ruta, String nombre, int limite) throws FileNotFoundException, IOException {
+        List<String> algoritmos = new ArrayList<>();
+        algoritmos.add(MOGA_2);
 //        algoritmos.add("ilp");
         for (String algoritmo : algoritmos) {
-            String pathGeneral = ruta  + topologia + "\\";
-            String pathInicial = pathGeneral + tipoDeCarga + "\\";
+            String pathGeneral = ruta + RUTA_AG + TOPOLOGIA + FIN_DE_RUTA;
+            String pathInicial = pathGeneral;
             List<List<Solucion>> todosLosConjuntos = new ArrayList<>();
             List<List<Boolean>> topologia = AGHelper.leerTopologia(pathGeneral);
             int cantLlamadasGA = AGHelper.leerParametro(pathGeneral, "cantidad de corridas independientes");
@@ -37,72 +41,64 @@ public class AG {
             int totalRanuras = AGHelper.leerParametro(pathGeneral, "cantidad de longitudes de onda por fibra");
             int criterioDeParada = AGHelper.leerParametro(pathGeneral, "criterio de parada");
             double probabMutacion = AGHelper.leerProbabMutacion(pathGeneral, "probabilidad de mutacion");
-        /*
+            /*
         *  1. MOGA spectrum allocation random
         *  2. MOGA spectrum allocation first fit
-        */
-
-            List<Integer> cantDemandas = new ArrayList<>();
-            cantDemandas.add(50);
-//            cantDemandas.add(100);
-//            cantDemandas.add(150);
-//            cantDemandas.add(200);
+             */
             int k = limite;
-            int cantCantidadDeDemandas = 1;
             List<DemandaInfo> demandaInfoList = new ArrayList<>();
             String archivoDeMaximos;
             String pathActual;
             long TInicio, TFin; //Variables para determinar el tiempo de ejecución
 
             for (int a = 0; a < k; a++) {
-                for (int d = 0; d < cantCantidadDeDemandas; d++) {
-                    pathActual = pathInicial + "k" + (a + 1) + "\\cantSolicitada" + cantDemandas.get(d) + "\\";
-                    
-                    
-                    //cargarGA(pathGeneral, a + 1, pathActual);// reemplazar por una clase nuestra que prepare su arvhivo ga.txt
-                    adaptacionesAG.generarEntradaAG(peticionesFinales, k, pathActual, nombre);
-                    
-                    
-                    demandaInfoList.addAll(llenarDemandInfo(pathActual + "ga.txt"));
-                    saltoMayor = getSaltoMayorDeLaRed(demandaInfoList, a + 1);
-                    costoMayor = (getCostoMayorDeLaRed(demandaInfoList) + 1) * saltoMayor; // el 1 es agregado para banda guarda
-                    espectroMayor = Long.valueOf(totalRanuras);
+                pathActual = pathInicial + K + (a + 1) + FIN_DE_RUTA;
+//                if (true) {
+//                    archivoBean.eliminarDirectorio(pathActual);
+//                }
+                archivoBean.crearDirectorio(pathActual);
+                adaptacionesAG.generarEntradaAG(peticionesFinales, k, pathActual, nombre);
 
-                    if ("ilp".equals(algoritmo)) {
-                        archivoDeMaximos = pathActual + "maximos.txt";
-                        guardarMaximos(archivoDeMaximos);
-                        demandaInfoList = new ArrayList<>();
-                    } else {
-                        String sFichero = pathActual + algoritmo +"_corridaNro_1.txt";
-                        File fichero = new File(sFichero);
+                demandaInfoList.addAll(llenarDemandInfo(pathActual + ARCHIVO_GA));
+                saltoMayor = getSaltoMayorDeLaRed(demandaInfoList, a + 1);
+                costoMayor = (getCostoMayorDeLaRed(demandaInfoList) + 1) * saltoMayor; // el 1 es agregado para banda guarda
+                espectroMayor = Long.valueOf(totalRanuras);
 
-                        if (!fichero.exists()) {
-                            for (int i = 0; i < cantLlamadasGA; i++) {
+                if ("ilp".equals(algoritmo)) {
+                    archivoDeMaximos = pathActual + "maximos.txt";
+                    guardarMaximos(archivoDeMaximos);
+                    demandaInfoList = new ArrayList<>();
+                } else {
+                    String sFichero = pathActual + algoritmo + "_corridaNro_1.txt";
+                    File fichero = new File(sFichero);
 
-                                TInicio = System.currentTimeMillis();
-                                todosLosConjuntos.add(ga(topologia, cantSolucionesIniciales, totalRanuras, criterioDeParada, probabMutacion, demandaInfoList, (a + 1), algoritmo));
-                                TFin = System.currentTimeMillis();
+                    if (!fichero.exists()) {
+                        for (int i = 0; i < cantLlamadasGA; i++) {
 
-                                // guardar tambien las rutas y ranuras elegidas
-                                guardarEnArchivo(pathActual, algoritmo, todosLosConjuntos.get(i), i, (((TFin - TInicio) / 1000) / 60));
+                            TInicio = System.currentTimeMillis();
+                            todosLosConjuntos.add(ga(topologia, cantSolucionesIniciales, totalRanuras, criterioDeParada, probabMutacion, demandaInfoList, (a + 1), algoritmo));
+                            TFin = System.currentTimeMillis();
 
-                                long minRunningMemory = (1024 * 1024);
+                            // guardar tambien las rutas y ranuras elegidas
+                            guardarEnArchivo(pathActual, algoritmo, todosLosConjuntos.get(i), i, (((TFin - TInicio) / 1000) / 60));
 
-                                Runtime runtime = Runtime.getRuntime();
+                            long minRunningMemory = (1024 * 1024);
 
-                                if (runtime.freeMemory() < minRunningMemory)
-                                    System.gc();
+                            Runtime runtime = Runtime.getRuntime();
+
+                            if (runtime.freeMemory() < minRunningMemory) {
+                                System.gc();
                             }
                         }
-                        demandaInfoList = new ArrayList<>();
-                        todosLosConjuntos = new ArrayList<>();
                     }
+                    demandaInfoList = new ArrayList<>();
+                    todosLosConjuntos = new ArrayList<>();
                 }
             }
         }
     }
 
-    public static List<Solucion> generarPoblacionInicial (List<List<Boolean>> topologia, Integer cantSolucionesIniciales, Integer totalRanuras, List<DemandaInfo> demandaInfoList, String algoritmo) throws FileNotFoundException {
+    public static List<Solucion> generarPoblacionInicial(List<List<Boolean>> topologia, Integer cantSolucionesIniciales, Integer totalRanuras, List<DemandaInfo> demandaInfoList, String algoritmo) throws FileNotFoundException {
 
         List<Solucion> poblacionInicial = new ArrayList<>();
 
@@ -116,7 +112,7 @@ public class AG {
         return poblacionInicial;
     }
 
-    public static List<DemandaInfo> definirOrdenDemandas (List<DemandaInfo> demandasInfo) {
+    public static List<DemandaInfo> definirOrdenDemandas(List<DemandaInfo> demandasInfo) {
         int i, r;
 
         List<DemandaInfo> mayores = new ArrayList<DemandaInfo>();
@@ -131,14 +127,14 @@ public class AG {
         infoCopy.addAll(aux);
 
         // copio el 30% de los mayores a mayores
-        for (i = 0; i < floor(aux.size() * 0.3); i++){
+        for (i = 0; i < floor(aux.size() * 0.3); i++) {
             mayores.add(aux.get(i));
             infoCopy.remove(aux.get(i));
         }
 
         // copio el 70% restante en orden aleatorio
-        for (i = 0; i < aux.size() - floor(aux.size() * 0.3); i++){
-            r = (int)(Math.random()*infoCopy.size());
+        for (i = 0; i < aux.size() - floor(aux.size() * 0.3); i++) {
+            r = (int) (Math.random() * infoCopy.size());
             mayores.add(infoCopy.get(r));
             infoCopy.remove(r);
         }
@@ -147,7 +143,7 @@ public class AG {
     }
 
     public static Solucion generarSolucion(int cantRanuras, List<List<Boolean>> topologia, List<DemandaInfo> mayores, List<DemandaInfo> demandasInfo, String algoritmo) {
-        List<Enlace> enlacesIniciales = generarListaInicialRanuras (cantRanuras, topologia);
+        List<Enlace> enlacesIniciales = generarListaInicialRanuras(cantRanuras, topologia);
         Solucion solucion = new Solucion(enlacesIniciales); // inicializar con una lista de enlaces en la cual todas sus ranuras estan libres
         int j;
         boolean bloqueado;
@@ -161,68 +157,30 @@ public class AG {
             DemandaInfo demanda = mayores.get(m);
             bloqueado = true;
 
-            for (j = 0; j < demandasInfo.size(); j++){
-                if (demandasInfo.get(j).getOrigen() == demanda.getOrigen() &&
-                demandasInfo.get(j).getDestino() == demanda.getDestino()){
-                    if (asignarRanuras(solucion, j, demandasInfo, algoritmo)){
+            for (j = 0; j < demandasInfo.size(); j++) {
+                if (demandasInfo.get(j).getOrigen() == demanda.getOrigen()
+                        && demandasInfo.get(j).getDestino() == demanda.getDestino()) {
+                    if (asignarRanuras(solucion, j, demandasInfo, algoritmo)) {
                         j = demandasInfo.size();
                         bloqueado = false;
-//                    } else {
-//                        demanda.set
                     }
                 }
             }
 
-            if (bloqueado){
+            if (bloqueado) {
                 agregarBloqueado(solucion, demanda);
                 solucion.setCantBloq(solucion.getCantBloq() + 1);
             }
         }
-
-        // elegir rutas aleatoriamente
-//        for (DemandaInfo demanda : mayores) {
-//            bloqueado = true;
-//
-//            for (j = 0; j < demandasInfo.size(); j++){
-//                if (demandasInfo.get(j).getOrigen() == demanda.getOrigen()
-//                        && demandasInfo.get(j).getDestino() == demanda.getDestino()){
-//                    int o = j - 1;
-//                    for (int r = 0; r < k; r++) {
-//                        o++;
-//                        rutasDisponibles.add(o);
-//                    }
-//                    while (!rutasDisponibles.isEmpty() && bloqueado) {
-//                        int rutaElegida = rnd.nextInt(rutasDisponibles.size() - 1) + 0;
-//                        rutasDisponibles.remove(rutaElegida);
-//                        if (asignarRanuras(solucion, rutaElegida, demandasInfo)) {
-//                            bloqueado = false;
-//                        }
-//                    }
-//                    j = demandasInfo.size();
-//                }
-//            }
-//
-//            if (bloqueado){
-//                agregarBloqueado(solucion, demanda);
-//                solucion.setCantBloq(solucion.getCantBloq() + 1);
-//            }
-//        }
-
-
-
-
-//        solucion.setSaltos(getSaltoMayor(solucion, demandasInfo)/saltoMayor);
         solucion.setSaltos(getSaltoMayor(solucion, demandasInfo));
-//        solucion.setEspectro(getEspectroMayor(solucion)/espectroMayor);
         solucion.setEspectro(getEspectroMayor(solucion));
-//        solucion.setCosto(getCostoMayor(solucion, demandasInfo)/costoMayor);
         solucion.setCosto(getCostoDeLaSolucion(solucion, demandasInfo));
-        solucion.setFitness(/*solucion.getCosto()/costoMayor + solucion.getSaltos()/saltoMayor +*/ solucion.getEspectro()/*/espectroMayor*/);
+        solucion.setFitness(solucion.getEspectro());
         return solucion;
 
     }
 
-    public static List<DemandaInfo> llenarDemandInfo (String archivo) throws FileNotFoundException {
+    public static List<DemandaInfo> llenarDemandInfo(String archivo) throws FileNotFoundException {
 
         List<DemandaInfo> demandasInfo = new ArrayList<DemandaInfo>();
         demandasInfo.addAll(AGHelper.leerDemandasInfo(archivo));
@@ -231,14 +189,14 @@ public class AG {
 
     }
 
-    public static void ordenar(List<DemandaInfo> demandasInfo){
+    public static void ordenar(List<DemandaInfo> demandasInfo) {
 
         DemandaInfo aux;
         int j;
 
         for (int i = 0; i < demandasInfo.size(); i++) {
             for (j = i + 1; j < demandasInfo.size(); j++) {
-                if (demandasInfo.get(i).getX() < demandasInfo.get(j).getX()){
+                if (demandasInfo.get(i).getX() < demandasInfo.get(j).getX()) {
                     aux = demandasInfo.get(i);
                     demandasInfo.set(i, demandasInfo.get(j));
                     demandasInfo.set(j, aux);
@@ -248,65 +206,23 @@ public class AG {
 
     }
 
-    public static boolean asignarRanuras (Solucion solucion, int rutaNro, List<DemandaInfo> demandasInfo, String algoritmo){
-
-        boolean aplica = false;
-        List<Boolean> ranuras = new ArrayList<>();
-        List<Integer> posicionesLibres = new ArrayList<>();
-        int r, cantRanurasLibres;
-
+    public static boolean asignarRanuras(Solucion solucion, int rutaNro, List<DemandaInfo> demandasInfo, String algoritmo) {
         DemandaInfo demandaInfo = demandasInfo.get(rutaNro);
-        int nodoPrimero = demandaInfo.getRuta().get(0);
-        int nodoSegundo = demandaInfo.getRuta().get(1);
-
-        // recorrer todos los enlaces, y guardar en una lista de listas las ranuras que correspondan a los enlaces de mi ruta.
-        // en la lista lo que voy a guardar es si mi ranura R == 1, elimino la posicion que contenga
-        // si es R == 0, agrego a mi map un
-//        for (int i = 0; i < solucion.getEnlaces().size(); i++) {
-//            if (solucion.getEnlaces().get(i).getInicio() == nodoPrimero && solucion.getEnlaces().get(i).getFin() == nodoSegundo){
-//                ranuras = solucion.getEnlaces().get(i).getRanuras();
-//                break;
-//            }
-//        }
-
-        // ESTO aplica para GA 1
-        /*
-        // Una vez que tenga la lista, del primer enlace busco su primera ranura libre, verifico que las X siguientes esten libres.
-        // Si es asi, agrego esa primera ranura a una una lista de posibles soluciones. Aplico esto para todas las siguientes ranuras libres.
-        // Para el siguiente enlace, obtengo de la lista de posibles soluciones la primera ranura, verifico si esa ranura existe en mi lista de ranuras,
-
-        obtenerRanurasLibres(ranuras, posicionesLibres);
-        cantRanurasLibres = posicionesLibres.size();
-
-        for (int i = 0; i < cantRanurasLibres; i++) {
-            r = (int)(Math.random() * posicionesLibres.size());
-            aplica = aplicaRanuras(posicionesLibres.get(r), rutaNro, solucion.getEnlaces(), demandasInfo);
-
-            if (aplica){
-                agregarRanurasASolucion(solucion, rutaNro, posicionesLibres.get(r), demandasInfo);
-                return true;
-            }
-            posicionesLibres.remove(r);
-            cantRanurasLibres--;
-        }
-
-        return false;
-        */
 
         List<Integer> ranurasDisponibles = new ArrayList<>();
         ranurasDisponibles.addAll(obtenerRanurasDisponiblesParaRuta(solucion, demandaInfo));
         // elegir randomicamente una posicion e ranurasDisponibles
         // asignar esa ranura a la solucion para esta demanda
 
-        if (ranurasDisponibles.isEmpty())
+        if (ranurasDisponibles.isEmpty()) {
             return false;
-        else {
-            if ("moga1".equals(algoritmo)) {
+        } else {
+            if (MOGA_1.equals(algoritmo)) {
                 // elegir enlaces aleatoriamente
-                int ranuraElegida = (int) (Math.random()*(ranurasDisponibles.size()-1));
+                int ranuraElegida = (int) (Math.random() * (ranurasDisponibles.size() - 1));
                 agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(ranuraElegida));
 
-            } else if ("moga2".equals(algoritmo)) {
+            } else if (MOGA_2.equals(algoritmo)) {
                 // elegir ranuras con first fit
                 agregarRanurasASolucion(solucion, rutaNro, demandaInfo, ranurasDisponibles.get(0));
             } else {
@@ -316,18 +232,18 @@ public class AG {
         }
     }
 
-    public static List<Integer> obtenerRanurasDisponiblesParaRuta (Solucion solucion, DemandaInfo demandaInfo) {
+    public static List<Integer> obtenerRanurasDisponiblesParaRuta(Solucion solucion, DemandaInfo demandaInfo) {
         int origen;
         int destino;
         List<Enlace> enlaces = new ArrayList<>();
 
         for (int i = 0; i < solucion.getEnlaces().size(); i++) {
-            for (int j = 0; j < (demandaInfo.getRuta().size()-1); j++) {
+            for (int j = 0; j < (demandaInfo.getRuta().size() - 1); j++) {
                 origen = demandaInfo.getRuta().get(j);
                 destino = demandaInfo.getRuta().get(j + 1);
 
-                if (solucion.getEnlaces().get(i).getInicio() == origen &&
-                        solucion.getEnlaces().get(i).getFin() == destino) {
+                if (solucion.getEnlaces().get(i).getInicio() == origen
+                        && solucion.getEnlaces().get(i).getFin() == destino) {
                     enlaces.add(solucion.getEnlaces().get(i));
                 }
             }
@@ -396,15 +312,15 @@ public class AG {
 
         // crea el objeto que cubre esta demanda y agrega a solucion
         for (int i = 0; i < solucion.getRuteos().size(); i++) {
-            if (solucion.getRuteos().get(i).getOriden() == demandaInfo.getOrigen() &&
-                    solucion.getRuteos().get(i).getDestino() == demandaInfo.getDestino()) {
+            if (solucion.getRuteos().get(i).getOriden() == demandaInfo.getOrigen()
+                    && solucion.getRuteos().get(i).getDestino() == demandaInfo.getDestino()) {
                 existe = true;
                 posicion = i;
                 break;
             }
         }
 
-        if (existe){
+        if (existe) {
             solucion.getRuteos().get(posicion).setRanurasUsadas(ranurasUsadas);
         } else {
             ruteo.setDemandaId(demandaInfo.getDemandaId());
@@ -433,7 +349,7 @@ public class AG {
             for (j = primeraRanura; j < limite; j++) {
                 // si recibe como primera ranura una de las ultimas y sumando las ranuras solicitadas alcanza mas del total de ranuras
                 // envia falso porque no aplica
-                if (j == enlaces.get(posicion).getRanuras().size() || enlaces.get(posicion).getRanuras().get(j)){
+                if (j == enlaces.get(posicion).getRanuras().size() || enlaces.get(posicion).getRanuras().get(j)) {
                     return false;
                 }
             }
@@ -442,10 +358,10 @@ public class AG {
         return true;
     }
 
-    public static int ubicarEnlace (int inicio, int fin, List<Enlace> enlaces) {
+    public static int ubicarEnlace(int inicio, int fin, List<Enlace> enlaces) {
 
         for (int i = 0; i < enlaces.size(); i++) {
-            if (enlaces.get(i).getInicio() == inicio && enlaces.get(i).getFin() == fin){
+            if (enlaces.get(i).getInicio() == inicio && enlaces.get(i).getFin() == fin) {
                 return i;
             }
         }
@@ -453,13 +369,10 @@ public class AG {
         return -1;
     }
 
-
-
     /*
     * Aca empieza el purete
     *
     * */
-
     public static List<Solucion> ga(List<List<Boolean>> topologia, int cantSolucionesIniciales, int totalRanuras, int criterioDeParada, double probabilidaMutacion, List<DemandaInfo> demandasInfo, int k, String algoritmo) throws FileNotFoundException {
 
         int j, reproductor1, reproductor2, candidato1 = -1, candidato2 = -1;
@@ -469,7 +382,7 @@ public class AG {
         List<Solucion> poblacionActual = new ArrayList<>();
         poblacionActual.addAll(poblacionInicial);
         List<Solucion> poblacionNueva;
-        List<Solucion> aux ;
+        List<Solucion> aux;
         Random rnd = new Random();
         Long TInicio;
         Long TFin; //Variables para determinar el tiempo de ejecución
@@ -485,21 +398,19 @@ public class AG {
         int tiempoLimite = criterioDeParada * 60 * 1000;
 
         while ((TFin - TInicio) < tiempoLimite) {
-
-//            System.out.println(v + ". Inicio: " + TInicio + ", Fin: " + TFin + ", Dif: " + (TFin - TInicio) + ", sigue: " + ((TFin - TInicio) < (240000)));
             aux = new ArrayList<>();
             poblacionNueva = new ArrayList<>();
 
-            for (j = 0; j < poblacionInicial.size()/4; j++){
+            for (j = 0; j < poblacionInicial.size() / 4; j++) {
 
                 hijo1 = new Solucion();
                 hijo2 = new Solucion();
 
                 // elegir reproductores aleatoriamente
                 // elegir 2 candidatos aleatoriamente, de los 2 candidatos tomar el de mejor fitness para ser un reproductor
-                while(candidato1 == candidato2){
-                    candidato1 = (int)(rnd.nextDouble() * poblacionActual.size());
-                    candidato2 = (int)(rnd.nextDouble() * poblacionActual.size());
+                while (candidato1 == candidato2) {
+                    candidato1 = (int) (rnd.nextDouble() * poblacionActual.size());
+                    candidato2 = (int) (rnd.nextDouble() * poblacionActual.size());
                 }
 
                 if (poblacionActual.get(candidato1).getFitness() > poblacionActual.get(candidato2).getFitness()) {
@@ -508,9 +419,9 @@ public class AG {
                     reproductor1 = candidato1;
                 }
 
-                while(candidato1 == candidato2 || candidato1 == reproductor1 || candidato2 == reproductor1){
-                    candidato1 = (int)(rnd.nextDouble() * poblacionActual.size());
-                    candidato2 = (int)(rnd.nextDouble() * poblacionActual.size());
+                while (candidato1 == candidato2 || candidato1 == reproductor1 || candidato2 == reproductor1) {
+                    candidato1 = (int) (rnd.nextDouble() * poblacionActual.size());
+                    candidato2 = (int) (rnd.nextDouble() * poblacionActual.size());
                 }
 
                 if (poblacionActual.get(candidato1).getFitness() > poblacionActual.get(candidato2).getFitness()) {
@@ -519,14 +430,14 @@ public class AG {
                     reproductor2 = candidato1;
                 }
 
-                cruce (poblacionActual.get(reproductor1), poblacionActual.get(reproductor2), hijo1, hijo2, topologia, totalRanuras, demandasInfo, algoritmo);
+                cruce(poblacionActual.get(reproductor1), poblacionActual.get(reproductor2), hijo1, hijo2, topologia, totalRanuras, demandasInfo, algoritmo);
 
                 // mantener poblacion actual para comparar con los hijos al final
                 // pero eliminar los reproductores ya elegidos para no repetir
                 aux.add(poblacionActual.get(reproductor1));
                 aux.add(poblacionActual.get(reproductor2));
 
-                if (reproductor1 < reproductor2){
+                if (reproductor1 < reproductor2) {
                     poblacionActual.remove(reproductor2);
                     poblacionActual.remove(reproductor1);
                 } else {
@@ -534,8 +445,8 @@ public class AG {
                     poblacionActual.remove(reproductor2);
                 }
 
-                mutacion (hijo1, probabilidaMutacion, topologia, totalRanuras, demandasInfo, algoritmo);
-                mutacion (hijo2, probabilidaMutacion, topologia, totalRanuras, demandasInfo, algoritmo);
+                mutacion(hijo1, probabilidaMutacion, topologia, totalRanuras, demandasInfo, algoritmo);
+                mutacion(hijo2, probabilidaMutacion, topologia, totalRanuras, demandasInfo, algoritmo);
 
                 poblacionNueva.add(hijo1);
                 poblacionNueva.add(hijo2);
@@ -547,7 +458,7 @@ public class AG {
 
             // de la poblacion vieja elegir solo las 2 primeras soluciones, las mejores y copiar a nueva poblacion
             // para el resto de mi poblacion nueva, cruzar el resto de las soluciones de la poblacion vieja
-            elegirMejores (poblacionActual, aux, poblacionNueva);
+            elegirMejores(poblacionActual, aux, poblacionNueva);
 
             TFin = System.currentTimeMillis();
             v++;
@@ -559,6 +470,7 @@ public class AG {
 
     /**
      * Nuestro operador cruce utiliza el cruce de 2 puntos
+     *
      * @param reproductor1
      * @param reproductor2
      * @param hijo1
@@ -567,8 +479,7 @@ public class AG {
      * @param totalRanuras
      * @param demandasInfo
      */
-    public static void cruce (Solucion reproductor1, Solucion reproductor2, Solucion hijo1, Solucion hijo2, List<List<Boolean>> topologia, Integer totalRanuras, List<DemandaInfo> demandasInfo, String algoritmo) {
-        int cantRutas = reproductor1.getRuteos().size() <= reproductor2.getRuteos().size() ? reproductor1.getRuteos().size() : reproductor2.getRuteos().size();
+    public static void cruce(Solucion reproductor1, Solucion reproductor2, Solucion hijo1, Solucion hijo2, List<List<Boolean>> topologia, Integer totalRanuras, List<DemandaInfo> demandasInfo, String algoritmo) {
         List<Ruteo> ruteo1 = new ArrayList<>();
         List<Ruteo> ruteo2 = new ArrayList<>();
         Ruteo ruteo = new Ruteo();
@@ -610,29 +521,22 @@ public class AG {
         hijo1.setEnlaces(generarListaInicialRanuras(totalRanuras, topologia));
         hijo2.setEnlaces(generarListaInicialRanuras(totalRanuras, topologia));
 
-        recalcularRanuras (hijo1, demandasInfo, algoritmo);
-        recalcularRanuras (hijo2, demandasInfo, algoritmo);
+        recalcularRanuras(hijo1, demandasInfo, algoritmo);
+        recalcularRanuras(hijo2, demandasInfo, algoritmo);
 
-//        hijo1.setSaltos(getSaltoMayor(hijo1, demandasInfo)/saltoMayor);
         hijo1.setSaltos(getSaltoMayor(hijo1, demandasInfo));
-//        hijo1.setEspectro(getEspectroMayor(hijo1)/espectroMayor);
         hijo1.setEspectro(getEspectroMayor(hijo1));
-//        hijo1.setCosto(hijo1.getFitness()/costoMayor);
         hijo1.setCosto(getCostoDeLaSolucion(hijo1, demandasInfo));
-        hijo1.setFitness(/*hijo1.getCosto()/costoMayor + hijo1.getSaltos()/saltoMayor +*/ hijo1.getEspectro()/*/espectroMayor*/);
+        hijo1.setFitness(hijo1.getEspectro());
 
-//        hijo2.setSaltos(getSaltoMayor(hijo2, demandasInfo)/saltoMayor);
         hijo2.setSaltos(getSaltoMayor(hijo2, demandasInfo));
-//        hijo2.setEspectro(getEspectroMayor(hijo2)/espectroMayor);
         hijo2.setEspectro(getEspectroMayor(hijo2));
-//        hijo2.setCosto(hijo2.getFitness()/costoMayor);
         hijo2.setCosto(getCostoDeLaSolucion(hijo2, demandasInfo));
-
-        hijo2.setFitness(/*hijo2.getCosto()/costoMayor + hijo2.getSaltos()/saltoMayor + */hijo2.getEspectro()/*/espectroMayor*/);
+        hijo2.setFitness(hijo2.getEspectro());
 
     }
 
-    public static void mutacion (Solucion solucion, double probabilidadMutacion, List<List<Boolean>> topologia, Integer totalRanuras, List<DemandaInfo> demandasInfo, String algoritmo) {
+    public static void mutacion(Solucion solucion, double probabilidadMutacion, List<List<Boolean>> topologia, Integer totalRanuras, List<DemandaInfo> demandasInfo, String algoritmo) {
         List<Integer> posiciones;
         int j, r;
 
@@ -640,13 +544,13 @@ public class AG {
             if ((Math.random()) <= probabilidadMutacion) {
                 posiciones = new ArrayList<>();
                 for (j = 0; j < demandasInfo.size(); j++) {
-                    if (demandasInfo.get(j).getOrigen() == solucion.getRuteos().get(i).getOriden() &&
-                            demandasInfo.get(j).getDestino() == solucion.getRuteos().get(i).getDestino()) {
+                    if (demandasInfo.get(j).getOrigen() == solucion.getRuteos().get(i).getOriden()
+                            && demandasInfo.get(j).getDestino() == solucion.getRuteos().get(i).getDestino()) {
                         posiciones.add(j);
                     }
                 }
 
-                r = (int)(Math.random() * posiciones.size());
+                r = (int) (Math.random() * posiciones.size());
 
                 solucion.getRuteos().get(i).setRutaNro(posiciones.get(r));
             }
@@ -661,23 +565,19 @@ public class AG {
         solucion.setFitness(0.0);
         recalcularRanuras(solucion, demandasInfo, algoritmo);
 
-//        solucion.setSaltos(getSaltoMayor(solucion, demandasInfo)/saltoMayor);
         solucion.setSaltos(getSaltoMayor(solucion, demandasInfo));
-//        solucion.setEspectro(getEspectroMayor(solucion)/espectroMayor);
         solucion.setEspectro(getEspectroMayor(solucion));
-//        solucion.setCosto(solucion.getFitness()/costoMayor);
         solucion.setCosto(getCostoDeLaSolucion(solucion, demandasInfo));
-
-        solucion.setFitness(/*solucion.getCosto()/costoMayor + solucion.getSaltos()/saltoMayor + */solucion.getEspectro()/*/espectroMayor*/);
+        solucion.setFitness(solucion.getEspectro());
 
     }
 
-    public static void recalcularRanuras (Solucion solucion, List<DemandaInfo> demandasInfo, String algoritmo) {
+    public static void recalcularRanuras(Solucion solucion, List<DemandaInfo> demandasInfo, String algoritmo) {
         int j, rutaNro;
 
         // vaciar las ranuras usadas por cada ruta
         for (int i = 0; i < solucion.getRuteos().size(); i++) {
-            for (j = solucion.getRuteos().get(i).getRanurasUsadas().size() - 1; j >= 0; j-- ) {
+            for (j = solucion.getRuteos().get(i).getRanurasUsadas().size() - 1; j >= 0; j--) {
                 solucion.getRuteos().get(i).getRanurasUsadas().remove(j);
             }
         }
@@ -697,21 +597,7 @@ public class AG {
         }
     }
 
-//    public static void calcularFitness (Solucion solucion, List<DemandaInfo> demandasInfo) {
-//        DemandaInfo demandaInfo;
-//        Double fitness = 0.0;
-//
-//        for (int i = 0; i < solucion.getRuteos().size(); i++) {
-//            if (solucion.getRuteos().get(i).getRutaNro() > -1) {
-//                demandaInfo = demandasInfo.get(solucion.getRuteos().get(i).getRutaNro());
-//                fitness = fitness + demandaInfo.getX();
-//            }
-//        }
-//
-//        solucion.setFitness(fitness);
-//    }
-
-    public static void elegirMejores (List<Solucion> poblacionResultado, List<Solucion> poblacionActual, List<Solucion> poblacionNueva) {
+    public static void elegirMejores(List<Solucion> poblacionResultado, List<Solucion> poblacionActual, List<Solucion> poblacionNueva) {
         int cantSoluciones = poblacionActual.size();
         List<Solucion> solucionesCompletas = new ArrayList<>();
 
@@ -722,7 +608,7 @@ public class AG {
         poblacionActual = new ArrayList<>();
         poblacionActual.addAll(solucionesCompletas);
 
-        ordenarPorFitness (poblacionActual);
+        ordenarPorFitness(poblacionActual);
 
         for (int i = 0; i < cantSoluciones; i++) {
             poblacionResultado.add(poblacionActual.get(i));
@@ -730,14 +616,14 @@ public class AG {
 
     }
 
-    public static void ordenarPorBloqueados (List<Solucion> soluciones) {
+    public static void ordenarPorBloqueados(List<Solucion> soluciones) {
 
         Solucion aux;
         int j;
 
         for (int i = 0; i < soluciones.size(); i++) {
             for (j = i + 1; j < soluciones.size(); j++) {
-                if (soluciones.get(i).getCantBloq() > soluciones.get(j).getCantBloq()){
+                if (soluciones.get(i).getCantBloq() > soluciones.get(j).getCantBloq()) {
                     aux = soluciones.get(i);
                     soluciones.set(i, soluciones.get(j));
                     soluciones.set(j, aux);
@@ -747,15 +633,15 @@ public class AG {
 
     }
 
-    public static void ordenarPorFitness (List<Solucion> soluciones) {
+    public static void ordenarPorFitness(List<Solucion> soluciones) {
 
         List<Solucion> gruposBloq = new ArrayList<Solucion>();
         Solucion aux;
         int j, cantidad = 0, inicio = -1;
 
-        if (soluciones.get(soluciones.size()/2).getCantBloq() == soluciones.get((soluciones.size()/2) -1 ).getCantBloq()) {
+        if (soluciones.get(soluciones.size() / 2).getCantBloq() == soluciones.get((soluciones.size() / 2) - 1).getCantBloq()) {
             for (int i = 0; i < soluciones.size(); i++) {
-                if (soluciones.get(soluciones.size()/2).getCantBloq() == soluciones.get(i).getCantBloq()) {
+                if (soluciones.get(soluciones.size() / 2).getCantBloq() == soluciones.get(i).getCantBloq()) {
                     if (inicio < 0) {
                         inicio = i;
                     }
@@ -767,7 +653,7 @@ public class AG {
 
         for (int i = 0; i < cantidad; i++) {
             for (j = i + 1; j < cantidad; j++) {
-                if (gruposBloq.get(i).getFitness() > gruposBloq.get(j).getFitness()){
+                if (gruposBloq.get(i).getFitness() > gruposBloq.get(j).getFitness()) {
                     aux = gruposBloq.get(i);
                     gruposBloq.set(i, gruposBloq.get(j));
                     gruposBloq.set(j, aux);
@@ -787,16 +673,15 @@ public class AG {
     * Inicializa todas las ranuras de todos los enlaces a false = no utilizado
     *
     * */
-
-    public static List<Enlace> generarListaInicialRanuras (int cantRanuras, List<List<Boolean>> topologia) {
+    public static List<Enlace> generarListaInicialRanuras(int cantRanuras, List<List<Boolean>> topologia) {
         int i, j, k;
         Enlace enlace;
         List<Enlace> enlaces = new ArrayList<>();
         List<Boolean> ranuras;
 
-        for (i = 0; i < topologia.get(0).size(); i++ ) {
-            for (j = 0; j < topologia.get(0).size(); j++ ) {
-                if (topologia.get(i).get(j)){
+        for (i = 0; i < topologia.get(0).size(); i++) {
+            for (j = 0; j < topologia.get(0).size(); j++) {
+                if (topologia.get(i).get(j)) {
                     enlace = new Enlace();
                     ranuras = new ArrayList<>();
                     for (k = 0; k < cantRanuras; k++) {
@@ -822,9 +707,9 @@ public class AG {
 
         while (i < demandasInfo.size()) {
             demandaInfo = demandasInfo.get(i);
-            while (i < demandasInfo.size() &&
-                    demandaInfo.getOrigen() == demandasInfo.get(i).getOrigen() &&
-                    demandaInfo.getDestino() == demandasInfo.get(i).getDestino() ) {
+            while (i < demandasInfo.size()
+                    && demandaInfo.getOrigen() == demandasInfo.get(i).getOrigen()
+                    && demandaInfo.getDestino() == demandasInfo.get(i).getDestino()) {
                 if (demandasInfo.get(i).getX() > demandaInfo.getX()) {
                     demandaInfo = demandasInfo.get(i);
                 }
@@ -836,66 +721,8 @@ public class AG {
         return aux;
     }
 
-//    public static void guardarEnArchivo(List<Solucion> conjuntoSoluciones, int corridaNumero, List<DemandaInfo> demandasInfo, String archivo, Long tiempoInicial) throws IOException {
-//
-//        int i, j, k, solucionNumero;
-//        DemandaInfo demandaInfo;
-//        int corridaNro = corridaNumero + 1;
-//        File f = new File(pathArchivo + archivo + "-corrida_" + corridaNro + ".txt");
-//        FileWriter fw = new FileWriter(f);
-//        int tiempoTotal = 0;
-//
-//        try{
-//            BufferedWriter bw = new BufferedWriter(fw);
-//            PrintWriter wr = new PrintWriter(bw);
-//
-//            for (i = 0; i < conjuntoSoluciones.size(); i++) {
-//                solucionNumero = i + 1;
-//                wr.write("\nSolucion numero: " + solucionNumero);
-//                wr.write("\nCantidad de bloqueados: " + conjuntoSoluciones.get(i).getCantBloq());
-//                wr.write("\nFitness: " + conjuntoSoluciones.get(i).getFitness());
-//                wr.write("\nRanuras \tOrigen \tDestino \tRuta");
-//
-//                for (j = 0; j < conjuntoSoluciones.get(i).getRuteos().size(); j++) {
-//                    wr.write("\n\t\t" + conjuntoSoluciones.get(i).getRuteos().get(j).getOriden());
-//                    wr.write("\t" + conjuntoSoluciones.get(i).getRuteos().get(j).getDestino());
-//
-//                    if (conjuntoSoluciones.get(i).getRuteos().get(j).getRutaNro() > -1) {
-//                        demandaInfo = demandasInfo.get(conjuntoSoluciones.get(i).getRuteos().get(j).getRutaNro());
-//
-//                        wr.write("\t\t" + demandaInfo.getRuta().get(0));
-//                        for (k = 1; k < demandaInfo.getRuta().size(); k++) {
-//                            wr.write(" - " + demandaInfo.getRuta().get(k));
-//                        }
-//
-//                        wr.write("\n" + conjuntoSoluciones.get(i).getRuteos().get(j).getRanurasUsadas().get(0));
-//                        for (k = 1; k < conjuntoSoluciones.get(i).getRuteos().get(j).getRanurasUsadas().size(); k++) {
-//                            wr.write("\n" + conjuntoSoluciones.get(i).getRuteos().get(j).getRanurasUsadas().get(k));
-//                        }
-//                    } else {
-//                        wr.write("\t\tBloqueado");
-//                        wr.write("\t\tBloqueado");
-//                    }
-//
-//                }
-//
-//                wr.write("\n\n");
-//
-//            }
-//
-//            tiempoTotal = (int) (((System.currentTimeMillis() - tiempoInicial) / 100) / 60);
-//            wr.write("\nTiempo Total: " + tiempoTotal);
-//            wr.close();
-//            bw.close();
-//        } catch (IOException e){
-//
-//        }
-//
-//
-//    }
-
-    public static void obtenerRanurasLibres (List<Boolean> ranuras, List<Integer> posicionesLibres) {
-        for (int i = 0; i < ranuras.size(); i++ ) {
+    public static void obtenerRanurasLibres(List<Boolean> ranuras, List<Integer> posicionesLibres) {
+        for (int i = 0; i < ranuras.size(); i++) {
             if (!ranuras.get(i)) {
                 posicionesLibres.add(i);
             }
@@ -903,7 +730,7 @@ public class AG {
 
     }
 
-    public static void agregarBloqueado (Solucion solucion, DemandaInfo demandaInfo) {
+    public static void agregarBloqueado(Solucion solucion, DemandaInfo demandaInfo) {
         Ruteo ruteo = new Ruteo();
 
         ruteo.setDemandaId(demandaInfo.getDemandaId());
@@ -915,12 +742,12 @@ public class AG {
     }
 
     // Suma las distancias de las rutas utilizadas en esta solucion
-    public static Double getSaltoMayor (Solucion solucion, List<DemandaInfo> demandasInfo) {
+    public static Double getSaltoMayor(Solucion solucion, List<DemandaInfo> demandasInfo) {
         Double distancia = 0.0;
         for (int i = 0; i < solucion.getRuteos().size(); i++) {
             if (solucion.getRuteos().get(i).getRutaNro() > -1) {
-                distancia = distancia +
-                        (demandasInfo.get(solucion.getRuteos().get(i).getRutaNro()).getSaltos());
+                distancia = distancia
+                        + (demandasInfo.get(solucion.getRuteos().get(i).getRutaNro()).getSaltos());
             }
         }
 
@@ -928,20 +755,20 @@ public class AG {
     }
 
     // Suma las distancias de las rutas utilizadas en esta solucion
-    public static Double getCostoDeLaSolucion (Solucion solucion, List<DemandaInfo> demandasInfo) {
+    public static Double getCostoDeLaSolucion(Solucion solucion, List<DemandaInfo> demandasInfo) {
         Double costo = 0.0;
         for (int i = 0; i < solucion.getRuteos().size(); i++) {
             if (solucion.getRuteos().get(i).getRutaNro() > -1) {
-                costo = costo +
-                        (demandasInfo.get(solucion.getRuteos().get(i).getRutaNro()).getSaltos() *
-                                (demandasInfo.get(solucion.getRuteos().get(i).getRutaNro()).getTraf() + nivelDeModulacion));
+                costo = costo
+                        + (demandasInfo.get(solucion.getRuteos().get(i).getRutaNro()).getSaltos()
+                        * (demandasInfo.get(solucion.getRuteos().get(i).getRutaNro()).getTraf() + nivelDeModulacion));
             }
         }
 
         return costo;
     }
 
-    public static Double getEspectroMayor (Solucion solucion) {
+    public static Double getEspectroMayor(Solucion solucion) {
         Double mayor = 0.0;
         int j;
         for (int i = 0; i < solucion.getEnlaces().size(); i++) {
@@ -954,7 +781,6 @@ public class AG {
 
         return mayor;
     }
-
 
     public static Double getCostoMayor(List<DemandaInfo> demandaInfoList) {
         Double mayor = 0.0;
@@ -991,48 +817,47 @@ public class AG {
         File f = new File(path + algoritmo + "_corridaNro_" + corridaNro + ".txt");
         FileWriter fw = new FileWriter(f);
 
-        try{
+        try {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter wr = new PrintWriter(bw);
 
             for (i = 0; i < conjuntoSoluciones.size(); i++) {
                 solucionNumero = i + 1;
-                wr.write("\nSolucion numero: " + solucionNumero);
-                wr.write("\nCantidad de bloqueados: " + conjuntoSoluciones.get(i).getCantBloq());
-                System.out.println("Enlaces: " + conjuntoSoluciones.get(i).getEnlaces());
-                System.out.println("Ruteos: " + conjuntoSoluciones.get(i).getRuteos());
-                wr.write("\nCosto: " + conjuntoSoluciones.get(i).getCosto());
-                wr.write("\nDistancia: " + conjuntoSoluciones.get(i).getSaltos());
-                wr.write("\nEspectro Mayor: " + conjuntoSoluciones.get(i).getEspectro());
-                wr.write("\nFitness: " + conjuntoSoluciones.get(i).getFitness());
+                wr.write(SOLUCION_NUMERO + solucionNumero);
+                wr.write(CANTIDAD_BLOQUEOS + conjuntoSoluciones.get(i).getCantBloq());
+                wr.write(COSTO + conjuntoSoluciones.get(i).getCosto());
+                wr.write(DISTANCIA + conjuntoSoluciones.get(i).getSaltos());
+                wr.write(ESPECTRO_MAYOR + conjuntoSoluciones.get(i).getEspectro());
+                wr.write(FITNESS + conjuntoSoluciones.get(i).getFitness());
+                wr.write(ENLACES + conjuntoSoluciones.get(i).getEnlaces());
+                wr.write(RUTEOS + conjuntoSoluciones.get(i).getRuteos());
 
-                wr.write("\n\n");
+                wr.write(FIN_ARCHIVO);
             }
 
-            wr.write("\nTiempo total de ejecucion: " + tiempoDeEjecucion + " minutos.");
+            wr.write(EJECUCION + tiempoDeEjecucion + UNIDAD_TIEMPO);
             wr.close();
             bw.close();
-        } catch (IOException e){
+        } catch (IOException e) {
 
         }
 
-
     }
 
-    public static void guardarMaximos (String archivo) throws IOException {
+    public static void guardarMaximos(String archivo) throws IOException {
         File f = new File(archivo);
         FileWriter fw = new FileWriter(f);
 
-        try{
+        try {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter wr = new PrintWriter(bw);
 
-            wr.write(costoMayor.toString() + "\n");
-            wr.write(saltoMayor.toString() + "\n");
+            wr.write(costoMayor.toString() + SALTO_LINEA);
+            wr.write(saltoMayor.toString() + SALTO_LINEA);
             wr.write(espectroMayor.toString());
             wr.close();
             bw.close();
-        } catch (IOException e){
+        } catch (IOException e) {
 
         }
     }
