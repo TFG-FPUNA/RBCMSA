@@ -17,7 +17,7 @@ public class AG {
     private static Long costoMayor;
     private static Long saltoMayor;
     private static Long espectroMayor;
-    private static final int nivelDeModulacion = 1;
+    //private static final int nivelDeModulacion = 1;
     //private static final List<String> ALGORITMOS = new ArrayList<>();
     private static final String TOPOLOGIA = "nsf";
 
@@ -253,7 +253,7 @@ public class AG {
 
         // obtener ranuras libres del primer enlace
         for (int i = 0; i < enlaces.get(0).getRanuras().size(); i++) {
-            if (ranuraEsSolucion(enlaces.get(0).getRanuras(), i, demandaInfo.getTraf() + nivelDeModulacion)) {
+            if (ranuraEsSolucion(enlaces.get(0).getRanuras(), i, demandaInfo.getTraf() /*+ nivelDeModulacion*/)) {
                 indiceDeRanurasLibres.add(i);
             }
         }
@@ -262,7 +262,7 @@ public class AG {
             List<Integer> copiaIndiceDeRanurasLibres = new ArrayList<>();
             copiaIndiceDeRanurasLibres.addAll(indiceDeRanurasLibres);
             for (int j = 0; j < indiceDeRanurasLibres.size(); j++) {
-                if (!ranuraEsSolucion(enlaces.get(i).getRanuras(), indiceDeRanurasLibres.get(j), demandaInfo.getTraf() + nivelDeModulacion)) {
+                if (!ranuraEsSolucion(enlaces.get(i).getRanuras(), indiceDeRanurasLibres.get(j), demandaInfo.getTraf() /*+ nivelDeModulacion*/)) {
                     copiaIndiceDeRanurasLibres.remove(indiceDeRanurasLibres.get(j));
                 }
             }
@@ -286,7 +286,7 @@ public class AG {
     }
 
     public static void agregarRanurasASolucion(Solucion solucion, int rutaNro, DemandaInfo demandaInfo, int primeraRanura) {
-        int ranurasSolicitadas = demandaInfo.getTraf() + nivelDeModulacion;
+        int ranurasSolicitadas = demandaInfo.getTraf() /*+ nivelDeModulacion*/;
         int nodoInicio, nodoFin, ubicacion, j;
         boolean existe = false;
         int posicion = -1;
@@ -761,7 +761,7 @@ public class AG {
             if (solucion.getRuteos().get(i).getRutaNro() > -1) {
                 costo = costo
                         + (demandasInfo.get(solucion.getRuteos().get(i).getRutaNro()).getSaltos()
-                        * (demandasInfo.get(solucion.getRuteos().get(i).getRutaNro()).getTraf() + nivelDeModulacion));
+                        * (demandasInfo.get(solucion.getRuteos().get(i).getRutaNro()).getTraf() /*+ nivelDeModulacion*/));
             }
         }
 
@@ -814,7 +814,7 @@ public class AG {
 
         int i, solucionNumero;
         int corridaNro = corridaNumero + 1;
-        File f = new File(path + algoritmo + "_corridaNro_" + corridaNro + ".txt");
+        File f = new File(path + algoritmo + CORRIDA + corridaNro + EXTENSION);
         FileWriter fw = new FileWriter(f);
 
         try {
@@ -866,8 +866,8 @@ public class AG {
         int costoMayor = 0;
 
         for (int i = 0; i < demandaInfoList.size(); i++) {
-            if ((demandaInfoList.get(i).getTraf() + nivelDeModulacion) > costoMayor) {
-                costoMayor = demandaInfoList.get(i).getTraf() + nivelDeModulacion;
+            if ((demandaInfoList.get(i).getTraf() /*+ nivelDeModulacion*/) > costoMayor) {
+                costoMayor = demandaInfoList.get(i).getTraf() /*+ nivelDeModulacion*/;
             }
         }
 

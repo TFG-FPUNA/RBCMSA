@@ -40,6 +40,8 @@ public class Constantes {
     public static final String FIN_ARCHIVO = "\n\n";
     public static final String EJECUCION = "\nTiempo total de ejecucion: ";
     public static final String UNIDAD_TIEMPO = " minutos.";
+    public static final String CORRIDA = "_corridaNro_";
+    public static final String EXTENSION =".txt";
     
     
 }
