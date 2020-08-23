@@ -14,6 +14,8 @@ import java.util.Properties;
 import javax.inject.Inject;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
+import py.com.fp.una.rbcmsa.ag.propio.AGP;
+import py.com.fp.una.rbcmsa.ag.propio.Operadores;
 import py.com.fp.una.rbcmsa.ag.ysa.AG;
 import py.com.fp.una.rbcmsa.ag.ysa.adaptaciones.AdaptacionesAG;
 import py.com.fp.una.rbcmsa.algoritmos.AlgoritmosAsignacionEspectro;
@@ -73,6 +75,12 @@ public class main {
     
     @Inject
     AG AG;
+    
+    @Inject
+    AGP AGP;
+    
+    @Inject
+    Operadores operadores;
 
     public static void main(String[] args) throws CloneNotSupportedException {
         //caso 2 para SFMRA
@@ -240,7 +248,22 @@ public class main {
         //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);
         //adaptacionesAG.generarEntradaAG(peticionesFinales, 0, rutaArchivoAG, nombreArchivoAG);
         
-        AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
-        
+        //AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
+        //AGP.permute(new int[]{1,2,3,4});
+        int[] primerIndividuo = {9,8,4,5,6,7,1,2,3,10};
+        int[] segundoIndividuo = {8,7,1,2,3,10,9,5,4,6};
+        List<int[]> resultado = operadores.orderCrosover(primerIndividuo, segundoIndividuo);
+        for (int[] result : resultado) {
+            for (int i = 0; i < result.length; i++) {
+                System.out.print(result[i]+",");
+            }
+            System.out.println("");
+        }
+        int[] individuoMutacion = {9,4,2,1,5,7,6,10,3,8};
+        int[] mutado = operadores.mutacion(individuoMutacion);
+        System.out.println("Mutacion");
+        for (int i = 0; i < mutado.length; i++) {
+            System.out.print(mutado[i] + ";");
+        }
     }
 }

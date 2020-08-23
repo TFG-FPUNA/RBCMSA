@@ -59,10 +59,12 @@ public class AlgoritmosAsignacionEspectro {
 
     }
 
-    public void BFMRA(List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS) {
+    public int BFMRA(int[] orden, List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS) {
         System.out.println("------------- BFMRA -------------");
 
-        for (PeticionBCM peticionFinal : peticionesFinales) {
+        for (int i = 0; i < orden.length; i++) {
+            //for (PeticionBCM peticionFinal : peticionesFinales) {
+            PeticionBCM peticionFinal = peticionesFinales.get(orden[i]);
             System.out.println("");
             System.out.println("------------- INICIAL -------------");
             System.out.println("");
@@ -82,6 +84,7 @@ public class AlgoritmosAsignacionEspectro {
             this.imprimirPeticion(peticionFinal);
             this.asignarFS(peticionFinal, grafo, true);
         }
+        return 0;//falta contar los fs
 
     }
 
@@ -128,7 +131,7 @@ public class AlgoritmosAsignacionEspectro {
             PeticionBCM peticionAux = peticionFinal.clone();
             peticionAux.getCaminosTR().clear();
             peticionAux.getCaminosTR().add(caminoSeleccionado);
-            System.out.println("Peticion a asignar: \n" +  peticionAux);
+            System.out.println("Peticion a asignar: \n" + peticionAux);
             this.asignarFS(peticionAux, grafo, true);
 //            Collections.sort(posicionesIniciales, (s1, s2) -> Integer.compare(s2, s1));
 //            if (!posicionesIniciales.isEmpty()) {
@@ -144,8 +147,8 @@ public class AlgoritmosAsignacionEspectro {
 
     private int buscarPosicionMenor(List<Integer> posicionesFinales) {
         int menor = Integer.MAX_VALUE;
-        int posicion = -1; 
-        
+        int posicion = -1;
+
         for (int i = 0; i < posicionesFinales.size(); i++) {
             if (posicionesFinales.get(i) < menor) {
                 menor = posicionesFinales.get(i);
@@ -163,21 +166,24 @@ public class AlgoritmosAsignacionEspectro {
             }
         }
         return aux;
-    }private List<CaminoTR> seleccionFSAmpliado(List<CaminoTR> caminosTrs, Integer FSMayor, int k) {
+    }
+
+    private List<CaminoTR> seleccionFSAmpliado(List<CaminoTR> caminosTrs, Integer FSMayor, int k) {
         List<CaminoTR> aux = new ArrayList<>();
         int cont = 0;
         Collections.sort(caminosTrs, (s1, s2) -> Integer.compare(s1.getTrfinal().getTamanhoFS(), s2.getTrfinal().getTamanhoFS()));
-         
+
         for (CaminoTR caminoTr : caminosTrs) {
             if (caminoTr.getTrfinal().getTamanhoFS() <= FSMayor) {
                 aux.add(caminoTr);
-                cont ++;
+                cont++;
             }
-            if (cont == k) break;
+            if (cont == k) {
+                break;
+            }
         }
         return aux;
     }
-    
 
     private void imprimirPeticion(PeticionBCM peticionesFinal) {
         System.out.println("Peticion Final: ");
