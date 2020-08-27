@@ -30,11 +30,9 @@ public class Operadores {
         for (int i = 0; i < individuo.length; i++) {
             boolean habilitado = true;
             for (int j = punto1; j <= punto2; j++) {
-
                 if (individuo[i] == hijo[j]) {
                     habilitado = false;
                     break;
-
                 }
             }
             if (habilitado) {
@@ -65,9 +63,9 @@ public class Operadores {
     public void mutarIndividuo(Gen hijo) {
         if (Math.random() < 0.025f) {
             //System.out.println("se va a realizar la mutacion");
-            int[] mutado = mutacion(hijo.getIndividio());
+            int[] mutado = mutacion(hijo.getIndividuo());
             //descendencia se copian de nuevo en la población, en sustitución de los padres.
-            hijo.setIndividio(mutado);
+            hijo.setIndividuo(mutado);
         }
     }
 

@@ -24,28 +24,27 @@ public class AGP {
     @Inject
     AlgoritmosAsignacionEspectro algoritmosAsignacionEspectro;
 
-    public void permute(int[] arr) {
-        permuteHelper(arr, 0);
+    public void permute(int[] arr, List<int[]> permutaciones, int cantidadElementos, int limite) {
+        permuteHelper(arr, 0, permutaciones, cantidadElementos, limite);
     }
 
-    private void permuteHelper(int[] arr, int index) {
-        //int longitud = arr.length;
-        //List<int[]> permutaciones = new ArrayList<>();
+    private void permuteHelper(int[] arr, int index, List<int[]> permutaciones, int cantidadElemento, int limite) {
         if (index >= arr.length - 1) { //If we are at the last element - nothing left to permute
-            //System.out.println(Arrays.toString(arr));
-            //Print the array
-            //int permutacion[]; //declarando un array
-            //permutacion = new int[longitud]; // asignando memoria al array
-            System.out.print("[");
+            int[] permutacion = new int[cantidadElemento]; //declarando un array
+
             for (int i = 0; i < arr.length - 1; i++) {
-                System.out.print(arr[i] + ", ");
-                //permutacion[i] = arr[i];
+                permutacion[i] = arr[i];
             }
             if (arr.length > 0) {
-                System.out.print(arr[arr.length - 1]);
+                permutacion[arr.length - 1] = arr[arr.length - 1];
             }
-            System.out.println("]");
-            //permutaciones.add(permutacion);
+            if (permutaciones.size() < limite) {
+                permutaciones.add(permutacion);
+                
+            }else{
+                return;// si hay kilombo con la permutacion quitar el else
+            }
+
             return;
         }
 
@@ -57,34 +56,38 @@ public class AGP {
             arr[i] = t;
 
             //Recurse on the sub array arr[index+1...end]
-            permuteHelper(arr, index + 1);
+            permuteHelper(arr, index + 1, permutaciones, cantidadElemento, limite);
 
             //Swap the elements back
             t = arr[index];
             arr[index] = arr[i];
             arr[i] = t;
         }
-//        System.out.println("Permutaciones");
-//        for (int[] permutacion : permutaciones) {
-//            for (int i = 0; i < permutacion.length; i++) {
-//                System.out.println(permutacion[i]+",");
-//            }
-//            System.out.println("\n");
-//        }
+    }
+    
+    private int[] generarPermutacionIdentidad(int cantidadPeticiones){
+        int[] identidad = new int[cantidadPeticiones];
+        for (int i = 0; i < cantidadPeticiones; i++) {
+            identidad [i] = i;
+        }
+        return  identidad;
     }
 
     public List<Gen> inicializarPoblacion(int cantidadPoblacion, int cantidadComponentes) {
         //System.out.println("estoy inicilizando la poblacion");
+        List<int[]> permutaciones = new ArrayList<>();
+        int[] identidad = generarPermutacionIdentidad(cantidadComponentes);
+        permute(identidad, permutaciones, identidad.length, cantidadPoblacion);
         List<Gen> poblacion = new ArrayList<>();
-
-        for (int i = 0; i < cantidadPoblacion; i++) {
+        for (int[] permutacion : permutaciones) {
             Gen gen = new Gen();
-            int[] individuo = new int[cantidadComponentes];
+            int[] individuo = permutacion;
             //llamar a generar permutacion
-            gen.setIndividio(individuo);
-            poblacion.add(gen);
 
+            gen.setIndividuo(individuo);
+            poblacion.add(gen);
         }
+        
         return poblacion;
     }
 
@@ -132,7 +135,7 @@ public class AGP {
 
                 int resultadoBFMRA = Integer.MAX_VALUE;
                 try {
-                    resultadoBFMRA = algoritmosAsignacionEspectro.BFMRA(individuoDeTurno.getIndividio(), peticionesFinales, grafo, cantidadFS, tamanhoFS);
+                    resultadoBFMRA = algoritmosAsignacionEspectro.BFMRA(individuoDeTurno.getIndividuo(), peticionesFinales, grafo, cantidadFS, tamanhoFS);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     //logger.error("Error:", ex);
@@ -143,7 +146,7 @@ public class AGP {
                 // que hago cuando empatan???? decido por que ????
                 if (individuoDeTurno.getFitness() < solucion.getFitness()) {
                     solucion.setFitness(individuoDeTurno.getFitness());
-                    solucion.setIndividio(individuoDeTurno.getIndividio());
+                    solucion.setIndividuo(individuoDeTurno.getIndividuo());
                 }
 
             }
@@ -167,17 +170,17 @@ public class AGP {
 
                 if (Math.random() < 0.75) {
                     //System.out.println("se va a realizar el cruce");
-                    List<int[]> descendientes = operadores.orderCrosover(padre1.getIndividio(), padre2.getIndividio());
+                    List<int[]> descendientes = operadores.orderCrosover(padre1.getIndividuo(), padre2.getIndividuo());
 
                     int[] descendiente1 = descendientes.get(0);
                     int[] descendiente2 = descendientes.get(1);
 
-                    hijo1.setIndividio(descendiente1);
-                    hijo2.setIndividio(descendiente2);
+                    hijo1.setIndividuo(descendiente1);
+                    hijo2.setIndividuo(descendiente2);
                 } else {
                     //System.out.println("NO se va a realizar el cruce");
-                    hijo1.setIndividio(padre1.getIndividio());
-                    hijo2.setIndividio(padre2.getIndividio());
+                    hijo1.setIndividuo(padre1.getIndividuo());
+                    hijo2.setIndividuo(padre2.getIndividuo());
                 }
                 numeroDescendientes += 2;
 

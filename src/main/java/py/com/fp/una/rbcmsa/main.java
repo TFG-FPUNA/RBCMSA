@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import py.com.fp.una.rbcmsa.ag.propio.AGP;
+import py.com.fp.una.rbcmsa.ag.propio.Gen;
 import py.com.fp.una.rbcmsa.ag.propio.Operadores;
 import py.com.fp.una.rbcmsa.ag.ysa.AG;
 import py.com.fp.una.rbcmsa.ag.ysa.adaptaciones.AdaptacionesAG;
@@ -57,28 +58,28 @@ public class main {
 
     @Inject
     Generador generadorBean;
-    
+
     @Inject
     AlgoritmosAsignacionEspectro algoritmosAsignacionEspectro;
-    
+
     @Inject
     SPILP SPILP;
-    
+
     @Inject
     JPILP JPILP;
-    
+
     @Inject
     Adaptaciones adaptacionesBean;
-    
+
     @Inject
     AdaptacionesAG adaptacionesAG;
-    
+
     @Inject
     AG AG;
-    
+
     @Inject
     AGP AGP;
-    
+
     @Inject
     Operadores operadores;
 
@@ -94,11 +95,11 @@ public class main {
 //        };
         // caso 3
         int[][] matriz = {
-            {0, 1000, 0, 0, 0, 200}, 
-            {1000, 0, 100, 0, 400, 0}, 
-            {0, 100, 0, 700, 0, 0}, 
-            {0, 0, 700, 0, 1000, 0}, 
-            {0, 400, 0, 1000, 0, 200}, 
+            {0, 1000, 0, 0, 0, 200},
+            {1000, 0, 100, 0, 400, 0},
+            {0, 100, 0, 700, 0, 0},
+            {0, 0, 700, 0, 1000, 0},
+            {0, 400, 0, 1000, 0, 200},
             {200, 0, 0, 0, 200, 0}
         };
         //int[][] matriz = {{0, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 0, 1}, {1, 1, 1, 0}};
@@ -125,8 +126,8 @@ public class main {
         Weld weld = new Weld();
         try {
             WeldContainer container = weld.initialize();
-            container.select(main.class).get().procesar(matriz, sepadadorTR, sepadadorPeticiones, 
-                    rutaArchivo, nombreArchivo, rutaArchivoILP, nombreArchivoILPFaseI, 
+            container.select(main.class).get().procesar(matriz, sepadadorTR, sepadadorPeticiones,
+                    rutaArchivo, nombreArchivo, rutaArchivoILP, nombreArchivoILPFaseI,
                     nombreArchivoILPFaseII, nombreArchivoJPIL, rutaArchivoAG, nombreArchivoAG);
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,8 +137,8 @@ public class main {
 //        }
     }
 
-    public void procesar(int matriz[][], String separadorTR, String sepadadorPeticiones, 
-            String rutaArchivos, String nombrePerticiones, String rutaArchivoILP, 
+    public void procesar(int matriz[][], String separadorTR, String sepadadorPeticiones,
+            String rutaArchivos, String nombrePerticiones, String rutaArchivoILP,
             String nombreArchivoILPFaseI, String nombreArchivoILPFaseII, String nombreArchivoJPIL,
             String rutaArchivoAG, String nombreArchivoAG)
             throws CloneNotSupportedException, IOException {
@@ -190,7 +191,7 @@ public class main {
             //List<TRBCM> trFinales = new ArrayList<>();
             List<CaminoTR> caminosTrFinales = new ArrayList<>();
             Integer FSMenor = Integer.MAX_VALUE;
-             Integer FSMayor = Integer.MIN_VALUE;
+            Integer FSMayor = Integer.MIN_VALUE;
             for (Camino camino : ruta.getCaminos()) {
                 CaminoTR caminoTrFinal = new CaminoTR();
                 TRBCM trFinal = buscarTRBean.buscarTR(camino.getDistancia(), TRS, peticion, tamanhoFS);
@@ -213,57 +214,80 @@ public class main {
             peticionFinal.setFSMayor(FSMayor);
             peticionFinal.setCaminosTR(caminosTrFinales);
             peticionesFinales.add(peticionFinal);
-            
 
             //PeticionesFinales.put(key, peticionFinal);
             //hablar con divina sobre el tema de ordenar por TFS porque cada camino tiene un TFS diferente y estos caminos estan asociados a una peticion
-        }       
-        
+        }
+
 //        for (Map.Entry<String, PeticionBCM> entry : PeticionesFinales.entrySet()) {
 //            String key = entry.getKey();
 //            PeticionBCM value = entry.getValue();
 //            System.out.println("key:" + key + " value: " + value);
 //
 //        }
-
         Grafo grafo = operacionesGrafos.cargaGrafo(matriz, cantidadSP);
         //Llamada algoritmo 1 del paper base
         //algoritmosAsignacionEspectro.SFMRA(peticionesFinales, grafo);
-        
+
         //Llamada algoritmo 2 del paper base
         //algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
-        
         //Llamada algoritmo 3 del paper base
-        //algoritmosAsignacionEspectro.BFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
-        
+        algoritmosAsignacionEspectro.BFMRA(new int[]{0, 1, 2, 3, 4, 5, 6},peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
-        
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
-        
         //SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
-        
         //SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
-        
-        
         //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);
         //adaptacionesAG.generarEntradaAG(peticionesFinales, 0, rutaArchivoAG, nombreArchivoAG);
-        
         //AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
-        //AGP.permute(new int[]{1,2,3,4});
-        int[] primerIndividuo = {9,8,4,5,6,7,1,2,3,10};
-        int[] segundoIndividuo = {8,7,1,2,3,10,9,5,4,6};
-        List<int[]> resultado = operadores.orderCrosover(primerIndividuo, segundoIndividuo);
-        for (int[] result : resultado) {
-            for (int i = 0; i < result.length; i++) {
-                System.out.print(result[i]+",");
-            }
-            System.out.println("");
-        }
-        int[] individuoMutacion = {9,4,2,1,5,7,6,10,3,8};
-        int[] mutado = operadores.mutacion(individuoMutacion);
-        System.out.println("Mutacion");
-        for (int i = 0; i < mutado.length; i++) {
-            System.out.print(mutado[i] + ";");
-        }
+//        List<int[]> permutaciones = new ArrayList<>();
+//        System.out.println("Permutaciones");
+//        AGP.permute(new int[]{1, 2, 3, 4}, permutaciones, 4, 23);
+//        System.out.println("longitud: " + permutaciones.size());
+//        for (int[] permutacion : permutaciones) {
+//            System.out.print("{");
+//            for (int i = 0; i < permutacion.length; i++) {
+//                System.out.print(permutacion[i]);
+//            }
+//            System.out.println("}\n");
+//        }
+//        System.out.println("");
+//        int[] primerIndividuo = {9, 8, 4, 5, 6, 7, 1, 2, 3, 10};
+//        int[] segundoIndividuo = {8, 7, 1, 2, 3, 10, 9, 5, 4, 6};
+//        List<int[]> resultado = operadores.orderCrosover(primerIndividuo, segundoIndividuo);
+//        for (int[] result : resultado) {
+//            for (int i = 0; i < result.length; i++) {
+//                System.out.print(result[i] + ",");
+//            }
+//            System.out.println("");
+//        }
+//        int[] individuoMutacion = {9, 4, 2, 1, 5, 7, 6, 10, 3, 8};
+//        int[] mutado = operadores.mutacion(individuoMutacion);
+//        System.out.println("Mutacion");
+//        for (int i = 0; i < mutado.length; i++) {
+//            System.out.print(mutado[i] + ";");
+//        }
+
+//        String str = "1234";
+//        StringBuffer strBuf = new StringBuffer(str);
+//        List<StringBuffer> permutaciones = new ArrayList<>();
+//
+//        System.out.println("Permutacion");
+//        AGP.doPerm(strBuf, str.length(), permutaciones);
+//        for (StringBuffer permutacione : permutaciones) {
+//            System.err.println(permutacione);
+//            
+//        }
+//        List<Gen> genes = AGP.inicializarPoblacion(20, 4);
+//        System.out.println("Lista: " + genes.size());
+//        for (Gen gen : genes) {
+//            System.out.print("Gen: {");
+//            for (int i = 0; i < gen.getIndividuo().length; i++) {
+//                System.out.print(gen.getIndividuo()[i]);
+//            }
+//            System.out.println("}\n");
+//        }
+        
     }
+
 }

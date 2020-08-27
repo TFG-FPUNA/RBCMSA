@@ -11,18 +11,18 @@ package py.com.fp.una.rbcmsa.ag.propio;
  */
 public class Gen {
 
-    public int[] individio;
+    public int[] individuo;
     public double fitness;
 
     public Gen() {
     }
 
-    public int[] getIndividio() {
-        return individio;
+    public int[] getIndividuo() {
+        return individuo;
     }
 
-    public void setIndividio(int[] individio) {
-        this.individio = individio;
+    public void setIndividuo(int[] individuo) {
+        this.individuo = individuo;
     }
 
     public double getFitness() {
@@ -35,7 +35,7 @@ public class Gen {
 
     @Override
     public String toString() {
-        return "Gen{" + "individio=" + individio + ", fitness=" + fitness + '}';
+        return "Gen{" + "individio=" + individuo + ", fitness=" + fitness + '}';
     }
 
 }
