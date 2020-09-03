@@ -24,70 +24,78 @@ public class AGP {
     @Inject
     AlgoritmosAsignacionEspectro algoritmosAsignacionEspectro;
 
-    public void permute(int[] arr, List<int[]> permutaciones, int cantidadElementos, int limite) {
-        permuteHelper(arr, 0, permutaciones, cantidadElementos, limite);
-    }
+//    public void permute(int[] arr, List<int[]> permutaciones, int cantidadElementos, int limite) {
+//        permuteHelper(arr, 0, permutaciones, cantidadElementos, limite);
+//    }
 
-    private void permuteHelper(int[] arr, int index, List<int[]> permutaciones, int cantidadElemento, int limite) {
-        if (index >= arr.length - 1) { //If we are at the last element - nothing left to permute
-            int[] permutacion = new int[cantidadElemento]; //declarando un array
+//    private void permuteHelper(int[] arr, int index, List<int[]> permutaciones, int cantidadElemento, int limite) {
+//        if (index >= arr.length - 1) { //If we are at the last element - nothing left to permute
+//            int[] permutacion = new int[cantidadElemento]; //declarando un array
+//
+//            for (int i = 0; i < arr.length - 1; i++) {
+//                permutacion[i] = arr[i];
+//            }
+//            if (arr.length > 0) {
+//                permutacion[arr.length - 1] = arr[arr.length - 1];
+//            }
+//            if (permutaciones.size() < limite) {
+//                permutaciones.add(permutacion);
+//
+//            } else {
+//                return;// si hay kilombo con la permutacion quitar el else
+//            }
+//
+//            return;
+//        }
+//
+//        for (int i = index; i < arr.length; i++) { //For each index in the sub array arr[index...end]
+//
+//            //Swap the elements at indices index and i
+//            int t = arr[index];
+//            arr[index] = arr[i];
+//            arr[i] = t;
+//
+//            //Recurse on the sub array arr[index+1...end]
+//            permuteHelper(arr, index + 1, permutaciones, cantidadElemento, limite);
+//
+//            //Swap the elements back
+//            t = arr[index];
+//            arr[index] = arr[i];
+//            arr[i] = t;
+//        }
+//    }
 
-            for (int i = 0; i < arr.length - 1; i++) {
-                permutacion[i] = arr[i];
-            }
-            if (arr.length > 0) {
-                permutacion[arr.length - 1] = arr[arr.length - 1];
-            }
-            if (permutaciones.size() < limite) {
-                permutaciones.add(permutacion);
-                
-            }else{
-                return;// si hay kilombo con la permutacion quitar el else
-            }
-
-            return;
-        }
-
-        for (int i = index; i < arr.length; i++) { //For each index in the sub array arr[index...end]
-
-            //Swap the elements at indices index and i
-            int t = arr[index];
-            arr[index] = arr[i];
-            arr[i] = t;
-
-            //Recurse on the sub array arr[index+1...end]
-            permuteHelper(arr, index + 1, permutaciones, cantidadElemento, limite);
-
-            //Swap the elements back
-            t = arr[index];
-            arr[index] = arr[i];
-            arr[i] = t;
-        }
-    }
-    
-    private int[] generarPermutacionIdentidad(int cantidadPeticiones){
+    private int[] generarPermutacionIdentidad(int cantidadPeticiones) {
         int[] identidad = new int[cantidadPeticiones];
         for (int i = 0; i < cantidadPeticiones; i++) {
-            identidad [i] = i;
+            identidad[i] = i;
         }
-        return  identidad;
+        return identidad;
     }
 
     public List<Gen> inicializarPoblacion(int cantidadPoblacion, int cantidadComponentes) {
         //System.out.println("estoy inicilizando la poblacion");
-        List<int[]> permutaciones = new ArrayList<>();
+        //List<int[]> permutaciones = new ArrayList<>();
         int[] identidad = generarPermutacionIdentidad(cantidadComponentes);
-        permute(identidad, permutaciones, identidad.length, cantidadPoblacion);
+        //permute(identidad, permutaciones, identidad.length, cantidadPoblacion);
         List<Gen> poblacion = new ArrayList<>();
-        for (int[] permutacion : permutaciones) {
+        for (int i = 0; i < cantidadPoblacion; i++) {
+            int[] mutarContinuamente = identidad;
+            for (int j = 0; j < cantidadComponentes; j++) {
+                mutarContinuamente = operadores.mutacion(mutarContinuamente, j, true);
+            }
             Gen gen = new Gen();
-            int[] individuo = permutacion;
-            //llamar a generar permutacion
-
-            gen.setIndividuo(individuo);
+            gen.setIndividuo(mutarContinuamente);
             poblacion.add(gen);
         }
-        
+//        for (int[] permutacion : permutaciones) {
+//            Gen gen = new Gen();
+//            int[] individuo = permutacion;
+//            //llamar a generar permutacion
+//
+//            gen.setIndividuo(individuo);
+//            poblacion.add(gen);
+//        }
         return poblacion;
     }
 
@@ -115,8 +123,9 @@ public class AGP {
         return padres;
     }*/
     public Solucion algoritmoGenetico(int cantidadGeneraciones, int cantidadPoblacion,
-            List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS,
-            Double limite) throws Exception {
+            List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS) 
+            //int total = algoritmosAsignacionEspectro.BFMRA(new int[]{0, 1, 2, 3, 4, 5, 6}, peticionesFinales, grafo, cantidadSP, tamanhoFS);
+        throws Exception {
         //System.out.println("empiezo el genetico");
 
         //Inicializar solucion;
@@ -136,6 +145,8 @@ public class AGP {
                 int resultadoBFMRA = Integer.MAX_VALUE;
                 try {
                     resultadoBFMRA = algoritmosAsignacionEspectro.BFMRA(individuoDeTurno.getIndividuo(), peticionesFinales, grafo, cantidadFS, tamanhoFS);
+                       //int total = algoritmosAsignacionEspectro.BFMRA(new int[]{0, 1, 2, 3, 4, 5, 6}, peticionesFinales, grafo, cantidadSP, tamanhoFS);
+        
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     //logger.error("Error:", ex);

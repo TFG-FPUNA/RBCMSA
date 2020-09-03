@@ -17,6 +17,7 @@ import org.jboss.weld.environment.se.WeldContainer;
 import py.com.fp.una.rbcmsa.ag.propio.AGP;
 import py.com.fp.una.rbcmsa.ag.propio.Gen;
 import py.com.fp.una.rbcmsa.ag.propio.Operadores;
+import py.com.fp.una.rbcmsa.ag.propio.Solucion;
 import py.com.fp.una.rbcmsa.ag.ysa.AG;
 import py.com.fp.una.rbcmsa.ag.ysa.adaptaciones.AdaptacionesAG;
 import py.com.fp.una.rbcmsa.algoritmos.AlgoritmosAsignacionEspectro;
@@ -113,6 +114,7 @@ public class main {
 //        String nombreArchivo = "Peticiones.txt";
 //        String nombreArchivo = "Peticiones_caso2.txt";
         String nombreArchivo = "Peticiones_caso3.txt";
+        //String nombreArchivo = "Peticiones_caso_comparacion_ysa.txt";
         String nombreArchivoILPFaseI = "SP-ILP_11.dat";
         String nombreArchivoILPFaseII = "SP-ILP_21.dat";
         String nombreArchivoJPIL = "JPILP.dat";
@@ -141,7 +143,7 @@ public class main {
             String rutaArchivos, String nombrePerticiones, String rutaArchivoILP,
             String nombreArchivoILPFaseI, String nombreArchivoILPFaseII, String nombreArchivoJPIL,
             String rutaArchivoAG, String nombreArchivoAG)
-            throws CloneNotSupportedException, IOException {
+            throws CloneNotSupportedException, IOException, Exception {
         Properties p = archivoBean.cargarPropiedades();
         String nombreArchivoTR = (String) p.get(NOMBRE_ARCHIVO_TR);
         int limite = Integer.parseInt((String) p.get(LIMITE));
@@ -232,7 +234,8 @@ public class main {
         //Llamada algoritmo 2 del paper base
         //algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         //Llamada algoritmo 3 del paper base
-        algoritmosAsignacionEspectro.BFMRA(new int[]{0, 1, 2, 3, 4, 5, 6},peticionesFinales, grafo, cantidadSP ,tamanhoFS);
+        int total = algoritmosAsignacionEspectro.BFMRA(new int[]{4,1,6,0,5,3,2}, peticionesFinales, grafo, cantidadSP, tamanhoFS);
+        System.out.println("Total: " + total);
         //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
         //SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
@@ -240,6 +243,24 @@ public class main {
         //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);
         //adaptacionesAG.generarEntradaAG(peticionesFinales, 0, rutaArchivoAG, nombreArchivoAG);
         //AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
+//        Solucion solucion = AGP.algoritmoGenetico(10, 10, peticionesFinales, grafo, cantidadSP, tamanhoFS);
+//        System.out.println("Fitness solucion: " + solucion.getFitness());
+//
+//        System.out.print("Individuo: {");
+//        for (int i = 0; i < solucion.getIndividuo().length; i++) {
+//            System.out.print(solucion.getIndividuo()[i]);
+//        }
+//        System.out.println("}\n");
+
+//        List<Gen> genes = AGP.inicializarPoblacion(10, 6);
+//        System.out.println("Lista: " + genes.size());
+//        for (Gen gen : genes) {
+//            System.out.print("Gen: {");
+//            for (int i = 0; i < gen.getIndividuo().length; i++) {
+//                System.out.print(gen.getIndividuo()[i]);
+//            }
+//            System.out.println("}\n");
+//        }
 //        List<int[]> permutaciones = new ArrayList<>();
 //        System.out.println("Permutaciones");
 //        AGP.permute(new int[]{1, 2, 3, 4}, permutaciones, 4, 23);
@@ -267,7 +288,6 @@ public class main {
 //        for (int i = 0; i < mutado.length; i++) {
 //            System.out.print(mutado[i] + ";");
 //        }
-
 //        String str = "1234";
 //        StringBuffer strBuf = new StringBuffer(str);
 //        List<StringBuffer> permutaciones = new ArrayList<>();
@@ -287,7 +307,6 @@ public class main {
 //            }
 //            System.out.println("}\n");
 //        }
-        
     }
 
 }

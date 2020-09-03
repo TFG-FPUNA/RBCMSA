@@ -63,7 +63,7 @@ public class Operadores {
     public void mutarIndividuo(Gen hijo) {
         if (Math.random() < 0.025f) {
             //System.out.println("se va a realizar la mutacion");
-            int[] mutado = mutacion(hijo.getIndividuo());
+            int[] mutado = mutacion(hijo.getIndividuo(),0,false);
             //descendencia se copian de nuevo en la población, en sustitución de los padres.
             hijo.setIndividuo(mutado);
         }
@@ -161,9 +161,15 @@ public class Operadores {
         }
     }
 
-    public int[] mutacion(int[] individuoMutar) {
+    public int[] mutacion(int[] individuoMutar, int punto, boolean flag) {
         //System.out.println("estoy haciendo en mutacion");
-        int puntoMutar = (int) (Math.random() * (individuoMutar.length));
+        int puntoMutar;
+        if (flag) {
+            puntoMutar = punto;
+        }else{
+            puntoMutar = (int) (Math.random() * (individuoMutar.length));
+        }
+        
         int puntoInsercion = (int) (Math.random() * (individuoMutar.length));
         int[] mutado = inicializarHijos(individuoMutar.length);
         mutado[puntoInsercion] = puntoMutar;

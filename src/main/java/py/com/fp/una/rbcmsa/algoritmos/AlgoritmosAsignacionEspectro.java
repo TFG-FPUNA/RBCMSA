@@ -8,6 +8,7 @@ package py.com.fp.una.rbcmsa.algoritmos;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import py.com.fp.una.rbcmsa.grafos.model.Arista;
 import py.com.fp.una.rbcmsa.grafos.model.AuxArista;
 import py.com.fp.una.rbcmsa.grafos.model.Camino;
@@ -84,10 +85,29 @@ public class AlgoritmosAsignacionEspectro {
             this.imprimirPeticion(peticionFinal);
             this.asignarFS(peticionFinal, grafo, true);
         }
-        return 0;//falta contar los fs
+        return obtenerTotalFS(grafo);//falta contar los fs
 
     }
 
+    private int obtenerTotalFS(Grafo grafo){
+        int total = 0;
+        grafo.getAristas();
+        for (Map.Entry<String, Arista> en : grafo.getAristas().entrySet()) {
+            String key = en.getKey();
+            Arista value = en.getValue();
+            int contador = 0;
+            for (int i = 0; i < value.getSP().length; i++) {
+                if (value.getSP()[i] == true) {
+                    contador ++;
+                }
+            }
+            if (contador>total) {
+                total = contador;
+            }
+        }
+        
+        return total-1;
+    }
     public void BFMRA2(List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS, int k) throws CloneNotSupportedException {
         System.out.println("------------- BFMRA -------------");
 
