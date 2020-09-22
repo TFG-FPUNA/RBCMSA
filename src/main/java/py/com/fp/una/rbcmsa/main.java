@@ -95,13 +95,37 @@ public class main {
 //            {200, 0, 0, 0, 200, 0}
 //        };
         // caso 3
+//        int[][] matriz = {
+//            {0, 1000, 0, 0, 0, 200},
+//            {1000, 0, 100, 0, 400, 0},
+//            {0, 100, 0, 700, 0, 0},
+//            {0, 0, 700, 0, 1000, 0},
+//            {0, 400, 0, 1000, 0, 200},
+//            {200, 0, 0, 0, 200, 0}
+//        };
+        // caso ag
         int[][] matriz = {
-            {0, 1000, 0, 0, 0, 200},
-            {1000, 0, 100, 0, 400, 0},
-            {0, 100, 0, 700, 0, 0},
-            {0, 0, 700, 0, 1000, 0},
-            {0, 400, 0, 1000, 0, 200},
-            {200, 0, 0, 0, 200, 0}
+            {0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0}
         };
         //int[][] matriz = {{0, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 0, 1}, {1, 1, 1, 0}};
         //int[][] matriz = {{0, 2233, 0, 0}, {0, 0, 1, 1}, {0, 0, 0, 1}, {1, 0, 0, 0}};
@@ -113,8 +137,9 @@ public class main {
         String rutaArchivoAG = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\";
 //        String nombreArchivo = "Peticiones.txt";
 //        String nombreArchivo = "Peticiones_caso2.txt";
-        String nombreArchivo = "Peticiones_caso3.txt";
+        //String nombreArchivo = "Peticiones_caso3.txt";
         //String nombreArchivo = "Peticiones_caso_comparacion_ysa.txt";
+        String nombreArchivo = "Peticiones_arpanet.txt";
         String nombreArchivoILPFaseI = "SP-ILP_11.dat";
         String nombreArchivoILPFaseII = "SP-ILP_21.dat";
         String nombreArchivoJPIL = "JPILP.dat";
@@ -150,7 +175,7 @@ public class main {
         double tamanhoFS = Double.parseDouble((String) p.get(TAMANHO_FS));
         int cantidadSP = Integer.parseInt((String) p.get(CANTIDAD_SP));
         int guarBan = Integer.parseInt((String) p.get(GUARBAN));
-
+        //SPILP.obtenerFFaseII(1);
         //String rutaArchivo = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\";
         //String nombreArchivo = "Peticiones1.txt";
         for (int i = 0; i < matriz.length; i++) {
@@ -234,23 +259,63 @@ public class main {
         //Llamada algoritmo 2 del paper base
         //algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
         //Llamada algoritmo 3 del paper base
-        int total = algoritmosAsignacionEspectro.BFMRA(new int[]{4,1,6,0,5,3,2}, peticionesFinales, grafo, cantidadSP, tamanhoFS);
-        System.out.println("Total: " + total);
+        //int total = algoritmosAsignacionEspectro.BFMRA(new int[]{5,3,4,1,0,2,6}, peticionesFinales, grafo, cantidadSP, tamanhoFS);
+        //System.out.println("Total: " + total);
         //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
+        long inicioILP = System.currentTimeMillis();
         //SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
+        long finILP = System.currentTimeMillis();
+        long tiempoILP = finILP - inicioILP;
+
         //SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
         //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);
         //adaptacionesAG.generarEntradaAG(peticionesFinales, 0, rutaArchivoAG, nombreArchivoAG);
+        long inicioAGYSA = System.currentTimeMillis();
         //AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
-//        Solucion solucion = AGP.algoritmoGenetico(10, 10, peticionesFinales, grafo, cantidadSP, tamanhoFS);
-//        System.out.println("Fitness solucion: " + solucion.getFitness());
-//
-//        System.out.print("Individuo: {");
-//        for (int i = 0; i < solucion.getIndividuo().length; i++) {
-//            System.out.print(solucion.getIndividuo()[i]);
-//        }
-//        System.out.println("}\n");
+        long finAGYSA = System.currentTimeMillis();
+        long tiempoAGYsa = finAGYSA - inicioAGYSA;
+        List<Double> mutacion = new ArrayList<>();
+//        mutacion.add(0.1d);
+//        mutacion.add(0.15d);
+//        mutacion.add(0.2d);
+//        mutacion.add(0.25d);
+//        mutacion.add(0.3d);
+//        mutacion.add(0.35d);
+//        mutacion.add(0.4d);
+//        mutacion.add(0.45d);
+//        mutacion.add(0.5d);
+//        mutacion.add(0.55d);
+//        mutacion.add(0.6d);
+//        mutacion.add(0.65d);
+        mutacion.add(0.7d);
+        List<Float> promedios = new ArrayList<>();
+        List<Float> generaciones = new ArrayList<>();
+
+        for (Double muta : mutacion) {
+            int promedio = 0;
+            int generacion = 0;
+            System.out.println("mutacion: " + muta);
+            for (int i = 0; i < 1; i++) {
+                long inicioAGPropio = System.currentTimeMillis();
+                Solucion solucion = AGP.algoritmoGenetico(10, 10, peticionesFinales, grafo, cantidadSP, tamanhoFS, muta);
+                long finAGPropio = System.currentTimeMillis();
+                long tiempoAGPropio = finAGPropio - inicioAGPropio;
+                System.out.println("Fitness solucion: " + solucion.getFitness());
+                System.out.println("Genracion: " + solucion.getGeneracion());
+                promedio += solucion.getFitness();
+                generacion += generacion;
+                System.out.print("Individuo: {");
+                for (int j = 0; j < solucion.getIndividuo().length; j++) {
+                    System.out.print(solucion.getIndividuo()[j] + ",");
+                }
+                System.out.println("}\n");
+            }
+            promedios.add(promedio / 1f);
+        }
+        for (Float promedio : promedios) {
+            System.out.println("Promedio: " + promedio);
+        }
 
 //        List<Gen> genes = AGP.inicializarPoblacion(10, 6);
 //        System.out.println("Lista: " + genes.size());

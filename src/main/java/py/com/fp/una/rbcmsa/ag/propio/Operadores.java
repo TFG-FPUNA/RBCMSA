@@ -60,9 +60,10 @@ public class Operadores {
         return evaluar;
     }
 
-    public void mutarIndividuo(Gen hijo) {
-        if (Math.random() < 0.025f) {
-            //System.out.println("se va a realizar la mutacion");
+    public void mutarIndividuo(Gen hijo, double mutacion) {
+        double porcentaje = Math.random();
+        if (porcentaje < mutacion) {
+            //System.out.println("se va a realizar la mutacion, random: " + porcentaje + ", enviado: " + mutacion );
             int[] mutado = mutacion(hijo.getIndividuo(),0,false);
             //descendencia se copian de nuevo en la población, en sustitución de los padres.
             hijo.setIndividuo(mutado);

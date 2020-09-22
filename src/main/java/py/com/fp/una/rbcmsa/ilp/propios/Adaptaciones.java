@@ -47,7 +47,7 @@ public class Adaptaciones {
         int indicaAuxPeticion = 0;
         for (PeticionBCM peticionFinal : peticionesFinales) {
             int indice = (posicionesCaminos.get(indicaAuxPeticion) - 1) - (k * indicaAuxPeticion);
-            System.out.println("peticion: " + indicaAuxPeticion + " - inidce: " + indice);
+            //System.out.println("peticion: " + indicaAuxPeticion + " - inidce: " + indice);
             CaminoTR caminoTR = peticionFinal.getCaminosTR().get(indice);
             for (int j = 0; j < caminoTR.getCamino().getNodos().size() - 1; j++) {
                 String identificador = caminoTR.getCamino().getNodos().get(j) + SEPARADOR_IDENTIFICADOR + caminoTR.getCamino().getNodos().get(j + 1);
@@ -56,7 +56,7 @@ public class Adaptaciones {
                     grafo.getAristas().get(identificador).getSP()[auxPosicion] = true;
                     grafo.getAristas().get(identificador).setCantidadSP(grafo.getAristas().get(identificador).getCantidadSP() - 1);
                     
-                    System.out.println("Arista:" + identificador + "posicion fs usado: " + auxPosicion);
+                    //System.out.println("Arista:" + identificador + "posicion fs usado: " + auxPosicion);
                 }
             }
             indicaAuxPeticion++;

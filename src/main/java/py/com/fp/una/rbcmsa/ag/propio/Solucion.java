@@ -10,5 +10,19 @@ package py.com.fp.una.rbcmsa.ag.propio;
  * @author Alexander
  */
 public class Solucion extends Gen{
+    int generacion;
+
+    public int getGeneracion() {
+        return generacion;
+    }
+
+    public void setGeneracion(int generacion) {
+        this.generacion = generacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Solucion{" + "generacion=" + generacion + '}';
+    }
     
 }

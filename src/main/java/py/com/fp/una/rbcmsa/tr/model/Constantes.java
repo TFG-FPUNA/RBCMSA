@@ -42,6 +42,6 @@ public class Constantes {
     public static final String UNIDAD_TIEMPO = " minutos.";
     public static final String CORRIDA = "_corridaNro_";
     public static final String EXTENSION =".txt";
-    
-    
+    /*AGP*/
+    public static final int CRITERIO_PARADA =10;
 }

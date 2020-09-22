@@ -78,8 +78,8 @@ public class SPILP {
 
     private static ArrayList<Integer> leerSalidaCplex(int k, int y) throws FileNotFoundException {
         ArrayList<Integer> listaCaminosElegidos = new ArrayList();
-        //FileReader fr = new FileReader("./src/resultados/salidaCplexSP-ILP_1" + y + ".txt");
-        FileReader fr = new FileReader("./src/resultados/salidaCplexILP1.txt");
+        FileReader fr = new FileReader("./src/resultados/salidaCplexSP-ILP_1" + y + ".txt");
+        //FileReader fr = new FileReader("./src/resultados/salidaCplexILP1.txt");
         String[] edgeText;
         String texto = "";
 
@@ -104,10 +104,13 @@ public class SPILP {
         System.out.println("x = \n" + texto2);
 
         String[] textoZ = texto2.split("\n");
-
+        int asdf = 0;
         for (int i = 0; i < textoZ.length; i++) {
             for (int j = 0; j < textoZ[i].length(); j++) {
                 if (textoZ[i].charAt(j) == '1') {
+                    if (10 == (i + 1) * k - k + j + 1) {
+                        asdf ++;
+                    }
                     listaCaminosElegidos.add((i + 1) * k - k + j + 1);
                     break;
                 }
@@ -156,9 +159,9 @@ public class SPILP {
         //System.out.println("EL ILP 2 ha tomado " + (time_end1 - time_start1 + time_end2 - time_start2) + " milisegundos");
     }
 
-    private List<Integer> obtenerFFaseII(int y) {
-        //String f = leerArchivo("./src/resultados/salidaCplexSP-ILP_2" + y + ".txt");
-        String f = leerArchivo("./src/resultados/salidaCplexILP1.txt");
+    public List<Integer> obtenerFFaseII(int y) {
+        String f = leerArchivo("./src/resultados/salidaCplexSP-ILP_2" + y + ".txt");
+        //String f = leerArchivo("./src/resultados/salidaCplexILP1.txt");
         f = f.substring(f.indexOf("f") + 5, f.indexOf("]"));
         System.out.println("F: " + f);
         String[] t2 = f.split(" ");
@@ -166,6 +169,9 @@ public class SPILP {
         List<Integer> posicionesFS = new ArrayList<>();
         for (String t1 : t2) {
             if (!t1.equals("")) {
+                if (t1.contains("\n")) {
+                    t1=t1.substring(0, t1.length()-1);
+                }
                 posicionesFS.add(Integer.parseInt(t1));
             }
         }
