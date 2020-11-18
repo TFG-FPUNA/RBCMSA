@@ -55,29 +55,65 @@ public class Adaptaciones {
                     int auxPosicion = l + posicionesFS.get(indicaAuxPeticion);
                     grafo.getAristas().get(identificador).getSP()[auxPosicion] = true;
                     grafo.getAristas().get(identificador).setCantidadSP(grafo.getAristas().get(identificador).getCantidadSP() - 1);
-                    
+
                     //System.out.println("Arista:" + identificador + "posicion fs usado: " + auxPosicion);
                 }
             }
             indicaAuxPeticion++;
         }
     }
-    
-    public AlphaR preparaArchivoJPILP(String ruta, String nombre, String k, List<PeticionBCM> peticionesFinales,
-            Grafo grafo, String GuardBan, int ftotal) throws IOException {
-        List<String> archivoPrimeraFaseILP = new ArrayList<>();
-        archivoPrimeraFaseILP.add(K + k + FIN_LINEA);
-        archivoPrimeraFaseILP.add(SD + peticionesFinales.size() + FIN_LINEA);
-        archivoPrimeraFaseILP.add(FTOTAL + ftotal + FIN_LINEA);
-        archivoPrimeraFaseILP.add(G + GuardBan + FIN_LINEA);
-        AlphaR alphaR = this.generarAlphaGenerarR(peticionesFinales, grafo);
-        archivoPrimeraFaseILP.add(alphaR.getAlphaR().replace(RR, LL));
-        archivoBean.crearArchivo(ruta + nombre, archivoPrimeraFaseILP, true);
 
-        return alphaR;
+    public void preparaArchivoJPILP(String ruta, String nombre, String k, List<PeticionBCM> peticionesFinales,
+            List<CaminoTR> caminos, String GuardBan, int ftotal) throws IOException {
+        List<String> archivoJPILP = new ArrayList<>();
+        archivoJPILP.add(K + k + FIN_LINEA);
+        archivoJPILP.add(SD + peticionesFinales.size() + FIN_LINEA);
+        archivoJPILP.add(FTOTAL + ftotal + FIN_LINEA);
+        archivoJPILP.add(G + GuardBan + FIN_LINEA);
+        archivoJPILP.add(ALFA + this.generarAlphaJPILP(peticionesFinales) + FIN_LINEA);
+        archivoJPILP.add(prepararLJPILP(caminos));
+        archivoBean.crearArchivo(ruta + nombre, archivoJPILP, true);
 
     }
-    
+
+    public String prepararLJPILP(List<CaminoTR> caminos) {
+        String lFinal = LL + INICIO_LLAVE + SALTO;
+        for (int i = 0; i < caminos.size(); i++) {
+            int cantNodosCamino1 = caminos.get(i).getCamino().getNodos().size();
+            lFinal = lFinal + INICIO_LLAVE;
+            for (int j = 0; j < caminos.size(); j++) {
+                int cantiNodosCamino2 = caminos.get(j).getCamino().getNodos().size();
+                boolean romper = false;
+                for (int k = 0; k < cantNodosCamino1 - 1; k++) {
+                    String enlace1 = caminos.get(i).getCamino().getNodos().get(k)
+                            + "-"
+                            + caminos.get(i).getCamino().getNodos().get(k + 1);
+                    
+                    for (int l = 0; l < cantiNodosCamino2 - 1; l++) {
+                        String enlace2 = caminos.get(j).getCamino().getNodos().get(l)
+                                + "-"
+                                + caminos.get(j).getCamino().getNodos().get(l + 1);
+                        if (enlace1.equals(enlace2)) {
+                            lFinal += 1 + SEPARADOR;
+                            romper = true;
+                            break;
+                        }
+                    }
+                    if (romper) {
+                        break;
+                    }
+
+                }
+                if (!romper) {
+                    lFinal += 0 + SEPARADOR;
+                }
+            }
+            lFinal = lFinal.substring(0, lFinal.length() - 1) + FIN_LLAVE + SEPARADOR + SALTO;
+        }
+        lFinal = lFinal + FIN_LLAVE + FIN_LINEA;
+        return lFinal;
+    }
+
     public AlphaR preparaArchivoFaseIILP(String ruta, String nombre, String k, List<PeticionBCM> peticionesFinales,
             Grafo grafo, String GuardBan) throws IOException {
         List<String> archivoPrimeraFaseILP = new ArrayList<>();
@@ -146,6 +182,7 @@ public class Adaptaciones {
         System.out.println(L);
         return L;
     }
+//comentarle a Divina que tenemos un drama con el ILP ya que el camino 15-17 tiene un solo camino este grafo pio es de bidirecconal_
 
     private String generarAlpha2(List<Integer> posicionesCaminos, List<PeticionBCM> peticionesFinales, int k) {
         String alpha2 = ALFA + INICIO_LLAVE;
@@ -224,6 +261,81 @@ public class Adaptaciones {
         retorno.setRLista(RLista);
         retorno.setAlphaR(alphaR);
         return retorno;
+
+    }
+
+    private AlphaR generarAlphaGenerarL(List<PeticionBCM> peticionesFinales, Grafo grafo) {
+        System.out.println("R: " + grafo.getRILP());
+
+        String[] spliter = grafo.getRILP().split(SEPARADOR);
+
+        String alpha = INICIO_LLAVE;
+        String R = INICIO_LLAVE + SALTO;
+        int j = 0;
+        List<List<String>> RLista = new ArrayList<>();
+
+        for (PeticionBCM peticionFinal : peticionesFinales) {
+            alpha = alpha + INICIO_LLAVE;
+
+            for (CaminoTR caminoTR : peticionFinal.getCaminosTR()) {
+                List<String> filaR = this.generarFilaRCerada(spliter.length);
+                Integer tamanhoFs = caminoTR.getTrfinal().getTamanhoFS() - 1;
+                alpha = alpha + tamanhoFs + SEPARADOR;
+
+                for (int i = 0; i < caminoTR.getCamino().getNodos().size() - 1; i++) {
+                    String identificador = caminoTR.getCamino().getNodos().get(i) + SEPARADOR_IDENTIFICADOR + caminoTR.getCamino().getNodos().get(i + 1);
+
+                    int indiceEnlace = -1;
+                    for (int l = 0; l < spliter.length; l++) {
+                        if (spliter[l].equals(identificador)) {
+                            indiceEnlace = l;
+                        }
+                    }
+                    filaR.set(indiceEnlace, UNO);
+                }
+                RLista.add(filaR);
+            }
+            alpha = alpha.substring(0, alpha.length() - 1);
+            alpha = alpha + FIN_LLAVE;
+            j++;
+        }
+        for (List<String> list : RLista) {
+            R = R + INICIO_LLAVE;
+            for (String string : list) {
+                R = R + string + SEPARADOR;
+            }
+            R = R.substring(0, R.length() - 1);
+            R = R + FIN_LLAVE + SEPARADOR + SALTO;
+
+        }
+        R = R.substring(0, R.length() - 2);
+        R = RR + R + FIN_LLAVE + FIN_LINEA;
+        System.out.println("R: " + R);
+        alpha = ALFA + alpha + FIN_LLAVE + FIN_LINEA + SALTO;
+        String alphaR = alpha + R;
+        AlphaR retorno = new AlphaR();
+        retorno.setRLista(RLista);
+        retorno.setAlphaR(alphaR);
+        return retorno;
+
+    }
+
+    // esto es ineficiente pero se va a complicar demasiado el codigo si hago alpha y L a la vez
+    private String generarAlphaJPILP(List<PeticionBCM> peticionesFinales) {
+        String alpha = INICIO_LLAVE;
+
+        for (PeticionBCM peticionFinal : peticionesFinales) {
+            alpha = alpha + INICIO_LLAVE;
+
+            for (CaminoTR caminoTR : peticionFinal.getCaminosTR()) {
+                Integer tamanhoFs = caminoTR.getTrfinal().getTamanhoFS() - 1;
+                alpha = alpha + tamanhoFs + SEPARADOR;
+            }
+            alpha = alpha.substring(0, alpha.length() - 1);
+            alpha = alpha + FIN_LLAVE + SEPARADOR;
+        }
+        alpha = alpha.substring(0,alpha.length()-1) + FIN_LLAVE;
+        return alpha;
 
     }
 }

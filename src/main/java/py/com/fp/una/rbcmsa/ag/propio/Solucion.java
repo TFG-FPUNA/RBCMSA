@@ -11,6 +11,15 @@ package py.com.fp.una.rbcmsa.ag.propio;
  */
 public class Solucion extends Gen{
     int generacion;
+    int indice;
+
+    public int getIndice() {
+        return indice;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
+    }
 
     public int getGeneracion() {
         return generacion;
@@ -22,7 +31,9 @@ public class Solucion extends Gen{
 
     @Override
     public String toString() {
-        return "Solucion{" + "generacion=" + generacion + '}';
+        return "Solucion{" + "generacion=" + generacion + ", indice=" + indice + '}';
     }
+
+    
     
 }

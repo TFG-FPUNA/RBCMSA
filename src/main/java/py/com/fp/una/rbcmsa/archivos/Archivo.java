@@ -66,7 +66,7 @@ public class Archivo {
     public Object cargarArchivo(String nombreArchivo, String separador, int indicador, int filas, int columnas) {
 
         HashMap<String, TR> TRS = new HashMap();
-        HashMap<String, Peticion> peticiones = new HashMap();
+        HashMap<Integer, Peticion> peticiones = new HashMap();
         int[][] matriz = new int[filas][columnas];
         try {
             FileReader fr = new FileReader(nombreArchivo);
@@ -85,7 +85,7 @@ public class Archivo {
                         break;
                     case 1:
                         Peticion peticion = mapearPeticion(linea, separador);
-                        peticiones.put(i + "", peticion);
+                        peticiones.put(i, peticion);
                         i++;
                         break;
                     case 2:

@@ -108,34 +108,41 @@ public class AGP {
         int contadorConvergencia = 0;
         boolean cambioSolucion = false;
         for (int i = 0; i < cantidadGeneraciones; i++) {
-            System.out.println("Generacion: " + i);
-            imprimirPoblacion(poblacion);
+            //System.out.println("Generacion: " + i);
+            //imprimirPoblacion(poblacion);
             //para cada cromosoma en la población, el cálculo de los cromosomas valor de fitness.
             for (int j = 0; j < cantidadPoblacion; j++) {
                 /*aplicar conversion del gen para poder usar el algoritmo*/
                 Gen individuoDeTurno = poblacion.get(j);
 
                 int resultadoBFMRA = Integer.MAX_VALUE;
-                try {
-                    resultadoBFMRA = algoritmosAsignacionEspectro.BFMRA(individuoDeTurno.getIndividuo(), peticionesFinales, grafo, cantidadFS, tamanhoFS);
-                    
+                int resultadoIndice = Integer.MAX_VALUE;
+                String resultadoString;
+                try { 
+                            resultadoString = algoritmosAsignacionEspectro.BFMRA(individuoDeTurno.getIndividuo(), peticionesFinales, grafo, cantidadFS, tamanhoFS);
+                            String[] split = resultadoString.split("-");
+                            resultadoBFMRA = Integer.parseInt(split[0]);
+                            resultadoIndice = Integer.parseInt(split[1]);
+                            
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     //logger.error("Error:", ex);
                 }
-                System.out.print("Individuo: {");
-                for (int k : individuoDeTurno.getIndividuo()) {
-                    System.out.print(k +",");
-                }
-                System.out.print("}");
-                System.out.println("");
-                System.out.println("Resultado: " + resultadoBFMRA);
+//                System.out.print("Individuo: {");
+//                for (int k : individuoDeTurno.getIndividuo()) {
+//                    System.out.print(k +",");
+//                }
+//                System.out.print("}");
+//                System.out.println("");
+//                System.out.println("Resultado: " + resultadoBFMRA);
+//                System.out.println("Indice: " + resultadoIndice);
                 poblacion.get(j).setFitness(resultadoBFMRA);
                 // que hago cuando empatan???? decido por que ????
                 if (resultadoBFMRA < solucion.getFitness()) {
                     solucion.setFitness(resultadoBFMRA);
                     solucion.setIndividuo(individuoDeTurno.getIndividuo());
                     solucion.setGeneracion(i);
+                    solucion.setIndice(resultadoIndice);
                     cambioSolucion = true;
                 }else{
                     cambioSolucion = false;
@@ -153,7 +160,7 @@ public class AGP {
 //            }
 
             Collections.sort(poblacion, (s1, s2) -> Double.compare(s1.getFitness(), s2.getFitness()));
-            imprimirPoblacion(poblacion);
+            //imprimirPoblacion(poblacion);
             //reproducirse población entera.
             int numeroDescendientes = 0;
             //mientras que el número total de descendientes <tamaño de la población

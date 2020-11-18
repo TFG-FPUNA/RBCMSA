@@ -128,7 +128,7 @@ public class OplRunILP {
                     opl.printConflict(System.out);
                     System.out.println("CONFLICTS done.");
                 } else {
-                    opl.getCplex().setParam(IloCplex.DoubleParam.TiLim, 3600.00); /*comentar un rato */
+                    //opl.getCplex().setParam(IloCplex.DoubleParam.TiLim, 3600.00); /*comentar un rato */
                     //opl.getCplex().setParam(IloCplex.IntParam.ClockType, 2);
                     //opl.getCplex().setParam(IloCplex.IntParam.IntSolLim, 20); //Este es el que tira una sola solucion
                     opl.getCplex().setParam(IloCplex.IntParam.NodeFileInd, 3); /*comentar un rato */ // Este trabaja de la mano con WorkMem

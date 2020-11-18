@@ -60,7 +60,7 @@ public class AlgoritmosAsignacionEspectro {
 
     }
 
-    public int BFMRA(int[] orden, List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS) {
+    public String BFMRA(int[] orden, List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS) {
         //System.out.println("------------- BFMRA -------------");
 
         for (int i = 0; i < orden.length; i++) {
@@ -89,8 +89,9 @@ public class AlgoritmosAsignacionEspectro {
 
     }
 
-    private int obtenerTotalFS(Grafo grafo){
+    private String obtenerTotalFS(Grafo grafo){
         int total = 0;
+        int indiceMax = -1;
         grafo.getAristas();
         for (Map.Entry<String, Arista> en : grafo.getAristas().entrySet()) {
             String key = en.getKey();
@@ -100,14 +101,21 @@ public class AlgoritmosAsignacionEspectro {
                 if (value.getSP()[i] == true) {
                     contador ++;
                     value.getSP()[i] = false;
+                    if (i > indiceMax) {
+                        indiceMax = i;
+                    }
+                    
                 }
             }
             if (contador>total) {
                 total = contador;
             }
+//            System.out.println("Contador: " + contador);
+//            System.out.println("Total: " + total);
+//            System.out.println("Indice Max: " + indiceMax);
         }
-        
-        return total-1;
+        total += -1;
+        return total+"-"+indiceMax;
     }
     public void BFMRA2(List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS, int k) throws CloneNotSupportedException {
         System.out.println("------------- BFMRA -------------");

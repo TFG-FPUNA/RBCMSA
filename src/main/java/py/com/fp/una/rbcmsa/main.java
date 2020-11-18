@@ -94,7 +94,7 @@ public class main {
 //            {0, 400, 0, 100, 0, 200}, 
 //            {200, 0, 0, 0, 200, 0}
 //        };
-        // caso 3
+        //caso 3
 //        int[][] matriz = {
 //            {0, 1000, 0, 0, 0, 200},
 //            {1000, 0, 100, 0, 400, 0},
@@ -104,28 +104,41 @@ public class main {
 //            {200, 0, 0, 0, 200, 0}
 //        };
         // caso ag
+//        int[][] matriz = {
+//            {0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+//            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0}
+//        };
         int[][] matriz = {
-            {0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0}
+            {0, 1310, 760, 390, 0, 0, 740, 0, 0, 0, 0},
+            {1310, 0, 550, 0, 390, 0, 0, 450, 0, 0, 0},
+            {760, 550, 0, 660, 210, 390, 0, 0, 0, 0, 0},
+            {390, 0, 660, 0, 0, 0, 340, 1090, 0, 660, 0},
+            {0, 390, 210, 0, 0, 220, 0, 300, 0, 0, 930},
+            {0, 0, 390, 0, 220, 0, 730, 400, 350, 0, 0},
+            {740, 0, 0, 340, 0, 730, 0, 0, 565, 320, 0},
+            {0, 450, 0, 1090, 300, 400, 0, 0, 600, 0, 820},
+            {0, 0, 0, 0, 0, 350, 565, 600, 0, 730, 320},
+            {0, 0, 0, 660, 0, 0, 320, 0, 730, 0, 820},
+            {0, 0, 0, 0, 930, 0, 0, 820, 320, 820, 0}
         };
         //int[][] matriz = {{0, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 0, 1}, {1, 1, 1, 0}};
         //int[][] matriz = {{0, 2233, 0, 0}, {0, 0, 1, 1}, {0, 0, 0, 1}, {1, 0, 0, 0}};
@@ -139,7 +152,8 @@ public class main {
 //        String nombreArchivo = "Peticiones_caso2.txt";
         //String nombreArchivo = "Peticiones_caso3.txt";
         //String nombreArchivo = "Peticiones_caso_comparacion_ysa.txt";
-        String nombreArchivo = "Peticiones_arpanet.txt";
+        //String nombreArchivo = "Peticiones_arpanet.txt";
+        String nombreArchivo = "Peticiones_prueba_ilp.txt";
         String nombreArchivoILPFaseI = "SP-ILP_11.dat";
         String nombreArchivoILPFaseII = "SP-ILP_21.dat";
         String nombreArchivoJPIL = "JPILP.dat";
@@ -160,7 +174,7 @@ public class main {
             e.printStackTrace();
         }
 //        finally {
-//            weld.shutdown();
+//            weld.shutdowsdn();
 //        }
     }
 
@@ -198,10 +212,10 @@ public class main {
 
         //Se cargan las peticiones
         int flagPeticion = 1;
-        HashMap<String, Peticion> Peticiones = (HashMap<String, Peticion>) archivoBean.cargarArchivo(rutaArchivos + nombrePerticiones, sepadadorPeticiones, flagPeticion, 0, 0);
+        HashMap<Integer, Peticion> Peticiones = (HashMap<Integer, Peticion>) archivoBean.cargarArchivo(rutaArchivos + nombrePerticiones, sepadadorPeticiones, flagPeticion, 0, 0);
         System.out.println("\n" + "Peticiones: ");
-        for (Map.Entry<String, Peticion> entry : Peticiones.entrySet()) {
-            String key = entry.getKey();
+        for (Map.Entry<Integer, Peticion> entry : Peticiones.entrySet()) {
+            Integer key = entry.getKey();
             Peticion value = entry.getValue();
             System.out.println("key:" + key + " value: " + value);
 
@@ -210,12 +224,13 @@ public class main {
 
         //HashMap<String, PeticionBCM> PeticionesFinales = new HashMap();
         List<PeticionBCM> peticionesFinales = new ArrayList<>();
-
-        for (Map.Entry<String, Peticion> entry : Peticiones.entrySet()) {
-            String key = entry.getKey();
+        List<CaminoTR> caminos = new ArrayList<>();
+        for (Map.Entry<Integer, Peticion> entry : Peticiones.entrySet()) {
+            Integer key = entry.getKey();
             Peticion peticion = entry.getValue();
             Rutas ruta = rutasCompletas.get(peticion.getPedido());
             //List<TRBCM> trFinales = new ArrayList<>();
+
             List<CaminoTR> caminosTrFinales = new ArrayList<>();
             Integer FSMenor = Integer.MAX_VALUE;
             Integer FSMayor = Integer.MIN_VALUE;
@@ -232,6 +247,8 @@ public class main {
                 }
                 //trFinales.add(trFinal);
                 caminosTrFinales.add(caminoTrFinal);
+                //en este lugar anadir
+                caminos.add(caminoTrFinal);
             }
             PeticionBCM peticionFinal = new PeticionBCM();
             //peticionFinal.setCaminos(ruta.getCaminos());
@@ -263,22 +280,41 @@ public class main {
         //System.out.println("Total: " + total);
         //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
-        long inicioILP = System.currentTimeMillis();
-        //SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
-        long finILP = System.currentTimeMillis();
-        long tiempoILP = finILP - inicioILP;
+//        long acumuladorJILP = 0;
+//        for (int i = 0; i < 30; i++) {
+//            long inicioILP = System.currentTimeMillis();
+//            SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan + "", cantidadSP);
+//            long finILP = System.currentTimeMillis();
+//            archivoBean.eliminarDirectorio(rutaArchivoILP+nombreArchivoILPFaseI);
+//            archivoBean.eliminarDirectorio(rutaArchivoILP+nombreArchivoILPFaseII);
+//            //String nombreSalida1 = "salidaCplexSP-ILP_11.txt";
+//            //archivoBean.eliminarDirectorio(rutaArchivoILP+nombreSalida1);
+//            //archivoBean.eliminarDirectorio(rutaArchivoILP+"salidaCplexSP-ILP_21.txt");
+//            acumuladorJILP += finILP - inicioILP;
+//        }
+//        long acumuladorILP = 0;
+//        for (int i = 0; i < 30; i++) {
+//            long inicioJILP = System.currentTimeMillis();
+//            SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, caminos, grafo, guarBan + "", cantidadSP);
+//            long finJILP = System.currentTimeMillis();
+//            archivoBean.eliminarDirectorio(rutaArchivoILP+nombreArchivoJPIL);
+//            //archivoBean.eliminarDirectorio(rutaArchivoILP+"salidaCplexILP1.txt");
+//            acumuladorILP += finJILP - inicioJILP;
+//        }
 
-        //SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, grafo, guarBan+"",cantidadSP);
         //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);
         //adaptacionesAG.generarEntradaAG(peticionesFinales, 0, rutaArchivoAG, nombreArchivoAG);
-        long inicioAGYSA = System.currentTimeMillis();
-        //AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
-        long finAGYSA = System.currentTimeMillis();
-        long tiempoAGYsa = finAGYSA - inicioAGYSA;
+//        for (int i = 0; i < 10; i++) {
+//            
+//        }
+//        long inicioAGYSA = System.currentTimeMillis();
+//        AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
+//        long finAGYSA = System.currentTimeMillis();
+//        long tiempoAGYsa = finAGYSA - inicioAGYSA;
         List<Double> mutacion = new ArrayList<>();
 //        mutacion.add(0.1d);
 //        mutacion.add(0.15d);
-//        mutacion.add(0.2d);
+        mutacion.add(0.02d);
 //        mutacion.add(0.25d);
 //        mutacion.add(0.3d);
 //        mutacion.add(0.35d);
@@ -288,35 +324,39 @@ public class main {
 //        mutacion.add(0.55d);
 //        mutacion.add(0.6d);
 //        mutacion.add(0.65d);
-        mutacion.add(0.7d);
+//        mutacion.add(0.7d);
         List<Float> promedios = new ArrayList<>();
         List<Float> generaciones = new ArrayList<>();
 
+        long acumuladorAG = 0;
+         int promedio = 0;
         for (Double muta : mutacion) {
-            int promedio = 0;
+            //int promedio = 0;
             int generacion = 0;
-            System.out.println("mutacion: " + muta);
-            for (int i = 0; i < 1; i++) {
+            //System.out.println("mutacion: " + muta);
+            for (int i = 0; i < 30; i++) {
                 long inicioAGPropio = System.currentTimeMillis();
-                Solucion solucion = AGP.algoritmoGenetico(10, 10, peticionesFinales, grafo, cantidadSP, tamanhoFS, muta);
+                Solucion solucion = AGP.algoritmoGenetico(100, 100, peticionesFinales, grafo, cantidadSP, tamanhoFS, muta);
                 long finAGPropio = System.currentTimeMillis();
-                long tiempoAGPropio = finAGPropio - inicioAGPropio;
+                acumuladorAG += finAGPropio - inicioAGPropio;
                 System.out.println("Fitness solucion: " + solucion.getFitness());
+                System.out.println("Indice: " + solucion.getIndice());
                 System.out.println("Genracion: " + solucion.getGeneracion());
                 promedio += solucion.getFitness();
                 generacion += generacion;
-                System.out.print("Individuo: {");
-                for (int j = 0; j < solucion.getIndividuo().length; j++) {
-                    System.out.print(solucion.getIndividuo()[j] + ",");
-                }
-                System.out.println("}\n");
+//                System.out.print("Individuo: {");
+//                for (int j = 0; j < solucion.getIndividuo().length; j++) {
+//                    System.out.print(solucion.getIndividuo()[j] + ",");
+//                }
+//                System.out.println("}\n");
             }
-            promedios.add(promedio / 1f);
+            //promedios.add(promedio / 30f);
         }
-        for (Float promedio : promedios) {
-            System.out.println("Promedio: " + promedio);
-        }
-
+        System.out.println("Tiempo AGP: " + acumuladorAG/30);
+        System.out.println("Promedio Final: " + promedio/30);
+//        for (Float promedio : promedios) {
+//            System.out.println("Promedio: " + promedio);
+//        }
 //        List<Gen> genes = AGP.inicializarPoblacion(10, 6);
 //        System.out.println("Lista: " + genes.size());
 //        for (Gen gen : genes) {
@@ -372,6 +412,10 @@ public class main {
 //            }
 //            System.out.println("}\n");
 //        }
+//        System.out.println("Tiempo ILP: " + acumuladorILP/30);
+//        System.out.println("Tiempo JPILP: " + acumuladorJILP/30);
+//        System.out.println("Tiempo ILP: " + acumuladorAGYSA/30);
+//        System.out.println("Tiempo JPILP: " + acumuladorAG/30);
     }
 
 }
