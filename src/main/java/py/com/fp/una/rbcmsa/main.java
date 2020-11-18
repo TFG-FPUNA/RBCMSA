@@ -275,12 +275,16 @@ public class main {
 
         //Llamada algoritmo 2 del paper base
         //algoritmosAsignacionEspectro.MFMRA(peticionesFinales, grafo, cantidadSP ,tamanhoFS);
+        
         //Llamada algoritmo 3 del paper base
         //int total = algoritmosAsignacionEspectro.BFMRA(new int[]{5,3,4,1,0,2,6}, peticionesFinales, grafo, cantidadSP, tamanhoFS);
         //System.out.println("Total: " + total);
+        
         //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
 //        long acumuladorJILP = 0;
+
+/********************************ILP*******************************************/
 //        for (int i = 0; i < 30; i++) {
 //            long inicioILP = System.currentTimeMillis();
 //            SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan + "", cantidadSP);
@@ -292,6 +296,9 @@ public class main {
 //            //archivoBean.eliminarDirectorio(rutaArchivoILP+"salidaCplexSP-ILP_21.txt");
 //            acumuladorJILP += finILP - inicioILP;
 //        }
+/******************************************************************************/
+
+/******************************JPILP*******************************************/
 //        long acumuladorILP = 0;
 //        for (int i = 0; i < 30; i++) {
 //            long inicioJILP = System.currentTimeMillis();
@@ -302,15 +309,16 @@ public class main {
 //            acumuladorILP += finJILP - inicioJILP;
 //        }
 
-        //adaptacionesBean.preparaArchivoFaseIIILP(rutaArchivoILP, nombreArchivoILP, limite+"", peticionesFinales, grafo, guarBan+"", 0 , alphaR, null);
-        //adaptacionesAG.generarEntradaAG(peticionesFinales, 0, rutaArchivoAG, nombreArchivoAG);
-//        for (int i = 0; i < 10; i++) {
-//            
-//        }
+/******************************************************************************/
+
+/******************************AGYSA*******************************************/
 //        long inicioAGYSA = System.currentTimeMillis();
 //        AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
 //        long finAGYSA = System.currentTimeMillis();
 //        long tiempoAGYsa = finAGYSA - inicioAGYSA;
+/******************************************************************************/
+
+/******************************AGPER*******************************************/
         List<Double> mutacion = new ArrayList<>();
 //        mutacion.add(0.1d);
 //        mutacion.add(0.15d);
@@ -330,33 +338,37 @@ public class main {
 
         long acumuladorAG = 0;
          int promedio = 0;
-        for (Double muta : mutacion) {
-            //int promedio = 0;
-            int generacion = 0;
-            //System.out.println("mutacion: " + muta);
-            for (int i = 0; i < 30; i++) {
-                long inicioAGPropio = System.currentTimeMillis();
-                Solucion solucion = AGP.algoritmoGenetico(100, 100, peticionesFinales, grafo, cantidadSP, tamanhoFS, muta);
-                long finAGPropio = System.currentTimeMillis();
-                acumuladorAG += finAGPropio - inicioAGPropio;
-                System.out.println("Fitness solucion: " + solucion.getFitness());
-                System.out.println("Indice: " + solucion.getIndice());
-                System.out.println("Genracion: " + solucion.getGeneracion());
-                promedio += solucion.getFitness();
-                generacion += generacion;
-//                System.out.print("Individuo: {");
-//                for (int j = 0; j < solucion.getIndividuo().length; j++) {
-//                    System.out.print(solucion.getIndividuo()[j] + ",");
-//                }
-//                System.out.println("}\n");
-            }
-            //promedios.add(promedio / 30f);
-        }
-        System.out.println("Tiempo AGP: " + acumuladorAG/30);
-        System.out.println("Promedio Final: " + promedio/30);
+//        for (Double muta : mutacion) {
+//            //int promedio = 0;
+//            int generacion = 0;
+//            //System.out.println("mutacion: " + muta);
+//            for (int i = 0; i < 30; i++) {
+//                long inicioAGPropio = System.currentTimeMillis();
+//                Solucion solucion = AGP.algoritmoGenetico(100, 100, peticionesFinales, grafo, cantidadSP, tamanhoFS, muta);
+//                long finAGPropio = System.currentTimeMillis();
+//                acumuladorAG += finAGPropio - inicioAGPropio;
+//                System.out.println("Fitness solucion: " + solucion.getFitness());
+//                System.out.println("Indice: " + solucion.getIndice());
+//                System.out.println("Genracion: " + solucion.getGeneracion());
+//                promedio += solucion.getFitness();
+//                generacion += generacion;
+////                System.out.print("Individuo: {");
+////                for (int j = 0; j < solucion.getIndividuo().length; j++) {
+////                    System.out.print(solucion.getIndividuo()[j] + ",");
+////                }
+////                System.out.println("}\n");
+//            }
+//            //promedios.add(promedio / 30f);
+//        }
+//        System.out.println("Tiempo AGP: " + acumuladorAG/30);
+//        System.out.println("Promedio Final: " + promedio/30);
 //        for (Float promedio : promedios) {
 //            System.out.println("Promedio: " + promedio);
 //        }
+
+/******************************************************************************/
+
+/*******************************AUX********************************************/
 //        List<Gen> genes = AGP.inicializarPoblacion(10, 6);
 //        System.out.println("Lista: " + genes.size());
 //        for (Gen gen : genes) {
@@ -393,25 +405,8 @@ public class main {
 //        for (int i = 0; i < mutado.length; i++) {
 //            System.out.print(mutado[i] + ";");
 //        }
-//        String str = "1234";
-//        StringBuffer strBuf = new StringBuffer(str);
-//        List<StringBuffer> permutaciones = new ArrayList<>();
-//
-//        System.out.println("Permutacion");
-//        AGP.doPerm(strBuf, str.length(), permutaciones);
-//        for (StringBuffer permutacione : permutaciones) {
-//            System.err.println(permutacione);
-//            
-//        }
-//        List<Gen> genes = AGP.inicializarPoblacion(20, 4);
-//        System.out.println("Lista: " + genes.size());
-//        for (Gen gen : genes) {
-//            System.out.print("Gen: {");
-//            for (int i = 0; i < gen.getIndividuo().length; i++) {
-//                System.out.print(gen.getIndividuo()[i]);
-//            }
-//            System.out.println("}\n");
-//        }
+/******************************************************************************/
+
 //        System.out.println("Tiempo ILP: " + acumuladorILP/30);
 //        System.out.println("Tiempo JPILP: " + acumuladorJILP/30);
 //        System.out.println("Tiempo ILP: " + acumuladorAGYSA/30);
