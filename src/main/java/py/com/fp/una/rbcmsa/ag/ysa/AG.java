@@ -52,47 +52,50 @@ public class AG {
             long TInicio, TFin; //Variables para determinar el tiempo de ejecución
 
             for (int a = 0; a < k; a++) {
-                pathActual = pathInicial + K + (a + 1) + FIN_DE_RUTA;
+                if (a == 2) {
+                    pathActual = pathInicial + K + (a + 1) + FIN_DE_RUTA;
 //                if (true) {
 //                    archivoBean.eliminarDirectorio(pathActual);
 //                }
-                archivoBean.crearDirectorio(pathActual);
-                adaptacionesAG.generarEntradaAG(peticionesFinales, k, pathActual, nombre);
+                    archivoBean.crearDirectorio(pathActual);
+                    adaptacionesAG.generarEntradaAG(peticionesFinales, k, pathActual, nombre);
 
-                demandaInfoList.addAll(llenarDemandInfo(pathActual + ARCHIVO_GA));
-                saltoMayor = getSaltoMayorDeLaRed(demandaInfoList, a + 1);
-                costoMayor = (getCostoMayorDeLaRed(demandaInfoList) + 1) * saltoMayor; // el 1 es agregado para banda guarda
-                espectroMayor = Long.valueOf(totalRanuras);
+                    demandaInfoList.addAll(llenarDemandInfo(pathActual + ARCHIVO_GA));
+                    //saltoMayor = getSaltoMayorDeLaRed(demandaInfoList, a + 1);
+                    //costoMayor = (getCostoMayorDeLaRed(demandaInfoList) + 1) * saltoMayor; // el 1 es agregado para banda guarda
+                    espectroMayor = Long.valueOf(totalRanuras);
 
-                if ("ilp".equals(algoritmo)) {
-                    archivoDeMaximos = pathActual + "maximos.txt";
-                    guardarMaximos(archivoDeMaximos);
-                    demandaInfoList = new ArrayList<>();
-                } else {
-                    String sFichero = pathActual + algoritmo + "_corridaNro_1.txt";
-                    File fichero = new File(sFichero);
+                    if ("ilp".equals(algoritmo)) {
+                        archivoDeMaximos = pathActual + "maximos.txt";
+                        guardarMaximos(archivoDeMaximos);
+                        demandaInfoList = new ArrayList<>();
+                    } else {
+                        String sFichero = pathActual + algoritmo + "_corridaNro_1.txt";
+                        File fichero = new File(sFichero);
 
-                    if (!fichero.exists()) {
-                        for (int i = 0; i < cantLlamadasGA; i++) {
+                        if (!fichero.exists()) {
+                            for (int i = 0; i < cantLlamadasGA; i++) {
 
-                            TInicio = System.currentTimeMillis();
-                            todosLosConjuntos.add(ga(topologia, cantSolucionesIniciales, totalRanuras, criterioDeParada, probabMutacion, demandaInfoList, (a + 1), algoritmo));
-                            TFin = System.currentTimeMillis();
+                                TInicio = System.currentTimeMillis();
+                                todosLosConjuntos.add(ga(topologia, cantSolucionesIniciales, totalRanuras, criterioDeParada, probabMutacion, demandaInfoList, (a + 1), algoritmo));
+                                TFin = System.currentTimeMillis();
+                                System.out.println("Tiempo nhembo real ysa:" + (TFin-TInicio));
+                                
+                                // guardar tambien las rutas y ranuras elegidas
+                                guardarEnArchivo(pathActual, algoritmo, todosLosConjuntos.get(i), i, (((TFin - TInicio) / 1000) / 60));
 
-                            // guardar tambien las rutas y ranuras elegidas
-                            guardarEnArchivo(pathActual, algoritmo, todosLosConjuntos.get(i), i, (((TFin - TInicio) / 1000) / 60));
+                                long minRunningMemory = (1024 * 1024);
 
-                            long minRunningMemory = (1024 * 1024);
+                                Runtime runtime = Runtime.getRuntime();
 
-                            Runtime runtime = Runtime.getRuntime();
-
-                            if (runtime.freeMemory() < minRunningMemory) {
-                                System.gc();
+                                if (runtime.freeMemory() < minRunningMemory) {
+                                    System.gc();
+                                }
                             }
                         }
+                        demandaInfoList = new ArrayList<>();
+                        todosLosConjuntos = new ArrayList<>();
                     }
-                    demandaInfoList = new ArrayList<>();
-                    todosLosConjuntos = new ArrayList<>();
                 }
             }
         }
@@ -852,8 +855,8 @@ public class AG {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter wr = new PrintWriter(bw);
 
-            wr.write(costoMayor.toString() + SALTO_LINEA);
-            wr.write(saltoMayor.toString() + SALTO_LINEA);
+            //wr.write(costoMayor.toString() + SALTO_LINEA);
+            //wr.write(saltoMayor.toString() + SALTO_LINEA);
             wr.write(espectroMayor.toString());
             wr.close();
             bw.close();

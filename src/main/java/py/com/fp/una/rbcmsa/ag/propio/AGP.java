@@ -29,7 +29,46 @@ public class AGP {
     
 //    @Inject
 //    Logger log;
+    public void permute(int[] arr, List<int[]> permutaciones, int cantidadElementos, int limite) {
+        permuteHelper(arr, 0, permutaciones, cantidadElementos, limite);
+    }
 
+    private void permuteHelper(int[] arr, int index, List<int[]> permutaciones, int cantidadElemento, int limite) {
+        if (index >= arr.length - 1) { //If we are at the last element - nothing left to permute
+            int[] permutacion = new int[cantidadElemento]; //declarando un array
+
+            for (int i = 0; i < arr.length - 1; i++) {
+                permutacion[i] = arr[i];
+            }
+            if (arr.length > 0) {
+                permutacion[arr.length - 1] = arr[arr.length - 1];
+            }
+            if (permutaciones.size() < limite) {
+                permutaciones.add(permutacion);
+
+            } else {
+                return;// si hay kilombo con la permutacion quitar el else
+            }
+
+            return;
+        }
+
+        for (int i = index; i < arr.length; i++) { //For each index in the sub array arr[index...end]
+
+            //Swap the elements at indices index and i
+            int t = arr[index];
+            arr[index] = arr[i];
+            arr[i] = t;
+
+            //Recurse on the sub array arr[index+1...end]
+            permuteHelper(arr, index + 1, permutaciones, cantidadElemento, limite);
+
+            //Swap the elements back
+            t = arr[index];
+            arr[index] = arr[i];
+            arr[i] = t;
+        }
+    }
     private int[] generarPermutacionIdentidad(int cantidadPeticiones) {
         int[] identidad = new int[cantidadPeticiones];
         for (int i = 0; i < cantidadPeticiones; i++) {
@@ -150,14 +189,14 @@ public class AGP {
 
             }
 
-//            if (!cambioSolucion) {
-//                contadorConvergencia++;
-//            } else {
-//                contadorConvergencia = 0;
-//            }
-//            if (contadorConvergencia == CRITERIO_PARADA) {
-//                return solucion;
-//            }
+            if (!cambioSolucion) {
+                contadorConvergencia++;
+            } else {
+                contadorConvergencia = 0;
+            }
+            if (contadorConvergencia == CRITERIO_PARADA) {
+                return solucion;
+            }
 
             Collections.sort(poblacion, (s1, s2) -> Double.compare(s1.getFitness(), s2.getFitness()));
             //imprimirPoblacion(poblacion);
