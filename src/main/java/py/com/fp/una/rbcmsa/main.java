@@ -131,50 +131,30 @@ public class main {
 //            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
 //            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0}
 //        };
-        int[][] matriz = {
-            {0, 1310, 760, 390, 0, 0, 740, 0, 0, 0, 0},
-            {1310, 0, 550, 0, 390, 0, 0, 450, 0, 0, 0},
-            {760, 550, 0, 660, 210, 390, 0, 0, 0, 0, 0},
-            {390, 0, 660, 0, 0, 0, 340, 1090, 0, 660, 0},
-            {0, 390, 210, 0, 0, 220, 0, 300, 0, 0, 930},
-            {0, 0, 390, 0, 220, 0, 730, 400, 350, 0, 0},
-            {740, 0, 0, 340, 0, 730, 0, 0, 565, 320, 0},
-            {0, 450, 0, 1090, 300, 400, 0, 0, 600, 0, 820},
-            {0, 0, 0, 0, 0, 350, 565, 600, 0, 730, 320},
-            {0, 0, 0, 660, 0, 0, 320, 0, 730, 0, 820},
-            {0, 0, 0, 0, 930, 0, 0, 820, 320, 820, 0}
-        };
+//        int[][] matriz = {
+//            {0, 1310, 760, 390, 0, 0, 740, 0, 0, 0, 0},
+//            {1310, 0, 550, 0, 390, 0, 0, 450, 0, 0, 0},
+//            {760, 550, 0, 660, 210, 390, 0, 0, 0, 0, 0},
+//            {390, 0, 660, 0, 0, 0, 340, 1090, 0, 660, 0},
+//            {0, 390, 210, 0, 0, 220, 0, 300, 0, 0, 930},
+//            {0, 0, 390, 0, 220, 0, 730, 400, 350, 0, 0},
+//            {740, 0, 0, 340, 0, 730, 0, 0, 565, 320, 0},
+//            {0, 450, 0, 1090, 300, 400, 0, 0, 600, 0, 820},
+//            {0, 0, 0, 0, 0, 350, 565, 600, 0, 730, 320},
+//            {0, 0, 0, 660, 0, 0, 320, 0, 730, 0, 820},
+//            {0, 0, 0, 0, 930, 0, 0, 820, 320, 820, 0}
+//        };
         //int[][] matriz = {{0, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 0, 1}, {1, 1, 1, 0}};
         //int[][] matriz = {{0, 2233, 0, 0}, {0, 0, 1, 1}, {0, 0, 0, 1}, {1, 0, 0, 0}};
 
-        //String nombreArchivoTR = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\TR.txt";
-        String sepadadorTR = " ";
-        String rutaArchivo = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\";
-        String rutaArchivoILP = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\resultados\\";
-        String rutaArchivoAG = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\";
-//        String nombreArchivo = "Peticiones.txt";
-//        String nombreArchivo = "Peticiones_caso2.txt";
-        //String nombreArchivo = "Peticiones_caso3.txt";
-        //String nombreArchivo = "Peticiones_caso_comparacion_ysa.txt";
-        //String nombreArchivo = "Peticiones_arpanet.txt";
-        String nombreArchivo = "Peticiones_prueba_ilp.txt";
-        String nombreArchivoILPFaseI = "SP-ILP_11.dat";
-        String nombreArchivoILPFaseII = "SP-ILP_21.dat";
-        String nombreArchivoJPIL = "JPILP.dat";
-        String nombreArchivoAG = "ga.txt";
-        String sepadadorPeticiones = " ";
+        String sepadador= " ";
         //String nombreArchivoMatriz = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Matriz.txt";
-        //int limite = 5;
-        //double tamanhoFS = 12.5;
-        //int cantidadSP = 320;
 
         Weld weld = new Weld();
         try {
             WeldContainer container = weld.initialize();
 
-            container.select(main.class).get().procesar(matriz, sepadadorTR, sepadadorPeticiones,
-                    rutaArchivo, nombreArchivo, rutaArchivoILP, nombreArchivoILPFaseI,
-                    nombreArchivoILPFaseII, nombreArchivoJPIL, rutaArchivoAG, nombreArchivoAG);
+            container.select(main.class).get().procesar(sepadador);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,28 +163,46 @@ public class main {
 //        }
     }
 
-    public void procesar(int matriz[][], String separadorTR, String sepadadorPeticiones,
-            String rutaArchivos, String nombrePerticiones, String rutaArchivoILP,
-            String nombreArchivoILPFaseI, String nombreArchivoILPFaseII, String nombreArchivoJPIL,
-            String rutaArchivoAG, String nombreArchivoAG)
+    public void procesar(String separador)
             throws CloneNotSupportedException, IOException, Exception {
         logger.info("Logueando");
+        /*Lectura de properties.properties*/
         Properties p = archivoBean.cargarPropiedades();
-        String nombreArchivoTR = (String) p.get(NOMBRE_ARCHIVO_TR);
+        
+        /*Variables de generales*/
+        String archivoTR = (String) p.get(NOMBRE_ARCHIVO_TR);
+        String archivoMatriz = (String) p.get(NOMBRE_ARCHIVO_MATRIZ);
         int limite = Integer.parseInt((String) p.get(LIMITE));
         double tamanhoFS = Double.parseDouble((String) p.get(TAMANHO_FS));
         int cantidadSP = Integer.parseInt((String) p.get(CANTIDAD_SP));
         int guarBan = Integer.parseInt((String) p.get(GUARBAN));
-        //SPILP.obtenerFFaseII(1);
-        //String rutaArchivo = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\";
-        //String nombreArchivo = "Peticiones1.txt";
+        
+        /*Rutas de archivos leidas del properties*/
+        String rutaArchivos = (String) p.get(RUTA_ARCHIVOS);
+        String rutaArchivoILP = (String) p.get(RUTA_ARCHIVO_ILP);
+        String rutaArchivoAG = (String) p.get(RUTA_ARCHIVO_ILP);
+        
+        /*Nombers de archivos leidas del properties*/
+        String nombrePerticiones = (String) p.get(NOMBRE_ARCHIVO_PETICIONES);
+        String nombreArchivoILPFaseI = (String) p.get(NOMBRE_ARCHIVO_ILP_FASEI);
+        String nombreArchivoILPFaseII = (String) p.get(NOMBRE_ARCHIVO_ILP_FASEII);
+        String nombreArchivoJPIL = (String) p.get(NOMBRE_ARCHIVO_JPILP);
+        String nombreArchivoAG = (String) p.get(NOMBRE_ARCHIVO_AG);
+        int filas = Integer.parseInt((String) p.get(FILAS));
+        int columnas = Integer.parseInt((String) p.get(COLUMNAS));
+        
+        /*Se cargan los datos de la >Matriz*/
+        int flagMatriz = 2;
+        int matriz[][] = (int[][]) archivoBean.cargarArchivo(archivoMatriz, separador, flagMatriz, filas, columnas);
+        
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
                 System.out.print(matriz[i][j] + " ");
             }
             System.out.println("");
         }
-        //Se calculan los caminos posibles y sus distancias
+        
+        /*Se calculan los caminos posibles y sus distancias*/
         HashMap<String, Rutas> rutasCompletas = buscarCaminosBean.busqueda(matriz, limite);
         for (Map.Entry<String, Rutas> entry : rutasCompletas.entrySet()) {
             String key = entry.getKey();
@@ -212,13 +210,14 @@ public class main {
             System.out.println("Ruta:" + value);
 
         }
-        //Se cargan los datos de la Tabla TR
+        
+        /*Se cargan los datos de la Tabla TR*/
         int flagTR = 0;
-        HashMap<String, TR> TRS = (HashMap<String, TR>) archivoBean.cargarArchivo(nombreArchivoTR, separadorTR, flagTR, 0, 0);
-
-        //Se cargan las peticiones
+        HashMap<String, TR> TRS = (HashMap<String, TR>) archivoBean.cargarArchivo(archivoTR, separador, flagTR, 0, 0);
+        
+        /*Se cargan las peticiones*/
         int flagPeticion = 1;
-        HashMap<Integer, Peticion> Peticiones = (HashMap<Integer, Peticion>) archivoBean.cargarArchivo(rutaArchivos + nombrePerticiones, sepadadorPeticiones, flagPeticion, 0, 0);
+        HashMap<Integer, Peticion> Peticiones = (HashMap<Integer, Peticion>) archivoBean.cargarArchivo(rutaArchivos + nombrePerticiones, separador, flagPeticion, 0, 0);
         System.out.println("\n" + "Peticiones: ");
         for (Map.Entry<Integer, Peticion> entry : Peticiones.entrySet()) {
             Integer key = entry.getKey();
@@ -226,16 +225,14 @@ public class main {
             System.out.println("key:" + key + " value: " + value);
 
         }
-        //Se calculan los TR Finales (B,C,M y Landafinal)
-
-        //HashMap<String, PeticionBCM> PeticionesFinales = new HashMap();
+        
+        /*Se calculan los TR Finales (B,C,M y Landafinal)*/
         List<PeticionBCM> peticionesFinales = new ArrayList<>();
         List<CaminoTR> caminos = new ArrayList<>();
         for (Map.Entry<Integer, Peticion> entry : Peticiones.entrySet()) {
             Integer key = entry.getKey();
             Peticion peticion = entry.getValue();
             Rutas ruta = rutasCompletas.get(peticion.getPedido());
-            //List<TRBCM> trFinales = new ArrayList<>();
 
             List<CaminoTR> caminosTrFinales = new ArrayList<>();
             Integer FSMenor = Integer.MAX_VALUE;
@@ -257,24 +254,15 @@ public class main {
                 caminos.add(caminoTrFinal);
             }
             PeticionBCM peticionFinal = new PeticionBCM();
-            //peticionFinal.setCaminos(ruta.getCaminos());
-            //peticionFinal.setTrfinal(trFinales);
             peticionFinal.setPeticionOriginal(peticion);
             peticionFinal.setFSMenor(FSMenor);
             peticionFinal.setFSMayor(FSMayor);
             peticionFinal.setCaminosTR(caminosTrFinales);
             peticionesFinales.add(peticionFinal);
-
-            //PeticionesFinales.put(key, peticionFinal);
             //hablar con divina sobre el tema de ordenar por TFS porque cada camino tiene un TFS diferente y estos caminos estan asociados a una peticion
         }
 
-//        for (Map.Entry<String, PeticionBCM> entry : PeticionesFinales.entrySet()) {
-//            String key = entry.getKey();
-//            PeticionBCM value = entry.getValue();
-//            System.out.println("key:" + key + " value: " + value);
-//
-//        }
+        /*Se carga el Grafo*/
         Grafo grafo = operacionesGrafos.cargaGrafo(matriz, cantidadSP);
         //Llamada algoritmo 1 del paper base
         //algoritmosAsignacionEspectro.SFMRA(peticionesFinales, grafo);
@@ -309,6 +297,7 @@ public class main {
 //        System.out.println("Tiempo: " + (finEU - inicioEU));
         //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
+        
         /**
          * ******************************ILP******************************************
          */
@@ -327,6 +316,7 @@ public class main {
         /**
          * ***************************************************************************
          */
+        
         /**
          * ****************************JPILP******************************************
          */
@@ -342,6 +332,7 @@ public class main {
         /**
          * ***************************************************************************
          */
+        
         /**
          * ****************************AGYSA******************************************
          */
@@ -352,16 +343,16 @@ public class main {
         /**
          * ***************************************************************************
          */
+        
         /**
          * ****************************AGPER******************************************
          */
         List<Double> promedios = new ArrayList<>();
         List<Integer> generaciones = new ArrayList<>();
-//
+        
         long acumuladorAG = 0;
         int promedio = 0;
         int generacion = 0;
-        //System.out.println("mutacion: " + muta);
         for (int i = 0; i < 30; i++) {
             long inicioAGPropio = System.currentTimeMillis();
             Solucion solucion = AGP.algoritmoGenetico(100, 100, peticionesFinales, grafo, cantidadSP, tamanhoFS, 0.2d);
@@ -370,7 +361,7 @@ public class main {
             logger.info("****************Corrida "+i+" ************************");
             logger.info("Fitness solucion: " + solucion.getFitness());
             logger.info("Indice: " + solucion.getIndice());
-            logger.info("Genracion: " + solucion.getGeneracion());
+            logger.info("Generacion: " + solucion.getGeneracion());
             promedio += solucion.getFitness();
             promedios.add(solucion.getFitness());
             generacion += generacion;
@@ -382,7 +373,6 @@ public class main {
             }
             logger.info("Individuo Solucion: {" + individuoSting.substring(0, individuoSting.length() - 1) + "}\n");
             logger.info("*****************************************************");
-//promedios.add(promedio / 30f);
             }
             logger.info("Tiempo AGP: " + acumuladorAG / 30);
             logger.info("Promedio Final: " + promedio / 30);
@@ -399,6 +389,7 @@ public class main {
             /**
              * ***************************************************************************
              */
+            
             /**
              * *****************************AUX*******************************************
              */
