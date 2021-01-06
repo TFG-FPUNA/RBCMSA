@@ -29,6 +29,7 @@ public class Constantes {
     public static final String NOMBRE_ARCHIVO_AG = "nombreArchivoGA";
     public static final String FILAS = "filas";
     public static final String COLUMNAS = "columnas";
+    public static final String ALGORITMO = "algoritmo";
     
     public static final String LIMITE = "limite";
     public static final String TAMANHO_FS= "tamanhoFS";

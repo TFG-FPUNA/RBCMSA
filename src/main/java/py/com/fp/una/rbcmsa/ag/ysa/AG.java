@@ -27,78 +27,44 @@ public class AG {
     @Inject
     Archivo archivoBean;
 
-    public void AG(List<PeticionBCM> peticionesFinales, String ruta, String nombre, int limite) throws FileNotFoundException, IOException {
-        List<String> algoritmos = new ArrayList<>();
-        algoritmos.add(MOGA_2);
-//        algoritmos.add("ilp");
-        for (String algoritmo : algoritmos) {
-            String pathGeneral = ruta + RUTA_AG + TOPOLOGIA + FIN_DE_RUTA;
-            String pathInicial = pathGeneral;
-            List<List<Solucion>> todosLosConjuntos = new ArrayList<>();
-            List<List<Boolean>> topologia = AGHelper.leerTopologia(pathGeneral);
-            int cantLlamadasGA = AGHelper.leerParametro(pathGeneral, "cantidad de corridas independientes");
-            int cantSolucionesIniciales = AGHelper.leerParametro(pathGeneral, "cantidad de cromosomas");
-            int totalRanuras = AGHelper.leerParametro(pathGeneral, "cantidad de longitudes de onda por fibra");
-            int criterioDeParada = AGHelper.leerParametro(pathGeneral, "criterio de parada");
-            double probabMutacion = AGHelper.leerProbabMutacion(pathGeneral, "probabilidad de mutacion");
-            /*
+    public List<List<Solucion>> AG(List<PeticionBCM> peticionesFinales, String ruta, String nombre,
+            int limite, int cantidadGeneraciones, int cantidadPoblacion,
+            double mutacion, int cantidadSP) throws FileNotFoundException, IOException {
+        String algoritmo = MOGA_2;
+        String pathGeneral = ruta + RUTA_AG + TOPOLOGIA + FIN_DE_RUTA;
+        String pathInicial = pathGeneral;
+        List<List<Solucion>> todosLosConjuntos = new ArrayList<>();
+        List<List<Boolean>> topologia = AGHelper.leerTopologia(pathGeneral);
+        /*
         *  1. MOGA spectrum allocation random
         *  2. MOGA spectrum allocation first fit
-             */
-            int k = limite;
-            List<DemandaInfo> demandaInfoList = new ArrayList<>();
-            String archivoDeMaximos;
-            String pathActual;
-            long TInicio, TFin; //Variables para determinar el tiempo de ejecución
+         */
+        int k = limite;
+        List<DemandaInfo> demandaInfoList = new ArrayList<>();
+        String pathActual;
+        long TInicio, TFin; //Variables para determinar el tiempo de ejecución
 
-            for (int a = 0; a < k; a++) {
-                if (a == 2) {
-                    pathActual = pathInicial + K + (a + 1) + FIN_DE_RUTA;
-//                if (true) {
-//                    archivoBean.eliminarDirectorio(pathActual);
-//                }
-                    archivoBean.crearDirectorio(pathActual);
-                    adaptacionesAG.generarEntradaAG(peticionesFinales, k, pathActual, nombre);
+        pathActual = pathInicial + K + (k) + FIN_DE_RUTA;
+        archivoBean.crearDirectorio(pathActual);
+        adaptacionesAG.generarEntradaAG(peticionesFinales, k, pathActual, nombre);
 
-                    demandaInfoList.addAll(llenarDemandInfo(pathActual + ARCHIVO_GA));
-                    //saltoMayor = getSaltoMayorDeLaRed(demandaInfoList, a + 1);
-                    //costoMayor = (getCostoMayorDeLaRed(demandaInfoList) + 1) * saltoMayor; // el 1 es agregado para banda guarda
-                    espectroMayor = Long.valueOf(totalRanuras);
+        demandaInfoList.addAll(llenarDemandInfo(pathActual + ARCHIVO_GA));
+        espectroMayor = Long.valueOf(cantidadSP);
 
-                    if ("ilp".equals(algoritmo)) {
-                        archivoDeMaximos = pathActual + "maximos.txt";
-                        guardarMaximos(archivoDeMaximos);
-                        demandaInfoList = new ArrayList<>();
-                    } else {
-                        String sFichero = pathActual + algoritmo + "_corridaNro_1.txt";
-                        File fichero = new File(sFichero);
+        for (int i = 0; i < cantidadGeneraciones; i++) {
+            TInicio = System.currentTimeMillis();
+            todosLosConjuntos.add(ga(topologia, cantidadPoblacion, cantidadSP, mutacion, demandaInfoList, (/*a + 1*/k), algoritmo));
+            TFin = System.currentTimeMillis();
 
-                        if (!fichero.exists()) {
-                            for (int i = 0; i < cantLlamadasGA; i++) {
+            long minRunningMemory = (1024 * 1024);
 
-                                TInicio = System.currentTimeMillis();
-                                todosLosConjuntos.add(ga(topologia, cantSolucionesIniciales, totalRanuras, criterioDeParada, probabMutacion, demandaInfoList, (a + 1), algoritmo));
-                                TFin = System.currentTimeMillis();
-                                System.out.println("Tiempo nhembo real ysa:" + (TFin-TInicio));
-                                
-                                // guardar tambien las rutas y ranuras elegidas
-                                guardarEnArchivo(pathActual, algoritmo, todosLosConjuntos.get(i), i, (((TFin - TInicio) / 1000) / 60));
+            Runtime runtime = Runtime.getRuntime();
 
-                                long minRunningMemory = (1024 * 1024);
-
-                                Runtime runtime = Runtime.getRuntime();
-
-                                if (runtime.freeMemory() < minRunningMemory) {
-                                    System.gc();
-                                }
-                            }
-                        }
-                        demandaInfoList = new ArrayList<>();
-                        todosLosConjuntos = new ArrayList<>();
-                    }
-                }
+            if (runtime.freeMemory() < minRunningMemory) {
+                System.gc();
             }
         }
+        return todosLosConjuntos;
     }
 
     public static List<Solucion> generarPoblacionInicial(List<List<Boolean>> topologia, Integer cantSolucionesIniciales, Integer totalRanuras, List<DemandaInfo> demandaInfoList, String algoritmo) throws FileNotFoundException {
@@ -376,7 +342,9 @@ public class AG {
     * Aca empieza el purete
     *
     * */
-    public static List<Solucion> ga(List<List<Boolean>> topologia, int cantSolucionesIniciales, int totalRanuras, int criterioDeParada, double probabilidaMutacion, List<DemandaInfo> demandasInfo, int k, String algoritmo) throws FileNotFoundException {
+    public static List<Solucion> ga(List<List<Boolean>> topologia, int cantSolucionesIniciales,
+            int totalRanuras, double probabilidaMutacion, List<DemandaInfo> demandasInfo, int k,
+            String algoritmo) throws FileNotFoundException {
 
         int j, reproductor1, reproductor2, candidato1 = -1, candidato2 = -1;
         Solucion hijo1, hijo2; // inicializar con enlaces con ranuras vacias
@@ -398,9 +366,8 @@ public class AG {
 
         int v = 1;
         TFin = System.currentTimeMillis();
-        int tiempoLimite = criterioDeParada * 60 * 1000;
-
-        while ((TFin - TInicio) < tiempoLimite) {
+        
+        for (int i = 0; i < cantSolucionesIniciales; i++) {
             aux = new ArrayList<>();
             poblacionNueva = new ArrayList<>();
 
@@ -812,41 +779,7 @@ public class AG {
 
         return mayorSalto;
     }
-
-    public static void guardarEnArchivo(String path, String algoritmo, List<Solucion> conjuntoSoluciones, int corridaNumero, Long tiempoDeEjecucion) throws IOException {
-
-        int i, solucionNumero;
-        int corridaNro = corridaNumero + 1;
-        File f = new File(path + algoritmo + CORRIDA + corridaNro + EXTENSION);
-        FileWriter fw = new FileWriter(f);
-
-        try {
-            BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter wr = new PrintWriter(bw);
-
-            for (i = 0; i < conjuntoSoluciones.size(); i++) {
-                solucionNumero = i + 1;
-                wr.write(SOLUCION_NUMERO + solucionNumero);
-                wr.write(CANTIDAD_BLOQUEOS + conjuntoSoluciones.get(i).getCantBloq());
-                wr.write(COSTO + conjuntoSoluciones.get(i).getCosto());
-                wr.write(DISTANCIA + conjuntoSoluciones.get(i).getSaltos());
-                wr.write(ESPECTRO_MAYOR + conjuntoSoluciones.get(i).getEspectro());
-                wr.write(FITNESS + conjuntoSoluciones.get(i).getFitness());
-                wr.write(ENLACES + conjuntoSoluciones.get(i).getEnlaces());
-                wr.write(RUTEOS + conjuntoSoluciones.get(i).getRuteos());
-
-                wr.write(FIN_ARCHIVO);
-            }
-
-            wr.write(EJECUCION + tiempoDeEjecucion + UNIDAD_TIEMPO);
-            wr.close();
-            bw.close();
-        } catch (IOException e) {
-
-        }
-
-    }
-
+    
     public static void guardarMaximos(String archivo) throws IOException {
         File f = new File(archivo);
         FileWriter fw = new FileWriter(f);

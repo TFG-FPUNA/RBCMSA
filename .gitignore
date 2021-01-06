@@ -12,3 +12,7 @@ src/ag/nsf/k1/
 src/ag/nsf/k2/
 
 log/RBCMSA.log
+
+*.gz
+
+src/ag/nsf/k3/

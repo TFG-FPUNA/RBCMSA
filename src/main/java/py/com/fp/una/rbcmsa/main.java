@@ -147,7 +147,7 @@ public class main {
         //int[][] matriz = {{0, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 0, 1}, {1, 1, 1, 0}};
         //int[][] matriz = {{0, 2233, 0, 0}, {0, 0, 1, 1}, {0, 0, 0, 1}, {1, 0, 0, 0}};
 
-        String sepadador= " ";
+        String sepadador = " ";
         //String nombreArchivoMatriz = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Matriz.txt";
 
         Weld weld = new Weld();
@@ -168,7 +168,7 @@ public class main {
         logger.info("Logueando");
         /*Lectura de properties.properties*/
         Properties p = archivoBean.cargarPropiedades();
-        
+
         /*Variables de generales*/
         String archivoTR = (String) p.get(NOMBRE_ARCHIVO_TR);
         String archivoMatriz = (String) p.get(NOMBRE_ARCHIVO_MATRIZ);
@@ -176,12 +176,12 @@ public class main {
         double tamanhoFS = Double.parseDouble((String) p.get(TAMANHO_FS));
         int cantidadSP = Integer.parseInt((String) p.get(CANTIDAD_SP));
         int guarBan = Integer.parseInt((String) p.get(GUARBAN));
-        
+
         /*Rutas de archivos leidas del properties*/
         String rutaArchivos = (String) p.get(RUTA_ARCHIVOS);
         String rutaArchivoILP = (String) p.get(RUTA_ARCHIVO_ILP);
-        String rutaArchivoAG = (String) p.get(RUTA_ARCHIVO_ILP);
-        
+        String rutaArchivoAG = (String) p.get(RUTA_ARCHIVO_AG);
+
         /*Nombers de archivos leidas del properties*/
         String nombrePerticiones = (String) p.get(NOMBRE_ARCHIVO_PETICIONES);
         String nombreArchivoILPFaseI = (String) p.get(NOMBRE_ARCHIVO_ILP_FASEI);
@@ -190,18 +190,20 @@ public class main {
         String nombreArchivoAG = (String) p.get(NOMBRE_ARCHIVO_AG);
         int filas = Integer.parseInt((String) p.get(FILAS));
         int columnas = Integer.parseInt((String) p.get(COLUMNAS));
-        
+
+        String algoritmo = (String) p.get(ALGORITMO);
+
         /*Se cargan los datos de la >Matriz*/
         int flagMatriz = 2;
         int matriz[][] = (int[][]) archivoBean.cargarArchivo(archivoMatriz, separador, flagMatriz, filas, columnas);
-        
+
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
                 System.out.print(matriz[i][j] + " ");
             }
             System.out.println("");
         }
-        
+
         /*Se calculan los caminos posibles y sus distancias*/
         HashMap<String, Rutas> rutasCompletas = buscarCaminosBean.busqueda(matriz, limite);
         for (Map.Entry<String, Rutas> entry : rutasCompletas.entrySet()) {
@@ -210,11 +212,11 @@ public class main {
             System.out.println("Ruta:" + value);
 
         }
-        
+
         /*Se cargan los datos de la Tabla TR*/
         int flagTR = 0;
         HashMap<String, TR> TRS = (HashMap<String, TR>) archivoBean.cargarArchivo(archivoTR, separador, flagTR, 0, 0);
-        
+
         /*Se cargan las peticiones*/
         int flagPeticion = 1;
         HashMap<Integer, Peticion> Peticiones = (HashMap<Integer, Peticion>) archivoBean.cargarArchivo(rutaArchivos + nombrePerticiones, separador, flagPeticion, 0, 0);
@@ -225,7 +227,7 @@ public class main {
             System.out.println("key:" + key + " value: " + value);
 
         }
-        
+
         /*Se calculan los TR Finales (B,C,M y Landafinal)*/
         List<PeticionBCM> peticionesFinales = new ArrayList<>();
         List<CaminoTR> caminos = new ArrayList<>();
@@ -297,102 +299,136 @@ public class main {
 //        System.out.println("Tiempo: " + (finEU - inicioEU));
         //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
-        
-        /**
-         * ******************************ILP******************************************
-         */
-//        long acumuladorJILP = 0;
-//        for (int i = 0; i < 1; i++) {
-//            long inicioILP = System.currentTimeMillis();
-//            SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan + "", cantidadSP);
-//            long finILP = System.currentTimeMillis();
-//            archivoBean.eliminarDirectorio(rutaArchivoILP+nombreArchivoILPFaseI);
-//            archivoBean.eliminarDirectorio(rutaArchivoILP+nombreArchivoILPFaseII);
-//            //String nombreSalida1 = "salidaCplexSP-ILP_11.txt";
-//            //archivoBean.eliminarDirectorio(rutaArchivoILP+nombreSalida1);
-//            //archivoBean.eliminarDirectorio(rutaArchivoILP+"salidaCplexSP-ILP_21.txt");
-//            acumuladorJILP += finILP - inicioILP;
-//        }
-        /**
-         * ***************************************************************************
-         */
-        
-        /**
-         * ****************************JPILP******************************************
-         */
-//        long acumuladorILP = 0;
-//        for (int i = 0; i < 1; i++) {
-//            long inicioJILP = System.currentTimeMillis();
-//            SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, caminos, grafo, guarBan + "", cantidadSP);
-//            long finJILP = System.currentTimeMillis();
-//            archivoBean.eliminarDirectorio(rutaArchivoILP+nombreArchivoJPIL);
-//            //archivoBean.eliminarDirectorio(rutaArchivoILP+"salidaCplexILP1.txt");
-//            acumuladorILP += finJILP - inicioJILP;
-//        }
-        /**
-         * ***************************************************************************
-         */
-        
-        /**
-         * ****************************AGYSA******************************************
-         */
-//        long inicioAGYSA = System.currentTimeMillis();
-//        AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite);
-//        long finAGYSA = System.currentTimeMillis();
-//        long tiempoAGYsa = finAGYSA - inicioAGYSA;
-        /**
-         * ***************************************************************************
-         */
-        
-        /**
-         * ****************************AGPER******************************************
-         */
-        List<Double> promedios = new ArrayList<>();
-        List<Integer> generaciones = new ArrayList<>();
-        
-        long acumuladorAG = 0;
-        int promedio = 0;
-        int generacion = 0;
-        for (int i = 0; i < 30; i++) {
-            long inicioAGPropio = System.currentTimeMillis();
-            Solucion solucion = AGP.algoritmoGenetico(100, 100, peticionesFinales, grafo, cantidadSP, tamanhoFS, 0.2d);
-            long finAGPropio = System.currentTimeMillis();
-            acumuladorAG += finAGPropio - inicioAGPropio;
-            logger.info("****************Corrida "+i+" ************************");
-            logger.info("Fitness solucion: " + solucion.getFitness());
-            logger.info("Indice: " + solucion.getIndice());
-            logger.info("Generacion: " + solucion.getGeneracion());
-            promedio += solucion.getFitness();
-            promedios.add(solucion.getFitness());
-            generacion += generacion;
-            generaciones.add(generacion);
-
-            String individuoSting = "";
-            for (int j = 0; j < solucion.getIndividuo().length; j++) {
-                individuoSting += solucion.getIndividuo()[j] + ",";
-            }
-            logger.info("Individuo Solucion: {" + individuoSting.substring(0, individuoSting.length() - 1) + "}\n");
-            logger.info("*****************************************************");
-            }
-            logger.info("Tiempo AGP: " + acumuladorAG / 30);
-            logger.info("Promedio Final: " + promedio / 30);
-            logger.info("Promedio Generaciones: " + generacion / 30);
-
-            logger.info("*****************Resultados********************");
-            for (Double prom : promedios) {
-                logger.info("result: " + prom);
-            }
-            logger.info("*****************Generaciones********************");
-            for (Integer generacione : generaciones) {
-                logger.info("Generacion: " + generacione);
-            }
+        switch (algoritmo) {
+            case "1":
+                logger.info("****************ILP****************");
+                /**
+                 * ******************************ILP******************************************
+                 */
+                long acumuladorJILP = 0;
+                for (int i = 0; i < 1; i++) {
+                    long inicioILP = System.currentTimeMillis();
+                    SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan + "", cantidadSP);
+                    long finILP = System.currentTimeMillis();
+                    archivoBean.eliminarDirectorio(rutaArchivoILP + nombreArchivoILPFaseI);
+                    archivoBean.eliminarDirectorio(rutaArchivoILP + nombreArchivoILPFaseII);
+                    //String nombreSalida1 = "salidaCplexSP-ILP_11.txt";
+                    //archivoBean.eliminarDirectorio(rutaArchivoILP+nombreSalida1);
+                    //archivoBean.eliminarDirectorio(rutaArchivoILP+"salidaCplexSP-ILP_21.txt");
+                    acumuladorJILP += finILP - inicioILP;
+                }
+                /**
+                 * ***************************************************************************
+                 */
+                break;
             /**
-             * ***************************************************************************
+             * ****************************JPILP******************************************
              */
-            
-            /**
-             * *****************************AUX*******************************************
-             */
+            case "2":
+                logger.info("*****************JPILP*****************");
+                long acumuladorILP = 0;
+                long inicioJILP = System.currentTimeMillis();
+                SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, caminos, grafo, guarBan + "", cantidadSP);
+                long finJILP = System.currentTimeMillis();
+                archivoBean.eliminarDirectorio(rutaArchivoILP + nombreArchivoJPIL);
+                //archivoBean.eliminarDirectorio(rutaArchivoILP+"salidaCplexILP1.txt");
+                acumuladorILP += finJILP - inicioJILP;
+                logger.info("Tiempo JPILP: " + acumuladorILP);
+                /**
+                 * ***************************************************************************
+                 */
+                break;
+            case "3":
+                /**
+                 * ****************************AGYSA******************************************
+                 */
+                logger.info("****************AG RUTAS****************");
+                double acumuladorTiempoAGY = 0;
+                double acumuladorSolucionesAGY = 0;
+                for (int j = 0; j < 30; j++) {
+
+                    long inicioAGYSA = System.currentTimeMillis();
+                    List<List<py.com.fp.una.rbcmsa.ag.ysa.Solucion>> todosLosConjuntos = AG.AG(peticionesFinales, rutaArchivoAG, nombreArchivoAG, limite, 100, 100, 0.2, cantidadSP);
+                    long finAGYSA = System.currentTimeMillis();
+                    long tiempoAGYsa = finAGYSA - inicioAGYSA;
+                    List<py.com.fp.una.rbcmsa.ag.ysa.Solucion> conjuntoSoluciones = todosLosConjuntos.get(todosLosConjuntos.size() - 1);
+                    int i = conjuntoSoluciones.size() - 1;
+                    int solucionNumero = i;
+                    acumuladorSolucionesAGY += conjuntoSoluciones.get(i).getFitness();
+                    acumuladorTiempoAGY += tiempoAGYsa;
+                    logger.info("*******************Solucion: " + j + "*******************");
+                    logger.info("Solucion: " + j);
+                    logger.info(SOLUCION_NUMERO + solucionNumero);
+                    logger.info(CANTIDAD_BLOQUEOS + conjuntoSoluciones.get(i).getCantBloq());
+                    logger.info(COSTO + conjuntoSoluciones.get(i).getCosto());
+                    logger.info(DISTANCIA + conjuntoSoluciones.get(i).getSaltos());
+                    logger.info(ESPECTRO_MAYOR + conjuntoSoluciones.get(i).getEspectro());
+                    logger.info(FITNESS + conjuntoSoluciones.get(i).getFitness());
+                    logger.info(ENLACES + conjuntoSoluciones.get(i).getEnlaces());
+                    logger.info(RUTEOS + conjuntoSoluciones.get(i).getRuteos());
+                    logger.info("*****************************************************");
+                }
+
+                logger.info("Tiempo AGY: " + acumuladorTiempoAGY / 30);
+                logger.info("Promedio Final AGY: " + acumuladorSolucionesAGY / 30);
+                /**
+                 * ***************************************************************************
+                 */
+                break;
+            case "4":
+                /**
+                 * ****************************AGPER******************************************
+                 */
+                logger.info("****************AG PERMUTACION****************");
+                List<Double> promedios = new ArrayList<>();
+                List<Integer> generaciones = new ArrayList<>();
+
+                long acumuladorAG = 0;
+                int promedio = 0;
+                int generacion = 0;
+                for (int i = 0; i < 30; i++) {
+                    long inicioAGPropio = System.currentTimeMillis();
+                    Solucion solucion = AGP.algoritmoGenetico(100, 100, peticionesFinales, grafo, cantidadSP, tamanhoFS, 0.2d);
+                    long finAGPropio = System.currentTimeMillis();
+                    acumuladorAG += finAGPropio - inicioAGPropio;
+                    logger.info("****************Corrida " + i + " ************************");
+                    logger.info("Fitness solucion: " + solucion.getFitness());
+                    logger.info("Indice: " + solucion.getIndice());
+                    logger.info("Generacion: " + solucion.getGeneracion());
+                    promedio += solucion.getFitness();
+                    promedios.add(solucion.getFitness());
+                    generacion += generacion;
+                    generaciones.add(generacion);
+
+                    String individuoSting = "";
+                    for (int j = 0; j < solucion.getIndividuo().length; j++) {
+                        individuoSting += solucion.getIndividuo()[j] + ",";
+                    }
+                    logger.info("Individuo Solucion: {" + individuoSting.substring(0, individuoSting.length() - 1) + "}\n");
+                    logger.info("*****************************************************");
+                }
+                logger.info("Tiempo AGP: " + acumuladorAG / 30);
+                logger.info("Promedio Final: " + promedio / 30);
+                logger.info("Promedio Generaciones: " + generacion / 30);
+
+                logger.info("*****************Resultados********************");
+                for (Double prom : promedios) {
+                    logger.info("result: " + prom);
+                }
+                logger.info("*****************Generaciones********************");
+                for (Integer generacione : generaciones) {
+                    logger.info("Generacion: " + generacione);
+                }
+                /**
+                 * ***************************************************************************
+                 */
+                break;
+            default:
+                logger.info("*****************Ningun Algoritmo Especificado********************");
+        }
+        /**
+         * *****************************AUX*******************************************
+         */
 //        List<Gen> genes = AGP.inicializarPoblacion(10, 6);
 //        System.out.println("Lista: " + genes.size());
 //        for (Gen gen : genes) {
@@ -429,14 +465,12 @@ public class main {
 //        for (int i = 0; i < mutado.length; i++) {
 //            System.out.print(mutado[i] + ";");
 //        }
-            /**
-             * ***************************************************************************
-             */
-            //System.out.println("Tiempo ILP: " + acumuladorILP);
-            //System.out.println("Tiempo JPILP: " + acumuladorJILP);
+        /**
+         * ***************************************************************************
+         */
+        //System.out.println("Tiempo ILP: " + acumuladorILP);
+        //System.out.println("Tiempo JPILP: " + acumuladorJILP);
 //        System.out.println("Tiempo ILP: " + acumuladorAGYSA/30);
-            //System.out.println("Tiempo ag ysa: " + tiempoAGYsa);
-        
-
+        //System.out.println("Tiempo ag ysa: " + tiempoAGYsa);
     }
 }
