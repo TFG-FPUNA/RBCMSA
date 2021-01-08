@@ -51,10 +51,32 @@ public class AG {
         demandaInfoList.addAll(llenarDemandInfo(pathActual + ARCHIVO_GA));
         espectroMayor = Long.valueOf(cantidadSP);
 
+        int contadorConvergencia = 0;
+        double fitnessAnterior = -1;
         for (int i = 0; i < cantidadGeneraciones; i++) {
+            boolean cambioSolucion = false;
             TInicio = System.currentTimeMillis();
             todosLosConjuntos.add(ga(topologia, cantidadPoblacion, cantidadSP, mutacion, demandaInfoList, (/*a + 1*/k), algoritmo));
             TFin = System.currentTimeMillis();
+
+            List<py.com.fp.una.rbcmsa.ag.ysa.Solucion> conjuntoSoluciones = todosLosConjuntos.get(todosLosConjuntos.size() - 1);
+            int indice = conjuntoSoluciones.size() - 1;
+            double fitnessActual = conjuntoSoluciones.get(indice).getFitness();
+            if (fitnessAnterior < fitnessActual) {
+                fitnessAnterior = fitnessActual;
+                cambioSolucion = true;
+            } else {
+                cambioSolucion = false;
+            }
+
+            if (!cambioSolucion) {
+                contadorConvergencia++;
+            } else {
+                contadorConvergencia = 0;
+            }
+            if (contadorConvergencia == CRITERIO_PARADA) {
+                return todosLosConjuntos;
+            }
 
             long minRunningMemory = (1024 * 1024);
 
@@ -366,7 +388,7 @@ public class AG {
 
         int v = 1;
         TFin = System.currentTimeMillis();
-        
+
         for (int i = 0; i < cantSolucionesIniciales; i++) {
             aux = new ArrayList<>();
             poblacionNueva = new ArrayList<>();
@@ -779,7 +801,7 @@ public class AG {
 
         return mayorSalto;
     }
-    
+
     public static void guardarMaximos(String archivo) throws IOException {
         File f = new File(archivo);
         FileWriter fw = new FileWriter(f);

@@ -364,13 +364,15 @@ public class main {
                     logger.info(DISTANCIA + conjuntoSoluciones.get(i).getSaltos());
                     logger.info(ESPECTRO_MAYOR + conjuntoSoluciones.get(i).getEspectro());
                     logger.info(FITNESS + conjuntoSoluciones.get(i).getFitness());
-                    logger.info(ENLACES + conjuntoSoluciones.get(i).getEnlaces());
-                    logger.info(RUTEOS + conjuntoSoluciones.get(i).getRuteos());
+                    //logger.info(ENLACES + conjuntoSoluciones.get(i).getEnlaces());
+                    //logger.info(RUTEOS + conjuntoSoluciones.get(i).getRuteos());
                     logger.info("*****************************************************");
                 }
 
                 logger.info("Tiempo AGY: " + acumuladorTiempoAGY / 30);
+                System.out.println("Tiempo AGY: " + acumuladorTiempoAGY / 30);
                 logger.info("Promedio Final AGY: " + acumuladorSolucionesAGY / 30);
+                System.out.println("Promedio Final AGY: " + acumuladorSolucionesAGY / 30);
                 /**
                  * ***************************************************************************
                  */
@@ -395,6 +397,7 @@ public class main {
                     logger.info("Fitness solucion: " + solucion.getFitness());
                     logger.info("Indice: " + solucion.getIndice());
                     logger.info("Generacion: " + solucion.getGeneracion());
+                    logger.info("Rechazados: " + solucion.getRechazados());
                     promedio += solucion.getFitness();
                     promedios.add(solucion.getFitness());
                     generacion += generacion;

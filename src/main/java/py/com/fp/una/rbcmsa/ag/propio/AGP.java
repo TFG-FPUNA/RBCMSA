@@ -156,12 +156,14 @@ public class AGP {
 
                 int resultadoBFMRA = Integer.MAX_VALUE;
                 int resultadoIndice = Integer.MAX_VALUE;
+                int rechazados = 0;
                 String resultadoString;
                 try { 
                             resultadoString = algoritmosAsignacionEspectro.BFMRA(individuoDeTurno.getIndividuo(), peticionesFinales, grafo, cantidadFS, tamanhoFS);
                             String[] split = resultadoString.split("-");
                             resultadoBFMRA = Integer.parseInt(split[0]);
                             resultadoIndice = Integer.parseInt(split[1]);
+                            rechazados = Integer.parseInt(split[2]);
                             
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -182,6 +184,7 @@ public class AGP {
                     solucion.setIndividuo(individuoDeTurno.getIndividuo());
                     solucion.setGeneracion(i);
                     solucion.setIndice(resultadoIndice);
+                    solucion.setRechazados(rechazados);
                     cambioSolucion = true;
                 }else{
                     cambioSolucion = false;

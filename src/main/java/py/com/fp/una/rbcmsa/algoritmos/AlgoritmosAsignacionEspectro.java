@@ -62,7 +62,7 @@ public class AlgoritmosAsignacionEspectro {
 
     public String BFMRA(int[] orden, List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS) {
         //System.out.println("------------- BFMRA -------------");
-
+        int rechazados = 0;
         for (int i = 0; i < orden.length; i++) {
             //for (PeticionBCM peticionFinal : peticionesFinales) {
             PeticionBCM peticionFinal = peticionesFinales.get(orden[i]);
@@ -83,13 +83,13 @@ public class AlgoritmosAsignacionEspectro {
             //System.out.println("------------- ORDEN -------------");
             //System.out.println("");
             //this.imprimirPeticion(peticionFinal);
-            this.asignarFS(peticionFinal, grafo, true);
+            rechazados += this.asignarFS(peticionFinal, grafo, true);
         }
-        return obtenerTotalFS(grafo);//falta contar los fs
+        return obtenerTotalFS(grafo, rechazados);
 
     }
 
-    private String obtenerTotalFS(Grafo grafo){
+    private String obtenerTotalFS(Grafo grafo, int rechazados){
         int total = 0;
         int indiceMax = -1;
         grafo.getAristas();
@@ -115,7 +115,7 @@ public class AlgoritmosAsignacionEspectro {
 //            System.out.println("Indice Max: " + indiceMax);
         }
         total += -1;
-        return total+"-"+indiceMax;
+        return total+"-"+indiceMax+"-"+rechazados;
     }
     public void BFMRA2(List<PeticionBCM> peticionesFinales, Grafo grafo, int cantidadFS, double tamanhoFS, int k) throws CloneNotSupportedException {
         System.out.println("------------- BFMRA -------------");
@@ -362,13 +362,11 @@ public class AlgoritmosAsignacionEspectro {
             }
 
             if (posicionInicial != -1) {
-                //se rechaza la peticion
-                //rechazados++;
-                break;
+                return 1;
             }
 
         }
-        return -1;
+        return 0;
     }
 
     private boolean verificarAristas(Integer nodoInicial, Integer nodoSiguiente, int tamanhoRequeridoFS, Grafo grafo,
