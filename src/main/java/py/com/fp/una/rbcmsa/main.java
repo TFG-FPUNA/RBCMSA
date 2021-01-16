@@ -148,7 +148,7 @@ public class main {
         //int[][] matriz = {{0, 2233, 0, 0}, {0, 0, 1, 1}, {0, 0, 0, 1}, {1, 0, 0, 0}};
 
         String sepadador = " ";
-        //String nombreArchivoMatriz = "C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Matriz.txt";
+        //String nombreArchivoMatriz = "C:\\Users\\Divina\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\Matriz.txt";
 
         Weld weld = new Weld();
         try {
@@ -305,7 +305,7 @@ public class main {
                 /**
                  * ******************************ILP******************************************
                  */
-                long acumuladorJILP = 0;
+                long acumuladorILP = 0;
                 for (int i = 0; i < 1; i++) {
                     long inicioILP = System.currentTimeMillis();
                     SPILP.ILP(rutaArchivoILP, nombreArchivoILPFaseI, nombreArchivoILPFaseII, limite, peticionesFinales, grafo, guarBan + "", cantidadSP);
@@ -315,7 +315,9 @@ public class main {
                     //String nombreSalida1 = "salidaCplexSP-ILP_11.txt";
                     //archivoBean.eliminarDirectorio(rutaArchivoILP+nombreSalida1);
                     //archivoBean.eliminarDirectorio(rutaArchivoILP+"salidaCplexSP-ILP_21.txt");
-                    acumuladorJILP += finILP - inicioILP;
+                    acumuladorILP += finILP - inicioILP;
+                    logger.info("Tiempo ILP: " + acumuladorILP);
+                    System.out.println("Tiempo ILP: " + acumuladorILP);
                 }
                 /**
                  * ***************************************************************************
@@ -326,14 +328,15 @@ public class main {
              */
             case "2":
                 logger.info("*****************JPILP*****************");
-                long acumuladorILP = 0;
+                long acumuladorJILP = 0;
                 long inicioJILP = System.currentTimeMillis();
                 SPILP.JPILP(rutaArchivoILP, nombreArchivoJPIL, limite, peticionesFinales, caminos, grafo, guarBan + "", cantidadSP);
                 long finJILP = System.currentTimeMillis();
                 archivoBean.eliminarDirectorio(rutaArchivoILP + nombreArchivoJPIL);
                 //archivoBean.eliminarDirectorio(rutaArchivoILP+"salidaCplexILP1.txt");
-                acumuladorILP += finJILP - inicioJILP;
-                logger.info("Tiempo JPILP: " + acumuladorILP);
+                acumuladorJILP += finJILP - inicioJILP;
+                logger.info("Tiempo JPILP: " + acumuladorJILP);
+                System.out.println("Tiempo JPILP: " + acumuladorJILP);
                 /**
                  * ***************************************************************************
                  */
