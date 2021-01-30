@@ -1,0 +1,307 @@
+15:27:10,919  INFO main:168 - Logueando
+15:27:11,423  INFO main:387 - ****************AG PERMUTACION****************
+15:27:12,008  INFO main:399 - ****************Corrida 0 ************************
+15:27:12,008  INFO main:400 - Fitness solucion: 19.0
+15:27:12,008  INFO main:401 - Indice: 19
+15:27:12,008  INFO main:402 - Generacion: 0
+15:27:12,009  INFO main:403 - Rechazados: 20
+15:27:12,009  INFO main:413 - Individuo Solucion: {6,11,17,2,18,5,4,7,3,8,1,9,12,0,14,15,19,10,16,13}
+
+15:27:12,009  INFO main:414 - *****************************************************
+15:27:12,431  INFO main:399 - ****************Corrida 1 ************************
+15:27:12,431  INFO main:400 - Fitness solucion: 19.0
+15:27:12,431  INFO main:401 - Indice: 19
+15:27:12,431  INFO main:402 - Generacion: 0
+15:27:12,431  INFO main:403 - Rechazados: 20
+15:27:12,431  INFO main:413 - Individuo Solucion: {16,13,5,19,6,10,2,0,3,9,1,7,4,8,18,12,11,15,17,14}
+
+15:27:12,431  INFO main:414 - *****************************************************
+15:27:12,511  INFO main:399 - ****************Corrida 2 ************************
+15:27:12,511  INFO main:400 - Fitness solucion: 19.0
+15:27:12,511  INFO main:401 - Indice: 19
+15:27:12,511  INFO main:402 - Generacion: 0
+15:27:12,511  INFO main:403 - Rechazados: 20
+15:27:12,511  INFO main:413 - Individuo Solucion: {0,5,16,9,10,17,14,18,12,15,7,11,6,4,1,13,2,8,19,3}
+
+15:27:12,511  INFO main:414 - *****************************************************
+15:27:12,584  INFO main:399 - ****************Corrida 3 ************************
+15:27:12,584  INFO main:400 - Fitness solucion: 19.0
+15:27:12,584  INFO main:401 - Indice: 19
+15:27:12,585  INFO main:402 - Generacion: 0
+15:27:12,585  INFO main:403 - Rechazados: 20
+15:27:12,585  INFO main:413 - Individuo Solucion: {1,14,3,11,8,9,18,4,5,7,2,13,15,6,12,17,10,19,16,0}
+
+15:27:12,585  INFO main:414 - *****************************************************
+15:27:12,650  INFO main:399 - ****************Corrida 4 ************************
+15:27:12,651  INFO main:400 - Fitness solucion: 19.0
+15:27:12,651  INFO main:401 - Indice: 22
+15:27:12,651  INFO main:402 - Generacion: 0
+15:27:12,651  INFO main:403 - Rechazados: 20
+15:27:12,651  INFO main:413 - Individuo Solucion: {3,16,2,14,13,6,7,0,18,11,1,19,8,10,9,17,4,12,15,5}
+
+15:27:12,651  INFO main:414 - *****************************************************
+15:27:12,722  INFO main:399 - ****************Corrida 5 ************************
+15:27:12,722  INFO main:400 - Fitness solucion: 19.0
+15:27:12,722  INFO main:401 - Indice: 19
+15:27:12,722  INFO main:402 - Generacion: 0
+15:27:12,722  INFO main:403 - Rechazados: 20
+15:27:12,722  INFO main:413 - Individuo Solucion: {0,10,15,18,4,14,13,1,8,6,3,12,17,9,11,2,16,19,5,7}
+
+15:27:12,723  INFO main:414 - *****************************************************
+15:27:12,787  INFO main:399 - ****************Corrida 6 ************************
+15:27:12,787  INFO main:400 - Fitness solucion: 19.0
+15:27:12,787  INFO main:401 - Indice: 19
+15:27:12,787  INFO main:402 - Generacion: 0
+15:27:12,787  INFO main:403 - Rechazados: 20
+15:27:12,788  INFO main:413 - Individuo Solucion: {0,2,3,6,15,13,5,7,17,11,4,19,14,9,12,16,8,1,18,10}
+
+15:27:12,788  INFO main:414 - *****************************************************
+15:27:12,855  INFO main:399 - ****************Corrida 7 ************************
+15:27:12,855  INFO main:400 - Fitness solucion: 19.0
+15:27:12,855  INFO main:401 - Indice: 22
+15:27:12,855  INFO main:402 - Generacion: 0
+15:27:12,855  INFO main:403 - Rechazados: 20
+15:27:12,855  INFO main:413 - Individuo Solucion: {0,16,3,14,8,10,19,17,13,2,4,5,7,11,18,6,15,1,12,9}
+
+15:27:12,855  INFO main:414 - *****************************************************
+15:27:12,920  INFO main:399 - ****************Corrida 8 ************************
+15:27:12,920  INFO main:400 - Fitness solucion: 19.0
+15:27:12,920  INFO main:401 - Indice: 19
+15:27:12,920  INFO main:402 - Generacion: 0
+15:27:12,920  INFO main:403 - Rechazados: 20
+15:27:12,920  INFO main:413 - Individuo Solucion: {19,17,0,1,5,4,3,10,11,7,15,2,13,8,14,9,6,16,18,12}
+
+15:27:12,920  INFO main:414 - *****************************************************
+15:27:12,985  INFO main:399 - ****************Corrida 9 ************************
+15:27:12,985  INFO main:400 - Fitness solucion: 19.0
+15:27:12,986  INFO main:401 - Indice: 19
+15:27:12,986  INFO main:402 - Generacion: 0
+15:27:12,986  INFO main:403 - Rechazados: 20
+15:27:12,986  INFO main:413 - Individuo Solucion: {0,7,4,1,17,8,6,12,11,9,16,14,19,13,3,2,5,10,18,15}
+
+15:27:12,986  INFO main:414 - *****************************************************
+15:27:13,050  INFO main:399 - ****************Corrida 10 ************************
+15:27:13,051  INFO main:400 - Fitness solucion: 19.0
+15:27:13,051  INFO main:401 - Indice: 19
+15:27:13,051  INFO main:402 - Generacion: 0
+15:27:13,051  INFO main:403 - Rechazados: 20
+15:27:13,051  INFO main:413 - Individuo Solucion: {11,13,5,6,18,4,16,0,15,7,8,2,17,12,9,14,1,19,10,3}
+
+15:27:13,051  INFO main:414 - *****************************************************
+15:27:13,117  INFO main:399 - ****************Corrida 11 ************************
+15:27:13,117  INFO main:400 - Fitness solucion: 19.0
+15:27:13,117  INFO main:401 - Indice: 22
+15:27:13,118  INFO main:402 - Generacion: 0
+15:27:13,118  INFO main:403 - Rechazados: 20
+15:27:13,118  INFO main:413 - Individuo Solucion: {17,1,3,4,5,0,2,6,9,13,12,19,10,11,8,15,14,18,16,7}
+
+15:27:13,118  INFO main:414 - *****************************************************
+15:27:13,191  INFO main:399 - ****************Corrida 12 ************************
+15:27:13,192  INFO main:400 - Fitness solucion: 19.0
+15:27:13,192  INFO main:401 - Indice: 20
+15:27:13,192  INFO main:402 - Generacion: 0
+15:27:13,192  INFO main:403 - Rechazados: 20
+15:27:13,192  INFO main:413 - Individuo Solucion: {5,3,18,0,8,12,19,14,17,2,1,7,15,9,11,4,10,6,16,13}
+
+15:27:13,192  INFO main:414 - *****************************************************
+15:27:13,265  INFO main:399 - ****************Corrida 13 ************************
+15:27:13,266  INFO main:400 - Fitness solucion: 19.0
+15:27:13,266  INFO main:401 - Indice: 22
+15:27:13,266  INFO main:402 - Generacion: 0
+15:27:13,266  INFO main:403 - Rechazados: 20
+15:27:13,266  INFO main:413 - Individuo Solucion: {1,17,8,4,2,14,9,6,18,16,15,0,3,7,11,10,19,5,12,13}
+
+15:27:13,266  INFO main:414 - *****************************************************
+15:27:13,338  INFO main:399 - ****************Corrida 14 ************************
+15:27:13,338  INFO main:400 - Fitness solucion: 19.0
+15:27:13,338  INFO main:401 - Indice: 19
+15:27:13,338  INFO main:402 - Generacion: 0
+15:27:13,338  INFO main:403 - Rechazados: 20
+15:27:13,339  INFO main:413 - Individuo Solucion: {10,18,2,3,4,1,11,0,5,8,15,6,19,12,14,7,9,17,16,13}
+
+15:27:13,339  INFO main:414 - *****************************************************
+15:27:13,411  INFO main:399 - ****************Corrida 15 ************************
+15:27:13,411  INFO main:400 - Fitness solucion: 19.0
+15:27:13,411  INFO main:401 - Indice: 19
+15:27:13,412  INFO main:402 - Generacion: 0
+15:27:13,412  INFO main:403 - Rechazados: 20
+15:27:13,412  INFO main:413 - Individuo Solucion: {0,4,18,6,1,5,9,16,12,11,8,2,15,3,10,7,17,13,14,19}
+
+15:27:13,412  INFO main:414 - *****************************************************
+15:27:13,487  INFO main:399 - ****************Corrida 16 ************************
+15:27:13,487  INFO main:400 - Fitness solucion: 19.0
+15:27:13,487  INFO main:401 - Indice: 19
+15:27:13,487  INFO main:402 - Generacion: 0
+15:27:13,487  INFO main:403 - Rechazados: 20
+15:27:13,487  INFO main:413 - Individuo Solucion: {1,2,9,19,4,12,16,5,0,7,13,14,10,11,8,3,15,6,18,17}
+
+15:27:13,488  INFO main:414 - *****************************************************
+15:27:13,562  INFO main:399 - ****************Corrida 17 ************************
+15:27:13,562  INFO main:400 - Fitness solucion: 19.0
+15:27:13,562  INFO main:401 - Indice: 22
+15:27:13,562  INFO main:402 - Generacion: 0
+15:27:13,562  INFO main:403 - Rechazados: 20
+15:27:13,563  INFO main:413 - Individuo Solucion: {0,3,5,13,17,14,8,6,1,10,2,4,7,18,12,19,9,11,15,16}
+
+15:27:13,563  INFO main:414 - *****************************************************
+15:27:13,636  INFO main:399 - ****************Corrida 18 ************************
+15:27:13,636  INFO main:400 - Fitness solucion: 19.0
+15:27:13,637  INFO main:401 - Indice: 19
+15:27:13,637  INFO main:402 - Generacion: 0
+15:27:13,637  INFO main:403 - Rechazados: 20
+15:27:13,637  INFO main:413 - Individuo Solucion: {10,13,17,18,7,2,19,0,11,5,14,3,16,6,8,4,1,9,15,12}
+
+15:27:13,637  INFO main:414 - *****************************************************
+15:27:13,702  INFO main:399 - ****************Corrida 19 ************************
+15:27:13,703  INFO main:400 - Fitness solucion: 19.0
+15:27:13,703  INFO main:401 - Indice: 20
+15:27:13,703  INFO main:402 - Generacion: 0
+15:27:13,703  INFO main:403 - Rechazados: 20
+15:27:13,703  INFO main:413 - Individuo Solucion: {14,19,17,11,6,12,5,8,18,3,4,15,9,10,0,1,16,13,7,2}
+
+15:27:13,703  INFO main:414 - *****************************************************
+15:27:13,767  INFO main:399 - ****************Corrida 20 ************************
+15:27:13,767  INFO main:400 - Fitness solucion: 19.0
+15:27:13,767  INFO main:401 - Indice: 19
+15:27:13,767  INFO main:402 - Generacion: 0
+15:27:13,768  INFO main:403 - Rechazados: 20
+15:27:13,768  INFO main:413 - Individuo Solucion: {0,13,12,2,15,8,11,1,6,7,18,9,3,4,5,10,14,16,17,19}
+
+15:27:13,768  INFO main:414 - *****************************************************
+15:27:13,832  INFO main:399 - ****************Corrida 21 ************************
+15:27:13,832  INFO main:400 - Fitness solucion: 19.0
+15:27:13,832  INFO main:401 - Indice: 19
+15:27:13,833  INFO main:402 - Generacion: 0
+15:27:13,833  INFO main:403 - Rechazados: 20
+15:27:13,833  INFO main:413 - Individuo Solucion: {3,2,16,19,9,4,18,6,10,11,8,12,5,0,17,1,7,14,15,13}
+
+15:27:13,833  INFO main:414 - *****************************************************
+15:27:13,897  INFO main:399 - ****************Corrida 22 ************************
+15:27:13,897  INFO main:400 - Fitness solucion: 19.0
+15:27:13,897  INFO main:401 - Indice: 22
+15:27:13,897  INFO main:402 - Generacion: 0
+15:27:13,897  INFO main:403 - Rechazados: 20
+15:27:13,897  INFO main:413 - Individuo Solucion: {0,12,14,5,17,10,1,15,19,2,4,7,6,13,16,8,18,11,9,3}
+
+15:27:13,897  INFO main:414 - *****************************************************
+15:27:13,963  INFO main:399 - ****************Corrida 23 ************************
+15:27:13,963  INFO main:400 - Fitness solucion: 19.0
+15:27:13,963  INFO main:401 - Indice: 19
+15:27:13,963  INFO main:402 - Generacion: 0
+15:27:13,963  INFO main:403 - Rechazados: 20
+15:27:13,963  INFO main:413 - Individuo Solucion: {3,1,16,5,0,19,17,2,9,18,6,4,7,12,13,15,11,8,14,10}
+
+15:27:13,963  INFO main:414 - *****************************************************
+15:27:14,029  INFO main:399 - ****************Corrida 24 ************************
+15:27:14,029  INFO main:400 - Fitness solucion: 19.0
+15:27:14,029  INFO main:401 - Indice: 19
+15:27:14,029  INFO main:402 - Generacion: 0
+15:27:14,029  INFO main:403 - Rechazados: 20
+15:27:14,029  INFO main:413 - Individuo Solucion: {4,6,12,13,11,9,7,19,0,1,16,2,3,8,15,18,5,10,17,14}
+
+15:27:14,029  INFO main:414 - *****************************************************
+15:27:14,095  INFO main:399 - ****************Corrida 25 ************************
+15:27:14,095  INFO main:400 - Fitness solucion: 19.0
+15:27:14,095  INFO main:401 - Indice: 19
+15:27:14,095  INFO main:402 - Generacion: 0
+15:27:14,095  INFO main:403 - Rechazados: 20
+15:27:14,095  INFO main:413 - Individuo Solucion: {2,5,7,6,3,9,19,14,13,12,8,10,18,0,17,15,11,16,4,1}
+
+15:27:14,096  INFO main:414 - *****************************************************
+15:27:14,163  INFO main:399 - ****************Corrida 26 ************************
+15:27:14,164  INFO main:400 - Fitness solucion: 19.0
+15:27:14,164  INFO main:401 - Indice: 19
+15:27:14,164  INFO main:402 - Generacion: 0
+15:27:14,164  INFO main:403 - Rechazados: 20
+15:27:14,164  INFO main:413 - Individuo Solucion: {6,12,0,19,17,5,1,11,7,4,8,10,9,18,16,2,13,3,14,15}
+
+15:27:14,164  INFO main:414 - *****************************************************
+15:27:14,228  INFO main:399 - ****************Corrida 27 ************************
+15:27:14,228  INFO main:400 - Fitness solucion: 19.0
+15:27:14,228  INFO main:401 - Indice: 22
+15:27:14,228  INFO main:402 - Generacion: 0
+15:27:14,228  INFO main:403 - Rechazados: 20
+15:27:14,228  INFO main:413 - Individuo Solucion: {14,2,0,16,9,4,10,1,7,19,5,13,18,12,15,3,8,11,17,6}
+
+15:27:14,228  INFO main:414 - *****************************************************
+15:27:14,293  INFO main:399 - ****************Corrida 28 ************************
+15:27:14,293  INFO main:400 - Fitness solucion: 19.0
+15:27:14,293  INFO main:401 - Indice: 19
+15:27:14,293  INFO main:402 - Generacion: 0
+15:27:14,293  INFO main:403 - Rechazados: 20
+15:27:14,293  INFO main:413 - Individuo Solucion: {10,6,18,16,0,3,13,14,5,11,19,2,8,17,9,15,7,12,4,1}
+
+15:27:14,293  INFO main:414 - *****************************************************
+15:27:14,358  INFO main:399 - ****************Corrida 29 ************************
+15:27:14,358  INFO main:400 - Fitness solucion: 19.0
+15:27:14,358  INFO main:401 - Indice: 19
+15:27:14,358  INFO main:402 - Generacion: 0
+15:27:14,358  INFO main:403 - Rechazados: 20
+15:27:14,358  INFO main:413 - Individuo Solucion: {2,7,16,19,1,17,4,0,6,5,3,18,9,10,13,11,8,12,15,14}
+
+15:27:14,358  INFO main:414 - *****************************************************
+15:27:14,359  INFO main:416 - Tiempo AGP: 96
+15:27:14,359  INFO main:417 - Promedio Final: 19
+15:27:14,359  INFO main:418 - Promedio Generaciones: 0
+15:27:14,359  INFO main:420 - *****************Resultados********************
+15:27:14,359  INFO main:422 - result: 19.0
+15:27:14,359  INFO main:422 - result: 19.0
+15:27:14,359  INFO main:422 - result: 19.0
+15:27:14,359  INFO main:422 - result: 19.0
+15:27:14,359  INFO main:422 - result: 19.0
+15:27:14,359  INFO main:422 - result: 19.0
+15:27:14,359  INFO main:422 - result: 19.0
+15:27:14,359  INFO main:422 - result: 19.0
+15:27:14,359  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,360  INFO main:422 - result: 19.0
+15:27:14,361  INFO main:422 - result: 19.0
+15:27:14,361  INFO main:422 - result: 19.0
+15:27:14,361  INFO main:422 - result: 19.0
+15:27:14,361  INFO main:422 - result: 19.0
+15:27:14,361  INFO main:422 - result: 19.0
+15:27:14,361  INFO main:422 - result: 19.0
+15:27:14,361  INFO main:422 - result: 19.0
+15:27:14,361  INFO main:422 - result: 19.0
+15:27:14,361  INFO main:424 - *****************Generaciones********************
+15:27:14,361  INFO main:426 - Generacion: 0
+15:27:14,361  INFO main:426 - Generacion: 0
+15:27:14,361  INFO main:426 - Generacion: 0
+15:27:14,361  INFO main:426 - Generacion: 0
+15:27:14,361  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,362  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0
+15:27:14,363  INFO main:426 - Generacion: 0

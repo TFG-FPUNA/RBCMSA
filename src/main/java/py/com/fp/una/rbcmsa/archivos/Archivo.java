@@ -59,7 +59,8 @@ public class Archivo {
     
     public Properties cargarPropiedades() throws FileNotFoundException, IOException{
         Properties p = new Properties();
-        p.load(new FileReader("C:\\Users\\Divina\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\properties.properties"));
+        //p.load(new FileReader("C:\\Users\\Divina\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\properties.properties"));
+        p.load(new FileReader("C:\\Users\\Richard\\Documents\\NetBeansProjects\\RBCMSA\\src\\main\\resources\\properties.properties"));
         return p;
     }
 

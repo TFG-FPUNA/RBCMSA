@@ -1,0 +1,35 @@
+// solution (optimal) with objective 11
+// Quality Incumbent solution:
+// MILP objective                                1.1000000000e+001
+// MILP solution norm |x| (Total, Max)           9.30000e+001 1.10000e+001
+// MILP solution error (Ax=b) (Total, Max)       0.00000e+000 0.00000e+000
+// MILP x bound error (Total, Max)               0.00000e+000 0.00000e+000
+// MILP x integrality error (Total, Max)         0.00000e+000 0.00000e+000
+// MILP slack bound error (Total, Max)           0.00000e+000 0.00000e+000
+// 
+
+c = 11;
+F = [[0 0 0 0 0 0 0 0 0 0]
+             [3 0 0 0 3 0 0 0 0 3]
+             [0 0 0 0 0 0 0 0 0 0]
+             [0 0 3 0 3 0 0 0 0 0]
+             [0 3 0 3 0 0 3 0 0 0]
+             [0 0 0 0 0 0 3 0 0 0]
+             [0 0 0 0 0 0 0 0 0 0]
+             [0 0 0 0 0 0 0 0 0 0]
+             [0 0 0 0 0 0 0 6 0 0]
+             [3 0 0 0 3 0 0 0 0 0]
+             [0 0 0 0 0 0 0 0 3 0]
+             [0 3 0 0 0 0 3 6 0 0]
+             [0 3 0 0 0 0 0 6 0 0]
+             [3 0 0 0 3 3 0 0 0 0]];
+x = [[1]
+             [1]
+             [1]
+             [1]
+             [1]
+             [1]
+             [1]
+             [1]
+             [1]
+             [1]];
