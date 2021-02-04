@@ -40,7 +40,7 @@ public class BuscarCaminos {
 
             }
         }
-        
+
         HashMap<String, Rutas> rutasCompletas = new HashMap();
         rutasCompletas = mapearRutas(rutas);
 
@@ -58,6 +58,11 @@ public class BuscarCaminos {
             if (ruta.getCaminos().size() > limite) {
                 ruta.setCaminos(ruta.getCaminos().subList(0, limite));
             }
+            if (ruta.getCaminos().size() < limite) {
+                int cant = limite - ruta.getCaminos().size();
+                ruta.getCaminos().addAll(ruta.getCaminos().subList(ruta.getCaminos().size() - cant, ruta.getCaminos().size()));
+            }
+            int i= 0;
 
         }
     }
@@ -215,15 +220,16 @@ public class BuscarCaminos {
                     }
                 }
                 //este
-                //                else if (ruta.getDestino().equals(destinoActual)) {
-                //                    for (Camino camino : ruta.getCaminos()) {
-                //                        if (!camino.getNodos().contains(origenActual)) {
-                //                            rutasExpandidas.add(expandirRutaDestinoDestino(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
-                //                            ruta.setExpandido(true);
-                //                            //rutasExpandidas.add(expandirRutaOrigenRutaDestinoActual(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
-                //                        }
-                //                    }
-                //
+//                                else if (ruta.getDestino().equals(destinoActual)) {
+//                                    for (Camino camino : ruta.getCaminos()) {
+//                                        if (!camino.getNodos().contains(origenActual)) {
+//                                            rutasExpandidas.add(expandirRutaDestinoDestino(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
+//                                            ruta.setExpandido(true);
+//                                            //rutasExpandidas.add(expandirRutaOrigenRutaDestinoActual(ruta.clone(), origenActual, destinoActual, matrizAdyacencia));
+//                                        }
+//                                    }
+//                                }
+
             }
 
         }

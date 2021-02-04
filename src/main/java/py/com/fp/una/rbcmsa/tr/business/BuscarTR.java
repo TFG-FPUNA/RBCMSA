@@ -49,6 +49,7 @@ public class BuscarTR {
 //        System.out.println("nivel modulacion: " + nivelModulacion);
         Double resultado = (landaInicial * (1 + porcentajeFEC)) / (tamanhoFS * nivelModulacion);
         resultado = Math.ceil(resultado);
+        //resultado = (double)resultado.intValue();
         resultado = resultado + 1;
         return resultado;
     }

@@ -292,11 +292,6 @@ public class main {
 //        }
 //        System.out.println("Resultado Final: " + mayor);
         //System.out.println("");
-//        long inicioEU = System.currentTimeMillis();
-//        String total = algoritmosAsignacionEspectro.BFMRA(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29}, peticionesFinales, grafo, cantidadSP, tamanhoFS);
-//        long finEU = System.currentTimeMillis();
-//        System.out.println("Total: " + total);
-//        System.out.println("Tiempo: " + (finEU - inicioEU));
         //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
         switch (algoritmo) {
@@ -414,7 +409,9 @@ public class main {
                     logger.info("*****************************************************");
                 }
                 logger.info("Tiempo AGP: " + acumuladorAG / 30);
+                System.out.println("Tiempo AGP: " + acumuladorAG / 30);
                 logger.info("Promedio Final: " + promedio / 30);
+                System.out.println("Promedio Final: " + promedio / 30);
                 logger.info("Promedio Generaciones: " + generacion / 30);
 
                 logger.info("*****************Resultados********************");
@@ -429,6 +426,22 @@ public class main {
                  * ***************************************************************************
                  */
                 break;
+            case "5":
+                /**
+                 * ****************************AGPER******************************************
+                 */
+                long inicioEU = System.currentTimeMillis();
+                List<Gen> lista = AGP.inicializarPoblacion(1, peticionesFinales.size());
+                String total = algoritmosAsignacionEspectro.BFMRA(lista.get(0).individuo, peticionesFinales, grafo, cantidadSP, tamanhoFS);
+                long finEU = System.currentTimeMillis();
+                System.out.println("Total: " + total);
+                logger.info("Total: " + total);
+                System.out.println("Tiempo: " + (finEU - inicioEU));
+                logger.info("Tiempo: " + (finEU - inicioEU));
+                break;
+                /**
+                 * ***************************************************************************
+                 */
             default:
                 logger.info("*****************Ningun Algoritmo Especificado********************");
         }

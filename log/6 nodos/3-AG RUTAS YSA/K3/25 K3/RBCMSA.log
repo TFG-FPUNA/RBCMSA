@@ -1,0 +1,454 @@
+20:30:13,774  INFO main:168 - Logueando
+20:30:14,324  INFO main:343 - ****************AG RUTAS****************
+20:30:59,130  INFO main:357 - *******************Solucion: 0*******************
+20:30:59,130  INFO main:358 - Solucion: 0
+20:30:59,130  INFO main:359 - 
+Solucion numero: 99
+20:30:59,130  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:30:59,130  INFO main:361 - 
+Costo: 67000.0
+20:30:59,130  INFO main:362 - 
+Distancia: 18400.0
+20:30:59,130  INFO main:363 - 
+Espectro Mayor: 17.0
+20:30:59,131  INFO main:364 - 
+Fitness: 17.0
+20:30:59,131  INFO main:367 - *****************************************************
+20:31:43,191  INFO main:357 - *******************Solucion: 1*******************
+20:31:43,191  INFO main:358 - Solucion: 1
+20:31:43,191  INFO main:359 - 
+Solucion numero: 99
+20:31:43,191  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:31:43,192  INFO main:361 - 
+Costo: 69600.0
+20:31:43,192  INFO main:362 - 
+Distancia: 18400.0
+20:31:43,192  INFO main:363 - 
+Espectro Mayor: 17.0
+20:31:43,192  INFO main:364 - 
+Fitness: 17.0
+20:31:43,192  INFO main:367 - *****************************************************
+20:32:27,115  INFO main:357 - *******************Solucion: 2*******************
+20:32:27,115  INFO main:358 - Solucion: 2
+20:32:27,115  INFO main:359 - 
+Solucion numero: 99
+20:32:27,115  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:32:27,116  INFO main:361 - 
+Costo: 67800.0
+20:32:27,116  INFO main:362 - 
+Distancia: 17000.0
+20:32:27,116  INFO main:363 - 
+Espectro Mayor: 17.0
+20:32:27,116  INFO main:364 - 
+Fitness: 17.0
+20:32:27,116  INFO main:367 - *****************************************************
+20:33:45,206  INFO main:357 - *******************Solucion: 3*******************
+20:33:45,206  INFO main:358 - Solucion: 3
+20:33:45,206  INFO main:359 - 
+Solucion numero: 99
+20:33:45,207  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:33:45,207  INFO main:361 - 
+Costo: 66500.0
+20:33:45,207  INFO main:362 - 
+Distancia: 18000.0
+20:33:45,207  INFO main:363 - 
+Espectro Mayor: 17.0
+20:33:45,207  INFO main:364 - 
+Fitness: 17.0
+20:33:45,207  INFO main:367 - *****************************************************
+20:34:25,679  INFO main:357 - *******************Solucion: 4*******************
+20:34:25,679  INFO main:358 - Solucion: 4
+20:34:25,679  INFO main:359 - 
+Solucion numero: 99
+20:34:25,679  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:34:25,679  INFO main:361 - 
+Costo: 64700.0
+20:34:25,679  INFO main:362 - 
+Distancia: 18200.0
+20:34:25,679  INFO main:363 - 
+Espectro Mayor: 16.0
+20:34:25,680  INFO main:364 - 
+Fitness: 16.0
+20:34:25,680  INFO main:367 - *****************************************************
+20:35:23,511  INFO main:357 - *******************Solucion: 5*******************
+20:35:23,511  INFO main:358 - Solucion: 5
+20:35:23,511  INFO main:359 - 
+Solucion numero: 99
+20:35:23,511  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:35:23,511  INFO main:361 - 
+Costo: 63000.0
+20:35:23,511  INFO main:362 - 
+Distancia: 17600.0
+20:35:23,512  INFO main:363 - 
+Espectro Mayor: 15.0
+20:35:23,512  INFO main:364 - 
+Fitness: 15.0
+20:35:23,512  INFO main:367 - *****************************************************
+20:35:59,178  INFO main:357 - *******************Solucion: 6*******************
+20:35:59,178  INFO main:358 - Solucion: 6
+20:35:59,178  INFO main:359 - 
+Solucion numero: 99
+20:35:59,178  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:35:59,178  INFO main:361 - 
+Costo: 73000.0
+20:35:59,178  INFO main:362 - 
+Distancia: 19000.0
+20:35:59,178  INFO main:363 - 
+Espectro Mayor: 18.0
+20:35:59,178  INFO main:364 - 
+Fitness: 18.0
+20:35:59,179  INFO main:367 - *****************************************************
+20:36:34,644  INFO main:357 - *******************Solucion: 7*******************
+20:36:34,644  INFO main:358 - Solucion: 7
+20:36:34,644  INFO main:359 - 
+Solucion numero: 99
+20:36:34,644  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:36:34,644  INFO main:361 - 
+Costo: 70100.0
+20:36:34,644  INFO main:362 - 
+Distancia: 18600.0
+20:36:34,644  INFO main:363 - 
+Espectro Mayor: 16.0
+20:36:34,644  INFO main:364 - 
+Fitness: 16.0
+20:36:34,644  INFO main:367 - *****************************************************
+20:37:16,137  INFO main:357 - *******************Solucion: 8*******************
+20:37:16,137  INFO main:358 - Solucion: 8
+20:37:16,137  INFO main:359 - 
+Solucion numero: 99
+20:37:16,137  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:37:16,138  INFO main:361 - 
+Costo: 76200.0
+20:37:16,138  INFO main:362 - 
+Distancia: 18800.0
+20:37:16,138  INFO main:363 - 
+Espectro Mayor: 17.0
+20:37:16,138  INFO main:364 - 
+Fitness: 17.0
+20:37:16,138  INFO main:367 - *****************************************************
+20:37:51,676  INFO main:357 - *******************Solucion: 9*******************
+20:37:51,676  INFO main:358 - Solucion: 9
+20:37:51,676  INFO main:359 - 
+Solucion numero: 99
+20:37:51,676  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:37:51,676  INFO main:361 - 
+Costo: 58200.0
+20:37:51,676  INFO main:362 - 
+Distancia: 16400.0
+20:37:51,676  INFO main:363 - 
+Espectro Mayor: 17.0
+20:37:51,677  INFO main:364 - 
+Fitness: 17.0
+20:37:51,677  INFO main:367 - *****************************************************
+20:38:27,163  INFO main:357 - *******************Solucion: 10*******************
+20:38:27,163  INFO main:358 - Solucion: 10
+20:38:27,163  INFO main:359 - 
+Solucion numero: 99
+20:38:27,163  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:38:27,163  INFO main:361 - 
+Costo: 72000.0
+20:38:27,163  INFO main:362 - 
+Distancia: 18400.0
+20:38:27,164  INFO main:363 - 
+Espectro Mayor: 17.0
+20:38:27,164  INFO main:364 - 
+Fitness: 17.0
+20:38:27,164  INFO main:367 - *****************************************************
+20:39:08,708  INFO main:357 - *******************Solucion: 11*******************
+20:39:08,708  INFO main:358 - Solucion: 11
+20:39:08,708  INFO main:359 - 
+Solucion numero: 99
+20:39:08,708  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:39:08,708  INFO main:361 - 
+Costo: 61100.0
+20:39:08,708  INFO main:362 - 
+Distancia: 17000.0
+20:39:08,708  INFO main:363 - 
+Espectro Mayor: 17.0
+20:39:08,708  INFO main:364 - 
+Fitness: 17.0
+20:39:08,708  INFO main:367 - *****************************************************
+20:39:44,195  INFO main:357 - *******************Solucion: 12*******************
+20:39:44,195  INFO main:358 - Solucion: 12
+20:39:44,195  INFO main:359 - 
+Solucion numero: 99
+20:39:44,195  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:39:44,195  INFO main:361 - 
+Costo: 55800.0
+20:39:44,195  INFO main:362 - 
+Distancia: 15800.0
+20:39:44,196  INFO main:363 - 
+Espectro Mayor: 17.0
+20:39:44,196  INFO main:364 - 
+Fitness: 17.0
+20:39:44,196  INFO main:367 - *****************************************************
+20:40:28,607  INFO main:357 - *******************Solucion: 13*******************
+20:40:28,607  INFO main:358 - Solucion: 13
+20:40:28,607  INFO main:359 - 
+Solucion numero: 99
+20:40:28,607  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:40:28,608  INFO main:361 - 
+Costo: 81500.0
+20:40:28,608  INFO main:362 - 
+Distancia: 20400.0
+20:40:28,608  INFO main:363 - 
+Espectro Mayor: 17.0
+20:40:28,609  INFO main:364 - 
+Fitness: 17.0
+20:40:28,610  INFO main:367 - *****************************************************
+20:41:19,049  INFO main:357 - *******************Solucion: 14*******************
+20:41:19,049  INFO main:358 - Solucion: 14
+20:41:19,049  INFO main:359 - 
+Solucion numero: 99
+20:41:19,049  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:41:19,049  INFO main:361 - 
+Costo: 57000.0
+20:41:19,049  INFO main:362 - 
+Distancia: 16200.0
+20:41:19,049  INFO main:363 - 
+Espectro Mayor: 15.0
+20:41:19,049  INFO main:364 - 
+Fitness: 15.0
+20:41:19,049  INFO main:367 - *****************************************************
+20:41:51,618  INFO main:357 - *******************Solucion: 15*******************
+20:41:51,618  INFO main:358 - Solucion: 15
+20:41:51,618  INFO main:359 - 
+Solucion numero: 99
+20:41:51,618  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:41:51,619  INFO main:361 - 
+Costo: 81500.0
+20:41:51,619  INFO main:362 - 
+Distancia: 20000.0
+20:41:51,619  INFO main:363 - 
+Espectro Mayor: 16.0
+20:41:51,619  INFO main:364 - 
+Fitness: 16.0
+20:41:51,619  INFO main:367 - *****************************************************
+20:42:41,965  INFO main:357 - *******************Solucion: 16*******************
+20:42:41,966  INFO main:358 - Solucion: 16
+20:42:41,966  INFO main:359 - 
+Solucion numero: 99
+20:42:41,966  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:42:41,966  INFO main:361 - 
+Costo: 65400.0
+20:42:41,966  INFO main:362 - 
+Distancia: 16800.0
+20:42:41,966  INFO main:363 - 
+Espectro Mayor: 17.0
+20:42:41,966  INFO main:364 - 
+Fitness: 17.0
+20:42:41,966  INFO main:367 - *****************************************************
+20:43:14,668  INFO main:357 - *******************Solucion: 17*******************
+20:43:14,668  INFO main:358 - Solucion: 17
+20:43:14,668  INFO main:359 - 
+Solucion numero: 99
+20:43:14,668  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:43:14,669  INFO main:361 - 
+Costo: 78900.0
+20:43:14,669  INFO main:362 - 
+Distancia: 18400.0
+20:43:14,669  INFO main:363 - 
+Espectro Mayor: 17.0
+20:43:14,669  INFO main:364 - 
+Fitness: 17.0
+20:43:14,669  INFO main:367 - *****************************************************
+20:43:50,260  INFO main:357 - *******************Solucion: 18*******************
+20:43:50,260  INFO main:358 - Solucion: 18
+20:43:50,260  INFO main:359 - 
+Solucion numero: 99
+20:43:50,260  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:43:50,260  INFO main:361 - 
+Costo: 70400.0
+20:43:50,260  INFO main:362 - 
+Distancia: 18200.0
+20:43:50,260  INFO main:363 - 
+Espectro Mayor: 18.0
+20:43:50,260  INFO main:364 - 
+Fitness: 18.0
+20:43:50,261  INFO main:367 - *****************************************************
+20:44:28,790  INFO main:357 - *******************Solucion: 19*******************
+20:44:28,791  INFO main:358 - Solucion: 19
+20:44:28,791  INFO main:359 - 
+Solucion numero: 99
+20:44:28,791  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:44:28,791  INFO main:361 - 
+Costo: 68000.0
+20:44:28,791  INFO main:362 - 
+Distancia: 18000.0
+20:44:28,791  INFO main:363 - 
+Espectro Mayor: 17.0
+20:44:28,791  INFO main:364 - 
+Fitness: 17.0
+20:44:28,791  INFO main:367 - *****************************************************
+20:45:01,396  INFO main:357 - *******************Solucion: 20*******************
+20:45:01,396  INFO main:358 - Solucion: 20
+20:45:01,397  INFO main:359 - 
+Solucion numero: 99
+20:45:01,397  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:45:01,397  INFO main:361 - 
+Costo: 65400.0
+20:45:01,397  INFO main:362 - 
+Distancia: 17600.0
+20:45:01,397  INFO main:363 - 
+Espectro Mayor: 17.0
+20:45:01,397  INFO main:364 - 
+Fitness: 17.0
+20:45:01,397  INFO main:367 - *****************************************************
+20:45:51,842  INFO main:357 - *******************Solucion: 21*******************
+20:45:51,843  INFO main:358 - Solucion: 21
+20:45:51,843  INFO main:359 - 
+Solucion numero: 99
+20:45:51,843  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:45:51,843  INFO main:361 - 
+Costo: 72600.0
+20:45:51,843  INFO main:362 - 
+Distancia: 18400.0
+20:45:51,843  INFO main:363 - 
+Espectro Mayor: 17.0
+20:45:51,843  INFO main:364 - 
+Fitness: 17.0
+20:45:51,843  INFO main:367 - *****************************************************
+20:46:27,759  INFO main:357 - *******************Solucion: 22*******************
+20:46:27,760  INFO main:358 - Solucion: 22
+20:46:27,760  INFO main:359 - 
+Solucion numero: 99
+20:46:27,760  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:46:27,760  INFO main:361 - 
+Costo: 68900.0
+20:46:27,760  INFO main:362 - 
+Distancia: 18200.0
+20:46:27,760  INFO main:363 - 
+Espectro Mayor: 17.0
+20:46:27,760  INFO main:364 - 
+Fitness: 17.0
+20:46:27,760  INFO main:367 - *****************************************************
+20:47:00,457  INFO main:357 - *******************Solucion: 23*******************
+20:47:00,457  INFO main:358 - Solucion: 23
+20:47:00,457  INFO main:359 - 
+Solucion numero: 99
+20:47:00,457  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:47:00,458  INFO main:361 - 
+Costo: 66000.0
+20:47:00,458  INFO main:362 - 
+Distancia: 17600.0
+20:47:00,458  INFO main:363 - 
+Espectro Mayor: 17.0
+20:47:00,458  INFO main:364 - 
+Fitness: 17.0
+20:47:00,458  INFO main:367 - *****************************************************
+20:48:02,750  INFO main:357 - *******************Solucion: 24*******************
+20:48:02,750  INFO main:358 - Solucion: 24
+20:48:02,751  INFO main:359 - 
+Solucion numero: 99
+20:48:02,751  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:48:02,751  INFO main:361 - 
+Costo: 63600.0
+20:48:02,751  INFO main:362 - 
+Distancia: 16400.0
+20:48:02,751  INFO main:363 - 
+Espectro Mayor: 17.0
+20:48:02,751  INFO main:364 - 
+Fitness: 17.0
+20:48:02,751  INFO main:367 - *****************************************************
+20:48:38,443  INFO main:357 - *******************Solucion: 25*******************
+20:48:38,443  INFO main:358 - Solucion: 25
+20:48:38,443  INFO main:359 - 
+Solucion numero: 99
+20:48:38,444  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:48:38,444  INFO main:361 - 
+Costo: 67800.0
+20:48:38,444  INFO main:362 - 
+Distancia: 17600.0
+20:48:38,444  INFO main:363 - 
+Espectro Mayor: 16.0
+20:48:38,444  INFO main:364 - 
+Fitness: 16.0
+20:48:38,444  INFO main:367 - *****************************************************
+20:49:11,119  INFO main:357 - *******************Solucion: 26*******************
+20:49:11,119  INFO main:358 - Solucion: 26
+20:49:11,120  INFO main:359 - 
+Solucion numero: 99
+20:49:11,120  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:49:11,120  INFO main:361 - 
+Costo: 66500.0
+20:49:11,120  INFO main:362 - 
+Distancia: 18000.0
+20:49:11,120  INFO main:363 - 
+Espectro Mayor: 16.0
+20:49:11,120  INFO main:364 - 
+Fitness: 16.0
+20:49:11,120  INFO main:367 - *****************************************************
+20:49:49,860  INFO main:357 - *******************Solucion: 27*******************
+20:49:49,860  INFO main:358 - Solucion: 27
+20:49:49,860  INFO main:359 - 
+Solucion numero: 99
+20:49:49,861  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:49:49,861  INFO main:361 - 
+Costo: 61200.0
+20:49:49,861  INFO main:362 - 
+Distancia: 17000.0
+20:49:49,861  INFO main:363 - 
+Espectro Mayor: 17.0
+20:49:49,861  INFO main:364 - 
+Fitness: 17.0
+20:49:49,861  INFO main:367 - *****************************************************
+20:50:40,352  INFO main:357 - *******************Solucion: 28*******************
+20:50:40,352  INFO main:358 - Solucion: 28
+20:50:40,353  INFO main:359 - 
+Solucion numero: 99
+20:50:40,353  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:50:40,353  INFO main:361 - 
+Costo: 72000.0
+20:50:40,353  INFO main:362 - 
+Distancia: 19000.0
+20:50:40,353  INFO main:363 - 
+Espectro Mayor: 18.0
+20:50:40,353  INFO main:364 - 
+Fitness: 18.0
+20:50:40,353  INFO main:367 - *****************************************************
+20:51:24,835  INFO main:357 - *******************Solucion: 29*******************
+20:51:24,836  INFO main:358 - Solucion: 29
+20:51:24,836  INFO main:359 - 
+Solucion numero: 99
+20:51:24,836  INFO main:360 - 
+Cantidad de bloqueados: 0
+20:51:24,836  INFO main:361 - 
+Costo: 72300.0
+20:51:24,836  INFO main:362 - 
+Distancia: 18600.0
+20:51:24,836  INFO main:363 - 
+Espectro Mayor: 18.0
+20:51:24,836  INFO main:364 - 
+Fitness: 18.0
+20:51:24,836  INFO main:367 - *****************************************************
+20:51:24,836  INFO main:370 - Tiempo AGY: 42349.3
+20:51:24,836  INFO main:372 - Promedio Final AGY: 16.833333333333332
