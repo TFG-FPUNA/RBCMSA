@@ -432,7 +432,8 @@ public class main {
                  */
                 long inicioEU = System.currentTimeMillis();
                 List<Gen> lista = AGP.inicializarPoblacion(1, peticionesFinales.size());
-                String total = algoritmosAsignacionEspectro.BFMRA(lista.get(0).individuo, peticionesFinales, grafo, cantidadSP, tamanhoFS);
+                //String total = algoritmosAsignacionEspectro.BFMRA(lista.get(0).individuo, peticionesFinales, grafo, cantidadSP, tamanhoFS);
+                String total = algoritmosAsignacionEspectro.BFMRA(new int[]{0, 1, 2, 3, 4, 5, 6}, peticionesFinales, grafo, cantidadSP, tamanhoFS);
                 long finEU = System.currentTimeMillis();
                 System.out.println("Total: " + total);
                 logger.info("Total: " + total);
