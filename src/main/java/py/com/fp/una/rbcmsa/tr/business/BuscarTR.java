@@ -22,17 +22,17 @@ import py.com.fp.una.rbcmsa.tr.model.TRBCM;
 public class BuscarTR {
 
     public TRBCM buscarTR(Integer distancia, HashMap<String, TR> TRtotales, Peticion peticion, Double tamanhoFS) {
-        
-        TR TRSeleccionado = seleccionarTRCandidatos(distancia, TRtotales, peticion.getLanda());
-        System.out.println("seleccionado: " + TRSeleccionado);
+
+        TR TRSeleccionado = seleccionarTRCandidatos(distancia, TRtotales, peticion.getLanda(), peticion);
+        //System.out.println("seleccionado: " + TRSeleccionado);
         TRBCM trFinal = new TRBCM();
         trFinal.setBaudios(TRSeleccionado.getBaudios());
         trFinal.setFEC(TRSeleccionado.getSeleccionado());
         trFinal.setModulacion(TRSeleccionado.getModulacion());
         trFinal.setFormatoModulacion(TRSeleccionado.getFormatoModulacion());
-        
+
         Double tamanhoFSRequerido = calcularNumeroFS(peticion.getLanda(), OH_FEC[TRSeleccionado.getSeleccionado()], tamanhoFS, TRSeleccionado.getFormatoModulacion());
-        System.out.println("tamanho: " + tamanhoFSRequerido);
+        //System.out.println("tamanho: " + tamanhoFSRequerido);
 
         trFinal.setTamanhoFS(tamanhoFSRequerido.intValue());
         return trFinal;
@@ -54,7 +54,7 @@ public class BuscarTR {
         return resultado;
     }
 
-    private TR seleccionarTRCandidatos(Integer distancia, HashMap<String, TR> TRtotales, Integer landaInicial) {
+    private TR seleccionarTRCandidatos(Integer distancia, HashMap<String, TR> TRtotales, Integer landaInicial, Peticion peticion) {
         List<TR> seleccionTR = new ArrayList<>();
         for (Map.Entry<String, TR> entry : TRtotales.entrySet()) {
             String key = entry.getKey();
@@ -65,14 +65,19 @@ public class BuscarTR {
                 if (landaInicial <= tr.getDistanciaSoportada()) {
                     seleccionTR.add(tr);
                 }
-                
+
             }
         }
 
         //encontrar el menor
         //System.out.println("seleccionado: " + seleccionTR);
-        Collections.sort(seleccionTR, (s2, s1) -> Integer.compare(s2.getFEC().get(s2.getSeleccionado()), s1.getFEC().get(s1.getSeleccionado())));
-        return seleccionTR.get(0);
+        if (seleccionTR.size() == 0) {
+            System.err.println("Peticio a descartar: " + peticion.getPedido());
+            return null;
+        } else {
+            Collections.sort(seleccionTR, (s2, s1) -> Integer.compare(s2.getFEC().get(s2.getSeleccionado()), s1.getFEC().get(s1.getSeleccionado())));
+            return seleccionTR.get(0);
+        }
 
     }
 

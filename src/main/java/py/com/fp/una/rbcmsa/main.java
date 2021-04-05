@@ -166,6 +166,7 @@ public class main {
     public void procesar(String separador)
             throws CloneNotSupportedException, IOException, Exception {
         logger.info("Logueando");
+        long inicioPreCalculo = System.currentTimeMillis();
         /*Lectura de properties.properties*/
         Properties p = archivoBean.cargarPropiedades();
 
@@ -197,21 +198,21 @@ public class main {
         int flagMatriz = 2;
         int matriz[][] = (int[][]) archivoBean.cargarArchivo(archivoMatriz, separador, flagMatriz, filas, columnas);
 
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[0].length; j++) {
-                System.out.print(matriz[i][j] + " ");
-            }
-            System.out.println("");
-        }
+//        for (int i = 0; i < matriz.length; i++) {
+//            for (int j = 0; j < matriz[0].length; j++) {
+//                System.out.print(matriz[i][j] + " ");
+//            }
+//            System.out.println("");
+//        }
 
         /*Se calculan los caminos posibles y sus distancias*/
         HashMap<String, Rutas> rutasCompletas = buscarCaminosBean.busqueda(matriz, limite);
-        for (Map.Entry<String, Rutas> entry : rutasCompletas.entrySet()) {
-            String key = entry.getKey();
-            Rutas value = entry.getValue();
-            System.out.println("Ruta:" + value);
-
-        }
+//        for (Map.Entry<String, Rutas> entry : rutasCompletas.entrySet()) {
+//            String key = entry.getKey();
+//            Rutas value = entry.getValue();
+//            System.out.println("Ruta:" + value);
+//
+//        }
 
         /*Se cargan los datos de la Tabla TR*/
         int flagTR = 0;
@@ -220,13 +221,13 @@ public class main {
         /*Se cargan las peticiones*/
         int flagPeticion = 1;
         HashMap<Integer, Peticion> Peticiones = (HashMap<Integer, Peticion>) archivoBean.cargarArchivo(rutaArchivos + nombrePerticiones, separador, flagPeticion, 0, 0);
-        System.out.println("\n" + "Peticiones: ");
-        for (Map.Entry<Integer, Peticion> entry : Peticiones.entrySet()) {
-            Integer key = entry.getKey();
-            Peticion value = entry.getValue();
-            System.out.println("key:" + key + " value: " + value);
-
-        }
+//        System.out.println("\n" + "Peticiones: ");
+//        for (Map.Entry<Integer, Peticion> entry : Peticiones.entrySet()) {
+//            Integer key = entry.getKey();
+//            Peticion value = entry.getValue();
+//            System.out.println("key:" + key + " value: " + value);
+//
+//        }
 
         /*Se calculan los TR Finales (B,C,M y Landafinal)*/
         List<PeticionBCM> peticionesFinales = new ArrayList<>();
@@ -294,6 +295,10 @@ public class main {
         //System.out.println("");
         //algoritmosAsignacionEspectro.BFMRA2(peticionesFinales, grafo, cantidadSP ,tamanhoFS, limite);
         //generadorBean.GenerarArchivo(10, 5, 100, 400, rutaArchivo, nombreArchivo);
+        long finPreCalculo = System.currentTimeMillis();
+        long preCalculo = finPreCalculo - inicioPreCalculo;
+        logger.info("Tiempo PreCalculo: " + preCalculo);
+        System.out.println("Tiempo PreCalculo: " + preCalculo);
         switch (algoritmo) {
             case "1":
                 logger.info("****************ILP****************");
@@ -440,9 +445,9 @@ public class main {
                 System.out.println("Tiempo: " + (finEU - inicioEU));
                 logger.info("Tiempo: " + (finEU - inicioEU));
                 break;
-                /**
-                 * ***************************************************************************
-                 */
+            /**
+             * ***************************************************************************
+             */
             default:
                 logger.info("*****************Ningun Algoritmo Especificado********************");
         }

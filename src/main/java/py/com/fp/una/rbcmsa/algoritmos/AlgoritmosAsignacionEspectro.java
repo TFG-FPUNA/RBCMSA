@@ -36,10 +36,10 @@ public class AlgoritmosAsignacionEspectro {
         System.out.println("------------- MFMRA -------------");
 
         for (PeticionBCM peticionFinal : peticionesFinales) {
-            System.out.println("");
-            System.out.println("------------- INICIAL -------------");
-            System.out.println("");
-            this.imprimirPeticion(peticionFinal);
+//            System.out.println("");
+//            System.out.println("------------- INICIAL -------------");
+//            System.out.println("");
+//            this.imprimirPeticion(peticionFinal);
             for (int i = 0; i < peticionFinal.getCaminosTR().size(); i++) {
                 System.out.println("cantidad fs total: " + cantidadFS);
                 int cantidadDisponibleFs = this.calcularFsDisponibles(peticionFinal.getCaminosTR().get(i).getCamino(), cantidadFS, grafo);
@@ -51,10 +51,10 @@ public class AlgoritmosAsignacionEspectro {
             }
             Collections.sort(peticionFinal.getCaminosTR(), (s1, s2) -> Integer.compare(s2.getCamino().getAnchoBandaAsignable(), s1.getCamino().getAnchoBandaAsignable()));
 
-            System.out.println("");
-            System.out.println("------------- ORDEN -------------");
-            System.out.println("");
-            this.imprimirPeticion(peticionFinal);
+//            System.out.println("");
+//            System.out.println("------------- ORDEN -------------");
+//            System.out.println("");
+//            this.imprimirPeticion(peticionFinal);
             this.asignarFS(peticionFinal, grafo, true);
         }
 
@@ -66,10 +66,10 @@ public class AlgoritmosAsignacionEspectro {
         for (int i = 0; i < orden.length; i++) {
             //for (PeticionBCM peticionFinal : peticionesFinales) {
             PeticionBCM peticionFinal = peticionesFinales.get(orden[i]);
-            System.out.println("");
-            System.out.println("------------- INICIAL -------------");
-            System.out.println("");
-            this.imprimirPeticion(peticionFinal);
+//            System.out.println("");
+//            System.out.println("------------- INICIAL -------------");
+//            System.out.println("");
+//            this.imprimirPeticion(peticionFinal);
             //ver si queremos pisar o que onda 
             peticionFinal.setCaminosTR(this.seleccionFS(peticionFinal.getCaminosTR(), peticionFinal.getFSMenor()));
             for (CaminoTR caminoTr : peticionFinal.getCaminosTR()) {
@@ -79,10 +79,10 @@ public class AlgoritmosAsignacionEspectro {
                 caminoTr.getCamino().setAnchoBandaAsignable(BWCamino);
             }
             Collections.sort(peticionFinal.getCaminosTR(), (s1, s2) -> Integer.compare(s2.getCamino().getAnchoBandaAsignable(), s1.getCamino().getAnchoBandaAsignable()));
-            System.out.println("");
-            System.out.println("------------- ORDEN -------------");
-            System.out.println("");
-            this.imprimirPeticion(peticionFinal);
+//            System.out.println("");
+//            System.out.println("------------- ORDEN -------------");
+//            System.out.println("");
+//            this.imprimirPeticion(peticionFinal);
             rechazados += this.asignarFS(peticionFinal, grafo, true);
         }
         String resultado = obtenerTotalFS(grafo);
@@ -376,7 +376,7 @@ public class AlgoritmosAsignacionEspectro {
                                     for (int j = posicionInicial; j < posicionInicial + tamanhoRequeridoFS; j++) {
                                         grafo.getAristas().get(aristasSeleccionada.getIdentificador()).getSP()[j] = true;
                                         grafo.getAristas().get(aristasSeleccionada.getIdentificador()).setCantidadSP(grafo.getAristas().get(aristasSeleccionada.getIdentificador()).getCantidadSP() - 1);
-                                        System.out.println("Arista:" + aristasSeleccionada.getIdentificador() + "posicion fs usado: " + j);
+//                                        System.out.println("Arista:" + aristasSeleccionada.getIdentificador() + "posicion fs usado: " + j);
                                     }
                                 }
                                 return 0;
