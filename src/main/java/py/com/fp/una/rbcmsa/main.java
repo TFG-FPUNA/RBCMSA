@@ -391,6 +391,8 @@ public class main {
                 long acumuladorAG = 0;
                 int promedio = 0;
                 int generacion = 0;
+                int rechazos = 0;
+                double defracmentacion = 0.0;
                 for (int i = 0; i < 30; i++) {
                     long inicioAGPropio = System.currentTimeMillis();
                     Solucion solucion = AGP.algoritmoGenetico(100, 100, peticionesFinales, grafo, cantidadSP, tamanhoFS, 0.2d);
@@ -405,6 +407,8 @@ public class main {
                     promedios.add(solucion.getFitness());
                     generacion += generacion;
                     generaciones.add(generacion);
+                    defracmentacion += solucion.getDefracmencion();
+                    rechazos += solucion.getRechazados();
 
                     String individuoSting = "";
                     for (int j = 0; j < solucion.getIndividuo().length; j++) {
@@ -418,6 +422,12 @@ public class main {
                 logger.info("Promedio Final: " + promedio / 30);
                 System.out.println("Promedio Final: " + promedio / 30);
                 logger.info("Promedio Generaciones: " + generacion / 30);
+                
+                System.out.println("Promedio Recahzo: " + rechazos / 30);
+                logger.info("Promedio Rechazos: " + rechazos / 30);
+                
+                System.out.println("Promedio Defragmentacion: " + defracmentacion/ 30);
+                logger.info("Promedio Defragmentacion: " + defracmentacion / 30);
 
                 logger.info("*****************Resultados********************");
                 for (Double prom : promedios) {

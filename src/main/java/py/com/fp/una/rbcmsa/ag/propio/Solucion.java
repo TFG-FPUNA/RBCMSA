@@ -13,6 +13,7 @@ public class Solucion extends Gen{
     int generacion;
     int indice;
     int rechazados;
+    double defracmencion;
 
     public int getIndice() {
         return indice;
@@ -38,9 +39,17 @@ public class Solucion extends Gen{
         this.rechazados = rechazados;
     }
 
+    public double getDefracmencion() {
+        return defracmencion;
+    }
+
+    public void setDefracmencion(double defracmencion) {
+        this.defracmencion = defracmencion;
+    }
+
     @Override
     public String toString() {
-        return "Solucion{" + "generacion=" + generacion + ", indice=" + indice + ", rechazados=" + rechazados + '}';
-    }    
-    
+        return "Solucion{" + "generacion=" + generacion + ", indice=" + indice + ", rechazados=" + rechazados + ", defracmencion=" + defracmencion + '}';
+    }
+        
 }

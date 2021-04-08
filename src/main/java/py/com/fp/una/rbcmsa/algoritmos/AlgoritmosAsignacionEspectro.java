@@ -87,7 +87,9 @@ public class AlgoritmosAsignacionEspectro {
         }
         String resultado = obtenerTotalFS(grafo);
         String[] split = resultado.split("-");
-        resultado += "-" + rechazados + "-" + defragmentacion(grafo, Integer.valueOf(split[1]), cantidadFS)/peticionesFinales.size();
+        Double defrag = (double)defragmentacion(grafo, Integer.valueOf(split[1]), cantidadFS)/peticionesFinales.size();
+        
+        resultado += "-" + rechazados + "-" + defrag;
         limpiarGrafo(grafo);
         return resultado;
 
@@ -99,7 +101,7 @@ public class AlgoritmosAsignacionEspectro {
             String key = en.getKey();
             Arista value = en.getValue();
             boolean estadoActual = value.getSP()[0];
-            for (int i = 0; i < FSMax+2; i++) {
+            for (int i = 0; i < FSMax+1/*value.getSP().length*/; i++) {
                 if (!(value.getSP()[i] == estadoActual)) {
                     total++;
                     estadoActual = value.getSP()[i];
